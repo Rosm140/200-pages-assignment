@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohit's Web Development Portfolio | 200+ Pages Assignment</title>
+    <meta name="description" content="Portfolio of 15 professional websites showcasing full-stack web development skills">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #0f172a;
+            --accent: #f59e0b;
+            --bg: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            min-width: 200px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            margin-top: 0.5rem;
+        }
+
+        /* Assignment Info */
+        .assignment-info {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .assignment-info strong {
+            color: #92400e;
+            font-size: 1.1rem;
+        }
+
+        /* Website Grid */
+        .websites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .website-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .website-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .website-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .website-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .website-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .website-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .website-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .website-description {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .website-body {
+            padding: 2rem;
+        }
+
+        .website-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-badge {
+            background: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-badge.pages {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .website-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .website-features li {
+            padding: 0.5rem 0;
+            color: #475569;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .website-features li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .website-link {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .website-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .footer p {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .footer strong {
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .websites-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .stat-box {
+                text-align: center;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .website-card {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .website-card:nth-child(1) { animation-delay: 0.1s; }
+        .website-card:nth-child(2) { animation-delay: 0.2s; }
+        .website-card:nth-child(3) { animation-delay: 0.3s; }
+        .website-card:nth-child(4) { animation-delay: 0.4s; }
+        .website-card:nth-child(5) { animation-delay: 0.5s; }
+        .website-card:nth-child(6) { animation-delay: 0.6s; }
+        .website-card:nth-child(7) { animation-delay: 0.7s; }
+        .website-card:nth-child(8) { animation-delay: 0.8s; }
+        .website-card:nth-child(9) { animation-delay: 0.9s; }
+        .website-card:nth-child(10) { animation-delay: 1s; }
+        .website-card:nth-child(11) { animation-delay: 1.1s; }
+        .website-card:nth-child(12) { animation-delay: 1.2s; }
+        .website-card:nth-child(13) { animation-delay: 1.3s; }
+        .website-card:nth-child(14) { animation-delay: 1.4s; }
+        .website-card:nth-child(15) { animation-delay: 1.5s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🚀 Rohit's Web Development Portfolio</h1>
+            <p class="subtitle">Professional Web Development Assignment | 15 Complete Websites</p>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-number" id="totalPages">215</span>
+                    <span class="stat-label">Total Pages</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">15</span>
+                    <span class="stat-label">Websites</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Responsive</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assignment Info -->
+        <div class="assignment-info">
+            <strong>📝 Assignment Requirement:</strong> 200 Pages<br>
+            <strong>✅ Delivered:</strong> 215+ Pages across 15 Professional Websites<br>
+            <strong>💡 Approach:</strong> Instead of creating 200 meaningless pages, I built 15 real-world websites with practical functionality, modern design, and professional quality - perfect for my resume and portfolio!
+        </div>
+
+        <!-- Websites Grid -->
+        <div class="websites-grid">
+            
+            <!-- Website 1: Travel Agency -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">01</span>
+                    <span class="website-icon">✈️</span>
+                    <h3 class="website-title">TravelGo</h3>
+                    <p class="website-description">Modern travel agency website with booking system</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 10 Pages</span>
+                        <span class="meta-badge">⭐ Featured</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Responsive</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>User authentication system</li>
+                        <li>Travel packages catalog</li>
+                        <li>Booking forms & gallery</li>
+                        <li>Blog & FAQ sections</li>
+                    </ul>
+                    <a href="travel-agency/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 2: E-Commerce Store -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">02</span>
+                    <span class="website-icon">🛒</span>
+                    <h3 class="website-title">ShopHub</h3>
+                    <p class="website-description">Full-featured e-commerce platform</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 20 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Cart System</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Product catalog & filters</li>
+                        <li>Shopping cart functionality</li>
+                        <li>User accounts & wishlist</li>
+                        <li>Checkout & payment UI</li>
+                    </ul>
+                    <a href="e-commerce/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 3: Restaurant -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">03</span>
+                    <span class="website-icon">🍽️</span>
+                    <h3 class="website-title">FoodiePlace</h3>
+                    <p class="website-description">Restaurant with online ordering</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 12 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Digital menu & categories</li>
+                        <li>Online ordering system</li>
+                        <li>Table reservations</li>
+                        <li>Chef specials & gallery</li>
+                    </ul>
+                    <a href="restaurant/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 4: Portfolio -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">04</span>
+                    <span class="website-icon">💼</span>
+                    <h3 class="website-title">DevFolio</h3>
+                    <p class="website-description">Professional developer portfolio</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 8 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Animations</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Project showcase</li>
+                        <li>Skills & experience</li>
+                        <li>Contact form</li>
+                        <li>Blog & testimonials</li>
+                    </ul>
+                    <a href="portfolio/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 5: Real Estate -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">05</span>
+                    <span class="website-icon">🏠</span>
+                    <h3 class="website-title">HomeQuest</h3>
+                    <p class="website-description">Real estate property listings</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 18 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Search</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Property listings & filters</li>
+                        <li>Advanced search</li>
+                        <li>Agent profiles</li>
+                        <li>Virtual tours</li>
+                    </ul>
+                    <a href="real-estate/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 6: Education -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">06</span>
+                    <span class="website-icon">🎓</span>
+                    <h3 class="website-title">EduLearn</h3>
+                    <p class="website-description">Online learning platform</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 22 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Course catalog</li>
+                        <li>Student dashboard</li>
+                        <li>Video lessons</li>
+                        <li>Quizzes & certificates</li>
+                    </ul>
+                    <a href="education/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 7: Fitness -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">07</span>
+                    <span class="website-icon">💪</span>
+                    <h3 class="website-title">FitZone</h3>
+                    <p class="website-description">Gym & fitness center</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 14 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Class schedules</li>
+                        <li>Trainer profiles</li>
+                        <li>Membership plans</li>
+                        <li>BMI calculator</li>
+                    </ul>
+                    <a href="fitness/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 8: Blog/Magazine -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">08</span>
+                    <span class="website-icon">📰</span>
+                    <h3 class="website-title">TechBlog</h3>
+                    <p class="website-description">Technology news & articles</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 25 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Article listings</li>
+                        <li>Categories & tags</li>
+                        <li>Author profiles</li>
+                        <li>Comments system UI</li>
+                    </ul>
+                    <a href="blog/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 9: Healthcare -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">09</span>
+                    <span class="website-icon">🏥</span>
+                    <h3 class="website-title">MediCare</h3>
+                    <p class="website-description">Hospital & healthcare services</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 16 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Doctor profiles</li>
+                        <li>Appointment booking</li>
+                        <li>Services & departments</li>
+                        <li>Health tips blog</li>
+                    </ul>
+                    <a href="healthcare/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 10: Event Management -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">10</span>
+                    <span class="website-icon">🎉</span>
+                    <h3 class="website-title">EventPro</h3>
+                    <p class="website-description">Event planning & management</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 15 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Event listings</li>
+                        <li>Ticket booking</li>
+                        <li>Venue showcase</li>
+                        <li>Gallery & reviews</li>
+                    </ul>
+                    <a href="events/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 11: Photography -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">11</span>
+                    <span class="website-icon">📸</span>
+                    <h3 class="website-title">LensArt</h3>
+                    <p class="website-description">Photography portfolio</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 10 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Gallery</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Photo galleries</li>
+                        <li>Service packages</li>
+                        <li>Booking system</li>
+                        <li>Client testimonials</li>
+                    </ul>
+                    <a href="photography/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 12: Music -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">12</span>
+                    <span class="website-icon">🎵</span>
+                    <h3 class="website-title">SoundWave</h3>
+                    <p class="website-description">Music streaming platform</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 18 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Music player UI</li>
+                        <li>Playlists & albums</li>
+                        <li>Artist profiles</li>
+                        <li>Search & discovery</li>
+                    </ul>
+                    <a href="music/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 13: Fashion -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">13</span>
+                    <span class="website-icon">👗</span>
+                    <h3 class="website-title">StyleHub</h3>
+                    <p class="website-description">Fashion e-commerce</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 17 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Product catalog</li>
+                        <li>Size guides</li>
+                        <li>Lookbook & trends</li>
+                        <li>Shopping cart</li>
+                    </ul>
+                    <a href="fashion/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 14: Gaming -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">14</span>
+                    <span class="website-icon">🎮</span>
+                    <h3 class="website-title">GameVerse</h3>
+                    <p class="website-description">Gaming community platform</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 19 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Game library</li>
+                        <li>User profiles</li>
+                        <li>Leaderboards</li>
+                        <li>Community forums</li>
+                    </ul>
+                    <a href="gaming/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+            <!-- Website 15: Corporate -->
+            <div class="website-card">
+                <div class="website-header">
+                    <span class="website-number">15</span>
+                    <span class="website-icon">🏢</span>
+                    <h3 class="website-title">BizCorp</h3>
+                    <p class="website-description">Corporate business website</p>
+                </div>
+                <div class="website-body">
+                    <div class="website-meta">
+                        <span class="meta-badge pages">📄 11 Pages</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <ul class="website-features">
+                        <li>Company profile</li>
+                        <li>Services showcase</li>
+                        <li>Team & careers</li>
+                        <li>Client portfolio</li>
+                    </ul>
+                    <a href="corporate/index.html" class="website-link">View Website →</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Student:</strong> Rohit</p>
+            <p><strong>Assignment:</strong> Web Development Project (200 Pages)</p>
+            <p><strong>Submitted:</strong> <span id="date"></span></p>
+            <p><strong>Repository:</strong> <a href="https://github.com/Rosm140/travel-agency-website" target="_blank" style="color: #667eea;">View on GitHub</a></p>
+            <p style="margin-top: 1.5rem; color: #94a3b8;">
+                💡 Smart Approach: 15 professional websites with real-world functionality instead of 200 meaningless pages.<br>
+                Perfect for resume, portfolio, and demonstrating practical web development skills!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('date').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Add hover effect to cards
+        const cards = document.querySelectorAll('.website-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // Dynamic page count (can be updated)
+        console.log('📊 Total Pages: 215');
+        console.log('🌐 Total Websites: 15');
+        console.log('✅ Assignment Complete!');
+    </script>
+</body>
+</html>
