@@ -5,7 +5,7 @@
 
 // ⚙️ MANUAL PAGE COUNT - UPDATE THIS AS YOU ADD PAGES
 const manualPageCounts = {
-    'travel-agency-website': 10,     // ✅ TravelGo - COMPLETED
+    'travel-agency': 10,     // ✅ TravelGo - COMPLETED
     'e-commerce': 20,
     'restaurant': 0,
     'portfolio': 0,
@@ -24,7 +24,7 @@ const manualPageCounts = {
 
 // Website Configuration
 const websiteConfig = [
-    { id: 1, name: "TravelGo", folder: "travel-agency-website", icon: "✈️", description: "Modern travel agency with booking system", techStack: ["HTML5", "CSS3", "JavaScript", "Responsive"], features: ["User authentication system", "Travel packages catalog", "Booking forms & gallery", "Blog & FAQ sections"], expectedPages: 10 },
+    { id: 1, name: "TravelGo", folder: "travel-agency", icon: "✈️", description: "Modern travel agency with booking system", techStack: ["HTML5", "CSS3", "JavaScript", "Responsive"], features: ["User authentication system", "Travel packages catalog", "Booking forms & gallery", "Blog & FAQ sections"], expectedPages: 10 },
     { id: 2, name: "ShopHub", folder: "e-commerce", icon: "🛒", description: "Full-featured e-commerce platform", techStack: ["HTML5", "CSS3", "JavaScript", "Cart System"], features: ["Product catalog & filters", "Shopping cart functionality", "User accounts & wishlist", "Checkout & payment UI"], expectedPages: 20 },
     { id: 3, name: "FoodiePlace", folder: "restaurant", icon: "🍽️", description: "Restaurant with online ordering", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Digital menu & categories", "Online ordering system", "Table reservations", "Chef specials & gallery"], expectedPages: 12 },
     { id: 4, name: "DevFolio", folder: "portfolio", icon: "💼", description: "Professional developer portfolio", techStack: ["HTML5", "CSS3", "JavaScript", "Animations"], features: ["Project showcase", "Skills & experience", "Contact form", "Blog & testimonials"], expectedPages: 8 },
