@@ -391,39 +391,6 @@
   // INITIALIZE ALL FEATURES
   // ====================================
 
-  // #region agent log
-  const logCssClampDebug = () => {
-    try {
-      const supportsStandard = typeof CSS !== 'undefined' && CSS.supports && CSS.supports('line-clamp', '2');
-      const supportsWebkit = typeof CSS !== 'undefined' && CSS.supports && CSS.supports('-webkit-line-clamp', '2');
-      const productTitleCount = document.querySelectorAll('.product-title').length;
-      
-      fetch('http://127.0.0.1:7536/ingest/e0c9abc5-b0a0-429e-989d-d244478b9b64', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Debug-Session-Id': '863839'
-        },
-        body: JSON.stringify({
-          sessionId: '863839',
-          runId: 'pre-fix',
-          hypothesisId: 'H1',
-          location: 'e-commerce/assets/js/main.js:logCssClampDebug',
-          message: 'CSS line-clamp support and product-title elements',
-          data: {
-            supportsStandard,
-            supportsWebkit,
-            productTitleCount
-          },
-          timestamp: Date.now()
-        })
-      }).catch(() => {});
-    } catch (e) {
-      // swallow logging errors
-    }
-  };
-  // #endregion
-
   const init = () => {
     // Wait for DOM to be ready
     if (document.readyState === 'loading') {
@@ -445,7 +412,6 @@
     initAccessibility();
     initParallax();
     initTestimonialRotation();
-    logCssClampDebug();
     
     console.log('✨ TravelGo initialized successfully!');
   };
