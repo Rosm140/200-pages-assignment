@@ -1,354 +1,364 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TravelGo – Discover Your Next Adventure</title>
-  <meta name="description" content="Explore handpicked destinations, personalized itineraries, and expert travel support. Your journey begins with TravelGo." />
-  <link rel="icon" href="assets/images/favicon.ico" />
-  
-  <!-- Open Graph / Social Media -->
-  <meta property="og:title" content="TravelGo – Discover Your Next Adventure" />
-  <meta property="og:description" content="Explore handpicked destinations, personalized itineraries, and expert travel support." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/images/og-image.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  
-  <!-- Enhanced CSS -->
-  <link rel="stylesheet" href="assets/css/style.css" />
-  
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TravelAgency",
-    "name": "TravelGo",
-    "url": "https://travelgo.example",
-    "logo": "https://travelgo.example/assets/images/logo.png",
-    "description": "Discover your next adventure with personalized travel experiences",
-    "contactPoint": [{
-      "@type": "ContactPoint",
-      "telephone": "+1-555-555-5555",
-      "contactType": "customer service",
-      "email": "support@travelgo.com"
-    }],
-    "sameAs": [
-      "https://facebook.com/travelgo",
-      "https://instagram.com/travelgo",
-      "https://twitter.com/travelgo"
-    ]
-  }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopHub - Online Shopping for Electronics, Fashion, Home & More</title>
+    <meta name="description" content="Shop online for electronics, fashion, home essentials and more. Great deals, fast delivery, easy returns.">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-  <!-- Skip to main content for accessibility -->
-  <a class="skip-link" href="#main">Skip to main content</a>
-
-  <!-- HEADER -->
-  <header class="site-header" role="banner">
-    <div class="container header-inner">
-      <!-- Logo/Brand -->
-     <a href="index.html" class="brand">
-  <img src="assets/images/logo.svg" alt="TravelGo" width="180" height="54" />
-</a>
-
-      <!-- Mobile Navigation Toggle -->
-      <button id="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation" class="nav-toggle">
-        <span class="hamburger" aria-hidden="true"></span>
-      </button>
-
-      <!-- Main Navigation -->
-      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
-        <ul>
-          <li><a href="index.html" aria-current="page">Home</a></li>
-          <li><a href="pages/destinations.html">Destinations</a></li>
-          <li><a href="pages/packages.html">Packages</a></li>
-          <li><a href="pages/about.html">About</a></li>
-          <li><a href="pages/blog.html">Blog</a></li>
-          <li><a href="pages/contact.html">Contact</a></li>
-          <li><a class="btn btn-sm cta" href="pages/booking.html">Book Now</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <!-- MAIN CONTENT -->
-  <main id="main">
-    
-    <!-- HERO SECTION -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="container hero-inner">
-        <div class="hero-copy">
-          <h1 id="hero-heading">Discover your next adventure</h1>
-          <p>Handpicked trips, personalized itineraries, and expert support—every step of the way. Your journey starts here.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="pages/booking.html">Start Booking</a>
-            <a class="btn btn-outline" href="pages/destinations.html">View Destinations</a>
-          </div>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container-fluid">
+            <span>🎉 MEGA SALE LIVE! Extra 20% OFF on Fashion + Free Shipping | Use: FASHION20</span>
+            <button class="close-banner" aria-label="Close banner">×</button>
         </div>
-
-        <div class="hero-media" aria-hidden="true">
-          <img src="assets/images/homesky.jpg" alt="Beautiful scenic travel destination with mountains and clear sky" loading="eager" width="600" height="450" />
-        </div>
-      </div>
-    </section>
-
-    <!-- FEATURED DESTINATIONS -->
-    <section class="section container" id="featured-destinations" aria-labelledby="featured-heading">
-      <h2 id="featured-heading">Featured Destinations</h2>
-      <div class="grid grid-3">
-        
-        <article class="card">
-          <img src="assets/images/paris.jpg" alt="Eiffel Tower and Paris cityscape at sunset" loading="lazy" width="400" height="240" />
-          <div class="card-body">
-            <h3>Paris, France</h3>
-            <p>Culture, cuisine, and romance await. Explore 5, 7, and 10-day curated itineraries through the City of Light.</p>
-            <a class="card-link" href="pages/destinations/paris.html" aria-label="View Paris travel packages">
-              See packages
-            </a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="assets/images/bali.jpg" alt="Pristine Bali beach with crystal clear water and palm trees" loading="lazy" width="400" height="240" />
-          <div class="card-body">
-            <h3>Bali, Indonesia</h3>
-            <p>Beach escapes, wellness retreats, and island adventures in tropical paradise.</p>
-            <a class="card-link" href="pages/destinations/bali.html" aria-label="View Bali travel packages">
-              See packages
-            </a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="assets/images/newzealand_main_01.jpg" alt="Breathtaking New Zealand mountains and lakes landscape" loading="lazy" width="400" height="240" />
-          <div class="card-body">
-            <h3>New Zealand</h3>
-            <p>Epic road trips, stunning nature hikes, and unforgettable photography tours.</p>
-            <a class="card-link" href="pages/destinations/new-zealand.html" aria-label="View New Zealand travel packages">
-              See packages
-            </a>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- WHY CHOOSE US -->
-    <section class="section bg-alt" aria-labelledby="why-heading">
-      <div class="container">
-        <h2 id="why-heading">Why Choose TravelGo</h2>
-        <div class="grid grid-3 features">
-          
-          <div class="feature">
-            <h3>🎯 Personalized Itineraries</h3>
-            <p>Every trip is tailored to your unique interests, travel pace, and budget. No cookie-cutter tours here.</p>
-          </div>
-
-          <div class="feature">
-            <h3>🌍 Local Experts</h3>
-            <p>Benefit from on-the-ground partners who know hidden gems, plus 24/7 support when you need it.</p>
-          </div>
-
-          <div class="feature">
-            <h3>💰 Best Price Guarantee</h3>
-            <p>Transparent pricing with no hidden fees. If you find a better deal, we'll match it.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="section container" aria-labelledby="testimonials-heading">
-      <h2 id="testimonials-heading">What Travelers Say</h2>
-      <div class="grid grid-2">
-        
-        <blockquote class="testimonial">
-          <p>"Amazing trip—everything was perfectly handled from start to finish. The itinerary was spot-on and exceeded all our expectations!"</p>
-          <cite>— Sarah L., San Francisco</cite>
-        </blockquote>
-
-        <blockquote class="testimonial">
-          <p>"Superb customer support when we needed to change our dates last minute. They went above and beyond to accommodate us."</p>
-          <cite>— Mark W., New York</cite>
-        </blockquote>
-
-        <blockquote class="testimonial">
-          <p>"The local guides were incredible and showed us places we never would have found on our own. Truly authentic experiences."</p>
-          <cite>— Jennifer K., Austin</cite>
-        </blockquote>
-
-        <blockquote class="testimonial">
-          <p>"Best value for money. No hidden costs, everything transparent. Will definitely book with TravelGo again!"</p>
-          <cite>— David M., Chicago</cite>
-        </blockquote>
-
-      </div>
-    </section>
-
-    <!-- QUICK INQUIRY FORM -->
-    <section class="section container" aria-labelledby="inquiry-heading">
-      <h2 id="inquiry-heading">Quick Inquiry</h2>
-      <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-        Ready to start planning? Fill out the form below and our travel experts will get back to you within 24 hours.
-      </p>
-      
-      <form id="quick-contact" class="form-grid" action="/api/contact" method="post" novalidate>
-        
-        <label class="form-row">
-          <span class="sr-only">Full Name</span>
-          <input 
-            name="name" 
-            id="name" 
-            type="text" 
-            placeholder="Full Name *" 
-            required 
-            aria-required="true"
-            autocomplete="name"
-          />
-        </label>
-
-        <label class="form-row">
-          <span class="sr-only">Email Address</span>
-          <input 
-            name="email" 
-            id="email" 
-            type="email" 
-            placeholder="Email Address *" 
-            required 
-            aria-required="true"
-            autocomplete="email"
-          />
-        </label>
-
-        <label class="form-row">
-          <span class="sr-only">Phone Number (Optional)</span>
-          <input 
-            name="phone" 
-            id="phone" 
-            type="tel" 
-            placeholder="Phone Number (optional)" 
-            autocomplete="tel"
-          />
-        </label>
-
-        <label class="form-row">
-          <span class="sr-only">Destination</span>
-          <select 
-            name="destination" 
-            id="destination" 
-            required 
-            aria-required="true"
-          >
-            <option value="">Choose Destination *</option>
-            <option value="paris">Paris, France</option>
-            <option value="bali">Bali, Indonesia</option>
-            <option value="newzealand">New Zealand</option>
-            <option value="tokyo">Tokyo, Japan</option>
-            <option value="italy">Italy</option>
-            <option value="dubai">Dubai, UAE</option>
-            <option value="other">Other / Undecided</option>
-          </select>
-        </label>
-
-        <label class="form-row" style="grid-column: 1 / -1;">
-          <span class="sr-only">Message</span>
-          <input 
-            name="message" 
-            id="message" 
-            type="text" 
-            placeholder="Tell us about your dream trip (optional)" 
-          />
-        </label>
-
-        <div class="form-row form-actions">
-          <button class="btn btn-primary" type="submit">Send Inquiry</button>
-        </div>
-      </form>
-
-      <div id="form-message" role="status" aria-live="polite" class="form-message"></div>
-    </section>
-
-    <!-- NEWSLETTER SECTION -->
-    <section class="section container" style="text-align: center; max-width: 700px;">
-      <h2>Stay Inspired</h2>
-      <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-        Get travel tips, destination guides, and exclusive deals delivered to your inbox.
-      </p>
-      <form class="form-grid" style="max-width: 500px; grid-template-columns: 1fr auto;">
-        <label class="form-row">
-          <span class="sr-only">Email for newsletter</span>
-          <input type="email" placeholder="Your email address" required />
-        </label>
-        <div class="form-row">
-          <button class="btn btn-primary" type="submit">Subscribe</button>
-        </div>
-      </form>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer-inner">
-      
-      <div class="footer-col">
-        <img src="assets/images/logo-footer.svg" alt="TravelGo" width="120" height="36" style="margin-bottom: 1rem;" />
-        <p>Your modern travel partner for discovering the world. Plan your next journey with confidence and style.</p>
-        <p style="margin-top: 1rem;">
-          <strong style="color: white;">Email:</strong> support@travelgo.com<br/>
-          <strong style="color: white;">Phone:</strong> +1-555-555-5555
-        </p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="pages/about.html">About Us</a></li>
-          <li><a href="pages/packages.html">Travel Packages</a></li>
-          <li><a href="pages/destinations.html">Destinations</a></li>
-          <li><a href="pages/gallery.html">Gallery</a></li>
-          <li><a href="pages/blog.html">Travel Blog</a></li>
-          <li><a href="pages/contact.html">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="pages/faq.html">FAQ</a></li>
-          <li><a href="pages/terms.html">Terms of Service</a></li>
-          <li><a href="pages/privacy.html">Privacy Policy</a></li>
-          <li><a href="pages/login.html">Login</a></li>
-          <li><a href="pages/signup.html">Sign Up</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Follow Us</h4>
-        <ul>
-          <li><a href="https://facebook.com/travelgo" target="_blank" rel="noopener">Facebook</a></li>
-          <li><a href="https://instagram.com/travelgo" target="_blank" rel="noopener">Instagram</a></li>
-          <li><a href="https://twitter.com/travelgo" target="_blank" rel="noopener">Twitter</a></li>
-          <li><a href="https://youtube.com/travelgo" target="_blank" rel="noopener">YouTube</a></li>
-        </ul>
-      </div>
-
     </div>
 
-    <div class="container footer-bottom">
-      <p>&copy; <span id="year"></span> TravelGo. Made with ❤️ by Rohit</p>
-    </div>
-  </footer>
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="header-row">
+                <!-- Logo -->
+                <div class="logo-section">
+                    <a href="index.html" class="logo">
+                        <img src="assets/images/logo.svg" alt="ShopHub - Your Shopping Destination" width="180" height="54">
+                    </a>
+                </div>
 
-  <!-- Enhanced JavaScript -->
-  <script src="assets/js/main.js" defer></script>
-  
-  <!-- Inline critical JavaScript for better UX -->
-  <script>
-    // Set current year in footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+                <!-- Search Bar -->
+                <div class="search-section">
+                    <div class="search-bar">
+                        <select class="search-category" aria-label="Select category">
+                            <option>All Categories</option>
+                            <option>Electronics</option>
+                            <option>Fashion</option>
+                            <option>Home & Living</option>
+                            <option>Beauty</option>
+                            <option>Sports</option>
+                            <option>Books</option>
+                        </select>
+                        <input type="search" placeholder="Search for products, brands and more..." class="search-input" aria-label="Search products">
+                        <button class="search-btn" aria-label="Search">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.35-4.35"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- User Actions -->
+                <div class="user-actions">
+                    <a href="pages/login.html" class="action-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <span>Account</span>
+                    </a>
+                    <a href="pages/wishlist.html" class="action-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <span>Wishlist</span>
+                    </a>
+                    <a href="pages/cart.html" class="action-btn cart-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                        <span>Cart</span>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="main-nav">
+                <a href="pages/deals.html" class="nav-item hot">⚡ Today's Deals</a>
+                <a href="pages/category-electronics.html" class="nav-item">Electronics</a>
+                <a href="pages/category-fashion.html" class="nav-item">Fashion</a>
+                <a href="pages/category-home.html" class="nav-item">Home</a>
+                <a href="pages/category-beauty.html" class="nav-item">Beauty</a>
+                <a href="pages/category-sports.html" class="nav-item">Sports</a>
+                <a href="pages/new-arrivals.html" class="nav-item">🆕 New</a>
+                <a href="pages/offers.html" class="nav-item">Offers</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider">
+        <div class="container-fluid">
+            <div class="slider-wrapper">
+                <div class="slide active">
+                    <div class="slide-content">
+                        <span class="slide-badge">MEGA SALE</span>
+                        <h1>Electronics Bonanza</h1>
+                        <p>Up to 70% OFF on Laptops, Mobiles, Headphones & More</p>
+                        <div class="slide-buttons">
+                            <a href="pages/category-electronics.html" class="btn-slide">Shop Now →</a>
+                            <a href="pages/deals.html" class="btn-slide-outline">View All Deals</a>
+                        </div>
+                    </div>
+                    <div class="slide-image">
+                        <div class="slide-bg">💻</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Grid -->
+    <section class="categories-section">
+        <div class="container-fluid">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid">
+                <a href="pages/category-electronics.html" class="cat-card">
+                    <div class="cat-icon">📱</div>
+                    <h3>Electronics</h3>
+                    <p>Mobiles, Laptops & More</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-fashion.html" class="cat-card">
+                    <div class="cat-icon">👕</div>
+                    <h3>Fashion</h3>
+                    <p>Clothing & Accessories</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-home.html" class="cat-card">
+                    <div class="cat-icon">🏠</div>
+                    <h3>Home & Living</h3>
+                    <p>Furniture & Decor</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-beauty.html" class="cat-card">
+                    <div class="cat-icon">💄</div>
+                    <h3>Beauty</h3>
+                    <p>Makeup & Skincare</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-sports.html" class="cat-card">
+                    <div class="cat-icon">⚽</div>
+                    <h3>Sports</h3>
+                    <p>Fitness & Equipment</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-books.html" class="cat-card">
+                    <div class="cat-icon">📚</div>
+                    <h3>Books</h3>
+                    <p>Fiction & Non-Fiction</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flash Deals -->
+    <section class="deals-section">
+        <div class="container-fluid">
+            <div class="deals-header">
+                <div>
+                    <h2 class="section-title">⚡ Flash Deals</h2>
+                    <p class="section-subtitle">Ends in: <span class="countdown">02:45:30</span></p>
+                </div>
+                <a href="pages/deals.html" class="link-all">View All →</a>
+            </div>
+            <div class="products-row">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <span class="deal-badge">65% OFF</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+                    <div class="product-img">
+                        <div class="placeholder-img">🎧</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Wireless Headphones</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="reviews">(2,847)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$89.99</span>
+                            <span class="old-price">$259.99</span>
+                        </div>
+                        <button class="btn-add-cart" data-product="Premium Wireless Headphones">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <span class="deal-badge">50% OFF</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+                    <div class="product-img">
+                        <div class="placeholder-img">⌚</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Smart Watch Pro Series 6</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="reviews">(5,234)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$199.99</span>
+                            <span class="old-price">$399.99</span>
+                        </div>
+                        <button class="btn-add-cart" data-product="Smart Watch Pro">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <span class="deal-badge">40% OFF</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+                    <div class="product-img">
+                        <div class="placeholder-img">🎒</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Travel Backpack 35L Waterproof</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="reviews">(1,892)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$49.99</span>
+                            <span class="old-price">$79.99</span>
+                        </div>
+                        <button class="btn-add-cart" data-product="Travel Backpack">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <span class="deal-badge">30% OFF</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+                    <div class="product-img">
+                        <div class="placeholder-img">☕</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Coffee Maker Deluxe</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="reviews">(3,456)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$129.99</span>
+                            <span class="old-price">$189.99</span>
+                        </div>
+                        <button class="btn-add-cart" data-product="Coffee Maker">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <span class="deal-badge new">NEW</span>
+                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+                    <div class="product-img">
+                        <div class="placeholder-img">🔊</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Portable Bluetooth Speaker</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="reviews">(987)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$79.99</span>
+                        </div>
+                        <button class="btn-add-cart" data-product="Bluetooth Speaker">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <section class="features-bar">
+        <div class="container-fluid">
+            <div class="features-row">
+                <div class="feature-item">
+                    <div class="feature-icon">🚚</div>
+                    <div class="feature-text">
+                        <strong>Free Shipping</strong>
+                        <span>On orders above $50</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💳</div>
+                    <div class="feature-text">
+                        <strong>Secure Payment</strong>
+                        <span>100% Protected</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">↩️</div>
+                    <div class="feature-text">
+                        <strong>Easy Returns</strong>
+                        <span>30-Day Policy</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-text">
+                        <strong>24/7 Support</strong>
+                        <span>Always Here</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <img src="assets/images/logo.svg" alt="ShopHub" width="160" height="48" style="margin-bottom: 1rem;">
+                    <p>Your trusted online shopping destination for quality products at unbeatable prices.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">FB</a>
+                        <a href="#" aria-label="Instagram">IG</a>
+                        <a href="#" aria-label="Twitter">TW</a>
+                        <a href="#" aria-label="YouTube">YT</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="pages/products.html">All Products</a></li>
+                        <li><a href="pages/categories.html">Categories</a></li>
+                        <li><a href="pages/deals.html">Deals</a></li>
+                        <li><a href="pages/new-arrivals.html">New Arrivals</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="pages/contact.html">Contact Us</a></li>
+                        <li><a href="pages/faq.html">FAQ</a></li>
+                        <li><a href="pages/shipping.html">Shipping</a></li>
+                        <li><a href="pages/returns.html">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Account</h3>
+                    <ul>
+                        <li><a href="pages/login.html">Login</a></li>
+                        <li><a href="pages/register.html">Register</a></li>
+                        <li><a href="pages/account.html">My Account</a></li>
+                        <li><a href="pages/orders.html">Track Order</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ShopHub. All rights reserved. | Made with ❤️ by Rohit</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/ecommerce.js"></script>
 </body>
 </html>

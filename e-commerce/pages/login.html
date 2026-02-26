@@ -1,28 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | TravelGo</title>
-  <link rel="stylesheet" href="../assets/css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopHub - Online Shopping for Electronics, Fashion, Home & More</title>
+    <meta name="description" content="Shop online for electronics, fashion, home essentials and more at ShopHub. Great deals, fast delivery, easy returns.">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-  <div id="header"></div>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container-fluid">
+            <span>🎉 Sale is LIVE! Extra 20% OFF on Fashion | Use code: FASHION20</span>
+            <button class="close-banner">×</button>
+        </div>
+    </div>
 
-  <section class="page">
-    <h2>Login</h2>
-    <p>Access your TravelGo account.</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="header-row">
+                <!-- Logo -->
+                <div class="logo-section">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">🛒</span>
+                        <span class="logo-text">ShopHub</span>
+                    </a>
+                </div>
 
-    <form class="form" id="loginForm">
-      <input class="input" id="loginEmail" type="email" placeholder="Email" required />
-      <input class="input" id="loginPass" type="password" placeholder="Password" required />
-      <button class="btn" type="submit">Login</button>
-      <p class="muted">New user? <a class="btn-sm" href="./signup.html">Create account</a></p>
-    </form>
-  </section>
+                <!-- Search Bar -->
+                <div class="search-section">
+                    <div class="search-bar">
+                        <select class="search-category">
+                            <option>All</option>
+                            <option>Electronics</option>
+                            <option>Fashion</option>
+                            <option>Home</option>
+                            <option>Books</option>
+                        </select>
+                        <input type="search" placeholder="Search for products, brands and more..." class="search-input">
+                        <button class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.35-4.35"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
-  <div id="footer"></div>
-  <script src="../assets/js/auth.js"></script>
-  <script src="../assets/js/include.js"></script>
+                <!-- User Actions -->
+                <div class="user-actions">
+                    <a href="pages/login.html" class="action-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <span>Account</span>
+                    </a>
+                    <a href="pages/wishlist.html" class="action-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <span>Wishlist</span>
+                    </a>
+                    <a href="pages/cart.html" class="action-btn cart-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                        <span>Cart</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="main-nav">
+                <a href="pages/deals.html" class="nav-item hot">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    Today's Deals
+                </a>
+                <a href="pages/category-electronics.html" class="nav-item">Electronics</a>
+                <a href="pages/category-fashion.html" class="nav-item">Fashion</a>
+                <a href="pages/category-home.html" class="nav-item">Home & Living</a>
+                <a href="pages/category-beauty.html" class="nav-item">Beauty</a>
+                <a href="pages/category-sports.html" class="nav-item">Sports</a>
+                <a href="pages/new-arrivals.html" class="nav-item">New Arrivals</a>
+                <a href="pages/offers.html" class="nav-item">Special Offers</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider">
+        <div class="container-fluid">
+            <div class="slider-wrapper">
+                <div class="slide active">
+                    <div class="slide-content">
+                        <span class="slide-badge">MEGA SALE</span>
+                        <h1>Electronics Bonanza</h1>
+                        <p>Up to 70% OFF on Laptops, Mobiles & More</p>
+                        <a href="pages/category-electronics.html" class="btn-slide">Shop Now →</a>
+                    </div>
+                    <div class="slide-image">
+                        <div class="slide-bg">💻</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Grid -->
+    <section class="categories-section">
+        <div class="container-fluid">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid">
+                <a href="pages/category-electronics.html" class="cat-card">
+                    <div class="cat-icon">📱</div>
+                    <h3>Electronics</h3>
+                    <p>Mobiles, Laptops & More</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-fashion.html" class="cat-card">
+                    <div class="cat-icon">👕</div>
+                    <h3>Fashion</h3>
+                    <p>Clothing, Shoes & Accessories</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-home.html" class="cat-card">
+                    <div class="cat-icon">🏠</div>
+                    <h3>Home & Furniture</h3>
+                    <p>Decor, Kitchen & More</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-beauty.html" class="cat-card">
+                    <div class="cat-icon">💄</div>
+                    <h3>Beauty</h3>
+                    <p>Makeup, Skincare & Fragrance</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-sports.html" class="cat-card">
+                    <div class="cat-icon">⚽</div>
+                    <h3>Sports & Fitness</h3>
+                    <p>Equipment, Apparel & More</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-books.html" class="cat-card">
+                    <div class="cat-icon">📚</div>
+                    <h3>Books</h3>
+                    <p>Fiction, Non-Fiction & More</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flash Deals -->
+    <section class="deals-section">
+        <div class="container-fluid">
+            <div class="deals-header">
+                <div>
+                    <h2 class="section-title">⚡ Flash Deals</h2>
+                    <p class="section-subtitle">Ends in: <span class="countdown">02:45:30</span></p>
+                </div>
+                <a href="pages/deals.html" class="link-all">View All Deals →</a>
+            </div>
+            <div class="products-row">
+                <div class="product-card">
+                    <span class="deal-badge">65% OFF</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-1.jpg" alt="Wireless Headphones">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Wireless Headphones</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="reviews">(2,847)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$89.99</span>
+                            <span class="old-price">$259.99</span>
+                        </div>
+                        <a href="pages/product-1.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="deal-badge">50% OFF</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-2.jpg" alt="Smart Watch">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Smart Watch Pro Series 6</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="reviews">(5,234)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$199.99</span>
+                            <span class="old-price">$399.99</span>
+                        </div>
+                        <a href="pages/product-2.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="deal-badge">40% OFF</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-3.jpg" alt="Backpack">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Travel Backpack 35L</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="reviews">(1,892)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$49.99</span>
+                            <span class="old-price">$79.99</span>
+                        </div>
+                        <a href="pages/product-3.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="deal-badge">30% OFF</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-4.jpg" alt="Coffee Maker">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Coffee Maker</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="reviews">(3,456)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$129.99</span>
+                            <span class="old-price">$189.99</span>
+                        </div>
+                        <a href="pages/product-4.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="deal-badge new">NEW</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-5.jpg" alt="Bluetooth Speaker">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Portable Bluetooth Speaker</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="reviews">(987)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$79.99</span>
+                        </div>
+                        <a href="pages/product-5.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="bestsellers-section">
+        <div class="container-fluid">
+            <h2 class="section-title">🏆 Best Sellers</h2>
+            <div class="products-grid">
+                <!-- Product cards will be similar to above -->
+                <div class="product-card-compact">
+                    <img src="assets/images/best-1.jpg" alt="Product">
+                    <h4>Smartphone X Pro</h4>
+                    <p class="price">$699.99</p>
+                    <div class="rating">★★★★★ (12k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-2.jpg" alt="Product">
+                    <h4>Laptop Ultra 15"</h4>
+                    <p class="price">$1,299.99</p>
+                    <div class="rating">★★★★☆ (8.5k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-3.jpg" alt="Product">
+                    <h4>Wireless Earbuds Pro</h4>
+                    <p class="price">$149.99</p>
+                    <div class="rating">★★★★★ (15k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-4.jpg" alt="Product">
+                    <h4>4K Smart TV 55"</h4>
+                    <p class="price">$799.99</p>
+                    <div class="rating">★★★★☆ (6.2k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-5.jpg" alt="Product">
+                    <h4>Gaming Console Pro</h4>
+                    <p class="price">$499.99</p>
+                    <div class="rating">★★★★★ (9.8k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-6.jpg" alt="Product">
+                    <h4>DSLR Camera Kit</h4>
+                    <p class="price">$1,499.99</p>
+                    <div class="rating">★★★★☆ (4.1k)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <section class="features-bar">
+        <div class="container-fluid">
+            <div class="features-row">
+                <div class="feature-item">
+                    <div class="feature-icon">🚚</div>
+                    <div class="feature-text">
+                        <strong>Free Shipping</strong>
+                        <span>On orders above $50</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💳</div>
+                    <div class="feature-text">
+                        <strong>Secure Payment</strong>
+                        <span>100% Protected</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">↩️</div>
+                    <div class="feature-text">
+                        <strong>Easy Returns</strong>
+                        <span>30-Day Return Policy</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-text">
+                        <strong>24/7 Support</strong>
+                        <span>Dedicated Customer Care</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="pages/about.html">About Us</a></li>
+                        <li><a href="pages/contact.html">Contact Us</a></li>
+                        <li><a href="pages/careers.html">Careers</a></li>
+                        <li><a href="pages/press.html">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="pages/faq.html">FAQ</a></li>
+                        <li><a href="pages/shipping.html">Shipping</a></li>
+                        <li><a href="pages/returns.html">Returns</a></li>
+                        <li><a href="pages/track-order.html">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Policy</h3>
+                    <ul>
+                        <li><a href="pages/terms.html">Terms of Use</a></li>
+                        <li><a href="pages/privacy.html">Privacy Policy</a></li>
+                        <li><a href="pages/security.html">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Account</h3>
+                    <ul>
+                        <li><a href="pages/login.html">Login</a></li>
+                        <li><a href="pages/register.html">Register</a></li>
+                        <li><a href="pages/account.html">My Account</a></li>
+                        <li><a href="pages/orders.html">My Orders</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ShopHub. All rights reserved. | Made with ❤️ by Rohit</p>
+                <div class="payment-methods">
+                    <span>We Accept:</span>
+                    <img src="assets/images/visa.svg" alt="Visa" class="payment-icon">
+                    <img src="assets/images/mastercard.svg" alt="Mastercard" class="payment-icon">
+                    <img src="assets/images/paypal.svg" alt="PayPal" class="payment-icon">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/ecommerce.js"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 // ⚙️ MANUAL PAGE COUNT - UPDATE THIS AS YOU ADD PAGES
 const manualPageCounts = {
     'travel-agency-website': 10,     // ✅ TravelGo - COMPLETED
-    'e-commerce': 20,
+    'e-commerce': 20,    // ✅ ShopHub - COMPLETED
     'restaurant': 0,
     'portfolio': 0,
     'real-estate': 0,

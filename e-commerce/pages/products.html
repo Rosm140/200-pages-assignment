@@ -1,178 +1,405 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>About Us – TravelGo | Your Modern Travel Partner</title>
-  <meta name="description" content="Learn about TravelGo - your trusted travel partner for discovering the world with personalized itineraries and expert support." />
-  <link rel="icon" href="../assets/images/favicon.ico" />
-  
-  <!-- Enhanced CSS -->
-  <link rel="stylesheet" href="../assets/css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopHub - Online Shopping for Electronics, Fashion, Home & More</title>
+    <meta name="description" content="Shop online for electronics, fashion, home essentials and more at ShopHub. Great deals, fast delivery, easy returns.">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
-
-  <!-- Header will be loaded here -->
-  <div id="header"></div>
-
-  <main id="main">
-    <!-- Hero Section -->
-    <section class="hero" style="padding: 4rem 0 3rem;" aria-labelledby="about-hero-heading">
-      <div class="container">
-        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-          <h1 id="about-hero-heading" style="font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 1rem;">
-            About TravelGo
-          </h1>
-          <p style="font-size: 1.25rem; color: var(--text-secondary); line-height: 1.7;">
-            We're passionate about creating unforgettable travel experiences that connect you with the world's most amazing destinations.
-          </p>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container-fluid">
+            <span>🎉 Sale is LIVE! Extra 20% OFF on Fashion | Use code: FASHION20</span>
+            <button class="close-banner">×</button>
         </div>
-      </div>
-    </section>
+    </div>
 
-    <!-- Our Story -->
-    <section class="section container">
-      <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;">
-        <div style="grid-column: 1; order: 2;">
-          <img src="../assets/images/about-story.jpg" alt="TravelGo team planning adventures" style="border-radius: 24px; box-shadow: var(--shadow-lg);" loading="lazy" />
-        </div>
-        <div style="grid-column: 1; order: 1;">
-          <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--brand-dark);">
-            Our Story
-          </h2>
-          <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 1rem;">
-            Founded in 2020, TravelGo was born from a simple idea: travel should be accessible, personalized, and stress-free. Our founders, a group of adventure enthusiasts and travel experts, noticed that planning trips often felt overwhelming and impersonal.
-          </p>
-          <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 1rem;">
-            We set out to change that. Today, we've helped thousands of travelers discover their dream destinations with customized itineraries, local expertise, and 24/7 support that makes every journey memorable.
-          </p>
-          <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);">
-            From solo backpackers to family vacations, luxury getaways to budget adventures—we believe every traveler deserves an experience tailored to their unique style and interests.
-          </p>
-        </div>
-      </div>
-    </section>
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="header-row">
+                <!-- Logo -->
+                <div class="logo-section">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">🛒</span>
+                        <span class="logo-text">ShopHub</span>
+                    </a>
+                </div>
 
-    <!-- Our Mission & Values -->
-    <section class="section bg-alt">
-      <div class="container">
-        <h2 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 3rem;">
-          Our Mission & Values
-        </h2>
-        <div class="grid grid-3">
-          <div class="feature" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow-sm);">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1rem;">Personalized Service</h3>
-            <p style="color: var(--text-secondary); line-height: 1.7;">
-              Every traveler is unique. We craft personalized itineraries that match your interests, budget, and travel style.
-            </p>
-          </div>
+                <!-- Search Bar -->
+                <div class="search-section">
+                    <div class="search-bar">
+                        <select class="search-category">
+                            <option>All</option>
+                            <option>Electronics</option>
+                            <option>Fashion</option>
+                            <option>Home</option>
+                            <option>Books</option>
+                        </select>
+                        <input type="search" placeholder="Search for products, brands and more..." class="search-input">
+                        <button class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.35-4.35"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
-          <div class="feature" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow-sm);">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">🌍</div>
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1rem;">Sustainable Travel</h3>
-            <p style="color: var(--text-secondary); line-height: 1.7;">
-              We're committed to responsible tourism that respects local cultures and protects our planet for future generations.
-            </p>
-          </div>
-
-          <div class="feature" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow-sm);">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1rem;">Expert Guidance</h3>
-            <p style="color: var(--text-secondary); line-height: 1.7;">
-              Our team of travel experts and local partners provide insider knowledge you won't find in guidebooks.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Team -->
-    <section class="section container">
-      <h2 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 3rem;">
-        Meet Our Team
-      </h2>
-      <div class="grid grid-3">
-        <article class="card">
-          <img src="../assets/images/team-1.jpg" alt="Sarah Johnson, CEO" loading="lazy" />
-          <div class="card-body" style="text-align: center;">
-            <h3>Sarah Johnson</h3>
-            <p style="color: var(--brand-primary); font-weight: 600; margin-bottom: 0.5rem;">CEO & Co-Founder</p>
-            <p>15 years of travel industry experience. Visited 75+ countries.</p>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="../assets/images/team-2.jpg" alt="Michael Chen, CTO" loading="lazy" />
-          <div class="card-body" style="text-align: center;">
-            <h3>Michael Chen</h3>
-            <p style="color: var(--brand-primary); font-weight: 600; margin-bottom: 0.5rem;">CTO & Co-Founder</p>
-            <p>Tech expert passionate about making travel accessible through innovation.</p>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="../assets/images/team-3.jpg" alt="Emma Rodriguez, Travel Director" loading="lazy" />
-          <div class="card-body" style="text-align: center;">
-            <h3>Emma Rodriguez</h3>
-            <p style="color: var(--brand-primary); font-weight: 600; margin-bottom: 0.5rem;">Travel Director</p>
-            <p>Curates unique experiences and manages our global partner network.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Stats -->
-    <section class="section bg-alt">
-      <div class="container">
-        <div class="grid grid-3" style="text-align: center;">
-          <div>
-            <div style="font-size: 3.5rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem;">
-              50K+
+                <!-- User Actions -->
+                <div class="user-actions">
+                    <a href="pages/login.html" class="action-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <span>Account</span>
+                    </a>
+                    <a href="pages/wishlist.html" class="action-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <span>Wishlist</span>
+                    </a>
+                    <a href="pages/cart.html" class="action-btn cart-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                        <span>Cart</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                </div>
             </div>
-            <p style="font-size: 1.25rem; font-weight: 600; color: var(--brand-dark);">Happy Travelers</p>
-          </div>
 
-          <div>
-            <div style="font-size: 3.5rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem;">
-              100+
-            </div>
-            <p style="font-size: 1.25rem; font-weight: 600; color: var(--brand-dark);">Destinations</p>
-          </div>
-
-          <div>
-            <div style="font-size: 3.5rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem;">
-              98%
-            </div>
-            <p style="font-size: 1.25rem; font-weight: 600; color: var(--brand-dark);">Satisfaction Rate</p>
-          </div>
+            <!-- Navigation -->
+            <nav class="main-nav">
+                <a href="pages/deals.html" class="nav-item hot">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    Today's Deals
+                </a>
+                <a href="pages/category-electronics.html" class="nav-item">Electronics</a>
+                <a href="pages/category-fashion.html" class="nav-item">Fashion</a>
+                <a href="pages/category-home.html" class="nav-item">Home & Living</a>
+                <a href="pages/category-beauty.html" class="nav-item">Beauty</a>
+                <a href="pages/category-sports.html" class="nav-item">Sports</a>
+                <a href="pages/new-arrivals.html" class="nav-item">New Arrivals</a>
+                <a href="pages/offers.html" class="nav-item">Special Offers</a>
+            </nav>
         </div>
-      </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider">
+        <div class="container-fluid">
+            <div class="slider-wrapper">
+                <div class="slide active">
+                    <div class="slide-content">
+                        <span class="slide-badge">MEGA SALE</span>
+                        <h1>Electronics Bonanza</h1>
+                        <p>Up to 70% OFF on Laptops, Mobiles & More</p>
+                        <a href="pages/category-electronics.html" class="btn-slide">Shop Now →</a>
+                    </div>
+                    <div class="slide-image">
+                        <div class="slide-bg">💻</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- CTA -->
-    <section class="section container" style="text-align: center;">
-      <div style="max-width: 700px; margin: 0 auto;">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1rem;">
-          Ready to Start Your Adventure?
-        </h2>
-        <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem;">
-          Let us help you plan the trip of a lifetime. Get in touch with our travel experts today.
-        </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-          <a href="contact.html" class="btn btn-primary">Contact Us</a>
-          <a href="packages.html" class="btn btn-outline">View Packages</a>
+    <!-- Categories Grid -->
+    <section class="categories-section">
+        <div class="container-fluid">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid">
+                <a href="pages/category-electronics.html" class="cat-card">
+                    <div class="cat-icon">📱</div>
+                    <h3>Electronics</h3>
+                    <p>Mobiles, Laptops & More</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-fashion.html" class="cat-card">
+                    <div class="cat-icon">👕</div>
+                    <h3>Fashion</h3>
+                    <p>Clothing, Shoes & Accessories</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-home.html" class="cat-card">
+                    <div class="cat-icon">🏠</div>
+                    <h3>Home & Furniture</h3>
+                    <p>Decor, Kitchen & More</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-beauty.html" class="cat-card">
+                    <div class="cat-icon">💄</div>
+                    <h3>Beauty</h3>
+                    <p>Makeup, Skincare & Fragrance</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-sports.html" class="cat-card">
+                    <div class="cat-icon">⚽</div>
+                    <h3>Sports & Fitness</h3>
+                    <p>Equipment, Apparel & More</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+                <a href="pages/category-books.html" class="cat-card">
+                    <div class="cat-icon">📚</div>
+                    <h3>Books</h3>
+                    <p>Fiction, Non-Fiction & More</p>
+                    <span class="cat-link">Explore →</span>
+                </a>
+            </div>
         </div>
-      </div>
     </section>
-  </main>
 
-  <!-- Footer will be loaded here -->
-  <div id="footer"></div>
+    <!-- Flash Deals -->
+    <section class="deals-section">
+        <div class="container-fluid">
+            <div class="deals-header">
+                <div>
+                    <h2 class="section-title">⚡ Flash Deals</h2>
+                    <p class="section-subtitle">Ends in: <span class="countdown">02:45:30</span></p>
+                </div>
+                <a href="pages/deals.html" class="link-all">View All Deals →</a>
+            </div>
+            <div class="products-row">
+                <div class="product-card">
+                    <span class="deal-badge">65% OFF</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-1.jpg" alt="Wireless Headphones">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Wireless Headphones</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="reviews">(2,847)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$89.99</span>
+                            <span class="old-price">$259.99</span>
+                        </div>
+                        <a href="pages/product-1.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
 
-  <!-- Scripts -->
-  <script src="../assets/js/include.js" defer></script>
-  <script src="../assets/js/main.js" defer></script>
+                <div class="product-card">
+                    <span class="deal-badge">50% OFF</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-2.jpg" alt="Smart Watch">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Smart Watch Pro Series 6</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="reviews">(5,234)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$199.99</span>
+                            <span class="old-price">$399.99</span>
+                        </div>
+                        <a href="pages/product-2.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="deal-badge">40% OFF</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-3.jpg" alt="Backpack">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Travel Backpack 35L</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="reviews">(1,892)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$49.99</span>
+                            <span class="old-price">$79.99</span>
+                        </div>
+                        <a href="pages/product-3.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="deal-badge">30% OFF</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-4.jpg" alt="Coffee Maker">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Coffee Maker</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="reviews">(3,456)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$129.99</span>
+                            <span class="old-price">$189.99</span>
+                        </div>
+                        <a href="pages/product-4.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="deal-badge new">NEW</span>
+                    <div class="product-img">
+                        <img src="assets/images/product-5.jpg" alt="Bluetooth Speaker">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Portable Bluetooth Speaker</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="reviews">(987)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$79.99</span>
+                        </div>
+                        <a href="pages/product-5.html" class="btn-add-cart">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="bestsellers-section">
+        <div class="container-fluid">
+            <h2 class="section-title">🏆 Best Sellers</h2>
+            <div class="products-grid">
+                <!-- Product cards will be similar to above -->
+                <div class="product-card-compact">
+                    <img src="assets/images/best-1.jpg" alt="Product">
+                    <h4>Smartphone X Pro</h4>
+                    <p class="price">$699.99</p>
+                    <div class="rating">★★★★★ (12k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-2.jpg" alt="Product">
+                    <h4>Laptop Ultra 15"</h4>
+                    <p class="price">$1,299.99</p>
+                    <div class="rating">★★★★☆ (8.5k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-3.jpg" alt="Product">
+                    <h4>Wireless Earbuds Pro</h4>
+                    <p class="price">$149.99</p>
+                    <div class="rating">★★★★★ (15k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-4.jpg" alt="Product">
+                    <h4>4K Smart TV 55"</h4>
+                    <p class="price">$799.99</p>
+                    <div class="rating">★★★★☆ (6.2k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-5.jpg" alt="Product">
+                    <h4>Gaming Console Pro</h4>
+                    <p class="price">$499.99</p>
+                    <div class="rating">★★★★★ (9.8k)</div>
+                </div>
+                <div class="product-card-compact">
+                    <img src="assets/images/best-6.jpg" alt="Product">
+                    <h4>DSLR Camera Kit</h4>
+                    <p class="price">$1,499.99</p>
+                    <div class="rating">★★★★☆ (4.1k)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <section class="features-bar">
+        <div class="container-fluid">
+            <div class="features-row">
+                <div class="feature-item">
+                    <div class="feature-icon">🚚</div>
+                    <div class="feature-text">
+                        <strong>Free Shipping</strong>
+                        <span>On orders above $50</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💳</div>
+                    <div class="feature-text">
+                        <strong>Secure Payment</strong>
+                        <span>100% Protected</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">↩️</div>
+                    <div class="feature-text">
+                        <strong>Easy Returns</strong>
+                        <span>30-Day Return Policy</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-text">
+                        <strong>24/7 Support</strong>
+                        <span>Dedicated Customer Care</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="pages/about.html">About Us</a></li>
+                        <li><a href="pages/contact.html">Contact Us</a></li>
+                        <li><a href="pages/careers.html">Careers</a></li>
+                        <li><a href="pages/press.html">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="pages/faq.html">FAQ</a></li>
+                        <li><a href="pages/shipping.html">Shipping</a></li>
+                        <li><a href="pages/returns.html">Returns</a></li>
+                        <li><a href="pages/track-order.html">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Policy</h3>
+                    <ul>
+                        <li><a href="pages/terms.html">Terms of Use</a></li>
+                        <li><a href="pages/privacy.html">Privacy Policy</a></li>
+                        <li><a href="pages/security.html">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Account</h3>
+                    <ul>
+                        <li><a href="pages/login.html">Login</a></li>
+                        <li><a href="pages/register.html">Register</a></li>
+                        <li><a href="pages/account.html">My Account</a></li>
+                        <li><a href="pages/orders.html">My Orders</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ShopHub. All rights reserved. | Made with ❤️ by Rohit</p>
+                <div class="payment-methods">
+                    <span>We Accept:</span>
+                    <img src="assets/images/visa.svg" alt="Visa" class="payment-icon">
+                    <img src="assets/images/mastercard.svg" alt="Mastercard" class="payment-icon">
+                    <img src="assets/images/paypal.svg" alt="PayPal" class="payment-icon">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/ecommerce.js"></script>
 </body>
 </html>
