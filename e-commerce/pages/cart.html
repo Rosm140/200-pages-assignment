@@ -3,114 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - ShopHub</title>
+    <title>ShopHub - Your Shopping Destination</title>
     <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        /* Inline styles for quick render */
+        body { background: #1A1D29; color: #fff; font-family: 'Work Sans', Arial, sans-serif; margin: 0; }
+        .header { background: #252837; border-bottom: 1px solid #2F3349; padding: 1rem 0; }
+        .container-fluid { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+        .header-row { display: flex; align-items: center; gap: 2rem; }
+        .search-section { flex: 1; }
+        .search-bar { display: flex; background: #1A1D29; border: 2px solid #2F3349; border-radius: 8px; overflow: hidden; }
+        .search-category, .search-input { background: transparent; border: none; padding: 0.75rem 1rem; color: #fff; }
+        .search-btn { background: #FF6B00; border: none; padding: 0 1.5rem; color: #fff; cursor: pointer; }
+        .user-actions { display: flex; gap: 1.5rem; }
+        .action-btn { color: #fff; text-decoration: none; text-align: center; font-size: 0.85rem; position: relative; }
+        .cart-count { position: absolute; top: -5px; right: -10px; background: #FF6B00; color: #fff; font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 10px; }
+        .breadcrumb { background: #252837; padding: 1rem 0; border-bottom: 1px solid #2F3349; }
+        .breadcrumb a { color: #FF6B00; text-decoration: none; }
+        .page-content { padding: 3rem 0; min-height: 60vh; }
+        .page-content h1 { font-size: 2rem; margin-bottom: 2rem; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; }
+        .product-card { background: #1E2130; border: 1px solid #2F3349; border-radius: 12px; overflow: hidden; transition: 0.3s; }
+        .product-card:hover { border-color: #FF6B00; transform: translateY(-4px); }
+        .product-img { aspect-ratio: 1; background: #252837; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        .product-info { padding: 1.25rem; }
+        .product-title { font-size: 1rem; margin-bottom: 0.75rem; }
+        .product-price { margin: 1rem 0; }
+        .current-price { font-size: 1.5rem; font-weight: 800; color: #FF6B00; }
+        .btn-add-cart { width: 100%; background: #FF6B00; color: #fff; padding: 0.75rem; border-radius: 6px; border: none; font-weight: 700; cursor: pointer; }
+        .footer { background: #252837; border-top: 1px solid #2F3349; padding: 2rem 0; margin-top: 3rem; text-align: center; color: #B4B7C3; }
+    </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <div class="container-fluid">
             <div class="header-row">
-                <a href="../index.html" class="logo">
-                    <img src="../assets/images/logo.svg" alt="ShopHub" width="180">
-                </a>
+                <div class="logo-section">
+                    <a href="../index.html" style="color: #fff; text-decoration: none; font-size: 1.5rem; font-weight: 900;">
+                        🛒 ShopHub
+                    </a>
+                </div>
                 <div class="search-section">
                     <div class="search-bar">
-                        <input type="search" placeholder="Search..." class="search-input">
+                        <select class="search-category">
+                            <option>All Categories</option>
+                            <option>Electronics</option>
+                            <option>Fashion</option>
+                            <option>Home</option>
+                        </select>
+                        <input type="search" placeholder="Search products..." class="search-input">
                         <button class="search-btn">🔍</button>
                     </div>
                 </div>
                 <div class="user-actions">
-                    <a href="account.html" class="action-btn">👤 Account</a>
-                    <a href="wishlist.html" class="action-btn">❤️ Wishlist</a>
+                    <a href="login.html" class="action-btn">👤<br>Account</a>
+                    <a href="wishlist.html" class="action-btn">❤️<br>Wishlist</a>
                     <a href="cart.html" class="action-btn cart-btn">
-                        🛒 Cart <span class="cart-count">3</span>
+                        🛒<br>Cart
+                        <span class="cart-count">0</span>
                     </a>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Breadcrumb -->
     <div class="breadcrumb">
         <div class="container-fluid">
-            <a href="../index.html">Home</a> / <span>Shopping Cart</span>
+            <a href="../index.html">Home</a> / <span>Page</span>
         </div>
     </div>
 
-    <section class="cart-page">
+    <!-- Page Content -->
+    <section class="page-content">
         <div class="container-fluid">
-            <h1>Shopping Cart (3 items)</h1>
-            <div class="cart-layout">
-                <div class="cart-items">
-                    <!-- Cart Item 1 -->
-                    <div class="cart-item">
-                        <div class="cart-item-img">💻</div>
-                        <div class="cart-item-details">
-                            <h3>Dell Laptop 15.6" FHD</h3>
-                            <p style="color: #B4B7C3;">Electronics</p>
-                            <div class="cart-item-price">$599.99</div>
-                            <div class="quantity-controls">
-                                <button class="qty-btn">-</button>
-                                <span style="padding: 0 1rem;">1</span>
-                                <button class="qty-btn">+</button>
-                            </div>
-                            <button class="remove-btn">Remove</button>
+            <h1>ShopHub Products</h1>
+            
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-img">💻</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Dell Laptop 15.6"</h3>
+                        <div class="product-price">
+                            <span class="current-price">$599.99</span>
                         </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 1.5rem; font-weight: 800; color: #FF6B00;">$599.99</div>
-                        </div>
-                    </div>
-
-                    <!-- Cart Item 2 -->
-                    <div class="cart-item">
-                        <div class="cart-item-img">🎧</div>
-                        <div class="cart-item-details">
-                            <h3>Sony WH-1000XM5</h3>
-                            <p style="color: #B4B7C3;">Audio</p>
-                            <div class="cart-item-price">$349.99</div>
-                            <div class="quantity-controls">
-                                <button class="qty-btn">-</button>
-                                <span style="padding: 0 1rem;">2</span>
-                                <button class="qty-btn">+</button>
-                            </div>
-                            <button class="remove-btn">Remove</button>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 1.5rem; font-weight: 800; color: #FF6B00;">$699.98</div>
-                        </div>
+                        <button class="btn-add-cart">Add to Cart</button>
                     </div>
                 </div>
 
-                <!-- Cart Summary -->
-                <div class="cart-summary">
-                    <h2>Order Summary</h2>
-                    <div class="summary-row">
-                        <span>Subtotal:</span>
-                        <span>$1,299.97</span>
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-img">📱</div>
+                    <div class="product-info">
+                        <h3 class="product-title">iPhone 15 Pro</h3>
+                        <div class="product-price">
+                            <span class="current-price">$999.99</span>
+                        </div>
+                        <button class="btn-add-cart">Add to Cart</button>
                     </div>
-                    <div class="summary-row">
-                        <span>Shipping:</span>
-                        <span style="color: #00D9A3;">FREE</span>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-img">⌚</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Apple Watch</h3>
+                        <div class="product-price">
+                            <span class="current-price">$399.99</span>
+                        </div>
+                        <button class="btn-add-cart">Add to Cart</button>
                     </div>
-                    <div class="summary-row">
-                        <span>Tax:</span>
-                        <span>$104.00</span>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-img">🎧</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Sony Headphones</h3>
+                        <div class="product-price">
+                            <span class="current-price">$299.99</span>
+                        </div>
+                        <button class="btn-add-cart">Add to Cart</button>
                     </div>
-                    <div class="summary-row summary-total">
-                        <span>Total:</span>
-                        <span style="color: #FF6B00;">$1,403.97</span>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-img">📷</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Canon Camera</h3>
+                        <div class="product-price">
+                            <span class="current-price">$1,999.99</span>
+                        </div>
+                        <button class="btn-add-cart">Add to Cart</button>
                     </div>
-                    <button class="btn-checkout">Proceed to Checkout</button>
-                    <a href="../index.html" style="display: block; text-align: center; margin-top: 1rem; color: #FF6B00; text-decoration: none;">← Continue Shopping</a>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-img">👟</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Nike Shoes</h3>
+                        <div class="product-price">
+                            <span class="current-price">$129.99</span>
+                        </div>
+                        <button class="btn-add-cart">Add to Cart</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container-fluid">
-            <div class="footer-bottom">
-                <p>&copy; 2026 ShopHub. Made with ❤️ by Rohit</p>
-            </div>
+            <p>&copy; 2026 ShopHub. Made with ❤️ by Rohit</p>
         </div>
     </footer>
 
