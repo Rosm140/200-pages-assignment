@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DevFolio | Skills</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --accent: #7c5cfc;
+      --accent2: #fc5c7d;
+      --accent3: #56ccf2;
+      --text: #f0f0f8;
+      --muted: #7a7a99;
+      --border: rgba(124,92,252,0.18);
+      --glow: rgba(124,92,252,0.25);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; cursor: none; }
+
+    /* Cursor */
+    .cursor { position:fixed; width:12px; height:12px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .3s,height .3s; mix-blend-mode:difference; }
+    .cursor-ring { position:fixed; width:36px; height:36px; border:1.5px solid var(--accent); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,opacity .3s; opacity:.6; }
+
+    /* Noise */
+    body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; opacity:.5; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.4rem 4rem; background:rgba(10,10,15,0.7); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); animation:slideDown .8s ease both; }
+    @keyframes slideDown { from{transform:translateY(-100%);opacity:0;} to{transform:translateY(0);opacity:1;} }
+    .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-size:.9rem; font-weight:500; letter-spacing:.5px; transition:color .3s; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1.5px; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .3s; }
+    .nav-links a:hover,.nav-links a.active { color:var(--text); }
+    .nav-links a:hover::after,.nav-links a.active::after { width:100%; }
+    .nav-cta { padding:.6rem 1.5rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:50px; color:#fff; font-family:'DM Sans',sans-serif; font-weight:500; font-size:.88rem; cursor:none; text-decoration:none; transition:opacity .3s,transform .2s; box-shadow:0 4px 20px var(--glow); }
+    .nav-cta:hover { opacity:.88; transform:translateY(-1px); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+
+    /* PAGE HERO */
+    .page-hero { min-height:48vh; display:flex; align-items:center; padding:10rem 4rem 5rem; position:relative; overflow:hidden; }
+    .page-hero-bg { position:absolute; inset:0; z-index:0; background: radial-gradient(ellipse 55% 70% at 80% 40%, rgba(86,204,242,0.1) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 15% 75%, rgba(124,92,252,0.08) 0%, transparent 60%); }
+    .hero-grid { position:absolute; inset:0; z-index:0; background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 80%); }
+    .page-hero-content { position:relative; z-index:1; }
+    .breadcrumb { display:flex; align-items:center; gap:.5rem; font-size:.8rem; color:var(--muted); margin-bottom:1.5rem; animation:fadeUp .7s .1s ease both; }
+    .breadcrumb a { color:var(--accent); text-decoration:none; }
+    .page-hero h1 { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(2.8rem,6vw,5rem); letter-spacing:-2px; line-height:1.05; animation:fadeUp .7s .2s ease both; }
+    .page-hero h1 span { background:linear-gradient(135deg,var(--accent3),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .page-hero p { font-size:1.1rem; color:var(--muted); line-height:1.8; max-width:500px; margin-top:1.2rem; animation:fadeUp .7s .35s ease both; }
+
+    /* SECTIONS */
+    section { padding:5rem 4rem; position:relative; }
+    .section-label { display:inline-flex; align-items:center; gap:.6rem; font-size:.75rem; color:var(--accent); font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:1rem; }
+    .section-label::before { content:''; width:24px; height:1.5px; background:var(--accent); }
+    .section-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(1.8rem,3.5vw,2.6rem); line-height:1.1; letter-spacing:-1px; margin-bottom:1rem; }
+    .section-title span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .section-sub { color:var(--muted); font-size:1rem; line-height:1.7; max-width:500px; margin-bottom:3rem; }
+
+    /* FILTER TABS */
+    .filter-tabs { display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:3rem; }
+    .filter-btn {
+      padding:.5rem 1.2rem; border-radius:50px;
+      border:1px solid var(--border); background:transparent;
+      color:var(--muted); font-family:'DM Sans',sans-serif;
+      font-size:.85rem; font-weight:500; cursor:none;
+      transition:all .25s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border-color:transparent; color:#fff;
+      box-shadow:0 4px 16px var(--glow);
+    }
+
+    /* SKILLS CARDS GRID */
+    .skills-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.2rem; }
+    .skill-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:20px; padding:1.6rem 1.2rem;
+      text-align:center; cursor:none;
+      transition:transform .3s, border-color .3s, box-shadow .3s;
+      position:relative; overflow:hidden;
+    }
+    .skill-card::before {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      opacity:0; transition:opacity .3s; border-radius:20px;
+    }
+    .skill-card:hover { transform:translateY(-8px); border-color:var(--accent); box-shadow:0 16px 40px var(--glow); }
+    .skill-card:hover::before { opacity:.06; }
+    .skill-icon { font-size:2.4rem; margin-bottom:.9rem; display:block; position:relative; z-index:1; }
+    .skill-name { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; margin-bottom:.4rem; position:relative; z-index:1; }
+    .skill-category { font-size:.72rem; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; margin-bottom:1rem; position:relative; z-index:1; }
+    .skill-bar-wrap { background:rgba(255,255,255,0.05); border-radius:50px; height:4px; overflow:hidden; position:relative; z-index:1; }
+    .skill-bar { height:100%; border-radius:50px; background:linear-gradient(90deg,var(--accent),var(--accent2)); width:0; transition:width 1.2s cubic-bezier(.4,0,.2,1); }
+    .skill-percent { font-size:.72rem; color:var(--accent); font-weight:600; margin-top:.4rem; position:relative; z-index:1; }
+
+    /* PROFICIENCY BARS SECTION */
+    .proficiency-section { background:var(--surface); }
+    .prof-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem 4rem; }
+    .prof-item { display:flex; flex-direction:column; gap:.6rem; }
+    .prof-header { display:flex; justify-content:space-between; align-items:center; }
+    .prof-name { font-weight:500; font-size:.92rem; }
+    .prof-pct { font-size:.82rem; color:var(--accent); font-weight:600; }
+    .prof-track { background:rgba(255,255,255,0.05); border-radius:50px; height:6px; overflow:hidden; }
+    .prof-fill { height:100%; border-radius:50px; background:linear-gradient(90deg,var(--accent),var(--accent2)); width:0; transition:width 1.4s cubic-bezier(.4,0,.2,1); }
+
+    /* TOOLS SECTION */
+    .tools-section {}
+    .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:1rem; }
+    .tool-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:16px; padding:1.2rem;
+      display:flex; flex-direction:column; align-items:center; gap:.6rem;
+      cursor:none; transition:transform .3s,border-color .3s;
+      text-align:center;
+    }
+    .tool-card:hover { transform:translateY(-5px); border-color:var(--accent3); }
+    .tool-icon { font-size:1.8rem; }
+    .tool-name { font-size:.8rem; font-weight:500; color:var(--text); }
+    .tool-type { font-size:.7rem; color:var(--muted); }
+
+    /* LEARNING */
+    .learning-section { background:var(--surface); }
+    .learning-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.2rem; }
+    .learning-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:20px; padding:1.6rem;
+      display:flex; gap:1rem; align-items:flex-start;
+      cursor:none; transition:transform .3s,border-color .3s;
+    }
+    .learning-card:hover { transform:translateY(-5px); border-color:var(--accent2); }
+    .learning-icon { font-size:1.8rem; flex-shrink:0; }
+    .learning-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; margin-bottom:.3rem; }
+    .learning-desc { font-size:.82rem; color:var(--muted); line-height:1.6; }
+    .learning-progress { margin-top:.8rem; }
+    .lp-label { font-size:.72rem; color:var(--accent3); font-weight:600; margin-bottom:.4rem; }
+    .lp-track { background:rgba(255,255,255,0.05); border-radius:50px; height:4px; }
+    .lp-fill { height:100%; border-radius:50px; background:linear-gradient(90deg,var(--accent3),var(--accent)); }
+
+    /* CTA */
+    .cta-section { text-align:center; border-top:1px solid var(--border); background:linear-gradient(135deg,rgba(124,92,252,0.06),rgba(86,204,242,0.04)); }
+    .cta-section p { color:var(--muted); margin:1rem auto 2rem; max-width:420px; }
+    .btn-primary { padding:.85rem 2rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:50px; color:#fff; font-family:'DM Sans',sans-serif; font-weight:500; font-size:.95rem; cursor:none; text-decoration:none; box-shadow:0 6px 30px var(--glow); transition:transform .2s,box-shadow .2s; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 40px var(--glow); }
+    .btn-secondary { padding:.85rem 2rem; background:transparent; border:1px solid var(--border); border-radius:50px; color:var(--text); font-family:'DM Sans',sans-serif; font-weight:500; font-size:.95rem; cursor:none; text-decoration:none; transition:background .3s,border-color .3s; }
+    .btn-secondary:hover { background:rgba(124,92,252,0.08); border-color:var(--accent); }
+
+    /* FOOTER */
+    footer { background:var(--surface); border-top:1px solid var(--border); padding:3rem 4rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .footer-text { font-size:.85rem; color:var(--muted); }
+    .footer-links { display:flex; gap:1.5rem; }
+    .footer-links a { color:var(--muted); text-decoration:none; font-size:.85rem; transition:color .2s; }
+    .footer-links a:hover { color:var(--accent); }
+
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(40px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* HIDE */
+    .skill-card.hidden { display:none; }
+
+    @media(max-width:900px) {
+      nav { padding:1.2rem 1.5rem; }
+      .nav-links { display:none; }
+      section { padding:4rem 1.5rem; }
+      .page-hero { padding:8rem 1.5rem 4rem; }
+      .prof-grid { grid-template-columns:1fr; }
+      footer { padding:2rem 1.5rem; flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">DevFolio</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="skills.html" class="active">Skills</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Hire Me</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="page-hero-content">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Skills</span></div>
+      <h1>Tools &amp; <span>Technologies</span><br/>I Work With</h1>
+      <p>A comprehensive look at my technical skill set — from frontend frameworks to cloud infrastructure.</p>
+    </div>
+  </div>
+
+  <!-- SKILLS CARDS -->
+  <section>
+    <div class="reveal">
+      <div class="section-label">Tech Stack</div>
+      <h2 class="section-title">My <span>Skills</span></h2>
+      <p class="section-sub">Filter by category to explore what I know best.</p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs reveal" id="filterTabs">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="frontend">Frontend</button>
+      <button class="filter-btn" data-filter="backend">Backend</button>
+      <button class="filter-btn" data-filter="database">Database</button>
+      <button class="filter-btn" data-filter="devops">DevOps</button>
+      <button class="filter-btn" data-filter="design">Design</button>
+    </div>
+
+    <div class="skills-grid reveal" id="skillsGrid">
+      <!-- Frontend -->
+      <div class="skill-card" data-category="frontend"><span class="skill-icon">⚛️</span><div class="skill-name">React</div><div class="skill-category">Frontend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90"></div></div><div class="skill-percent">90%</div></div>
+      <div class="skill-card" data-category="frontend"><span class="skill-icon">🟨</span><div class="skill-name">JavaScript</div><div class="skill-category">Frontend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92"></div></div><div class="skill-percent">92%</div></div>
+      <div class="skill-card" data-category="frontend"><span class="skill-icon">🔷</span><div class="skill-name">TypeScript</div><div class="skill-category">Frontend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="78"></div></div><div class="skill-percent">78%</div></div>
+      <div class="skill-card" data-category="frontend"><span class="skill-icon">🎨</span><div class="skill-name">CSS3</div><div class="skill-category">Frontend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="95"></div></div><div class="skill-percent">95%</div></div>
+      <div class="skill-card" data-category="frontend"><span class="skill-icon">🌐</span><div class="skill-name">HTML5</div><div class="skill-category">Frontend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="97"></div></div><div class="skill-percent">97%</div></div>
+      <div class="skill-card" data-category="frontend"><span class="skill-icon">💚</span><div class="skill-name">Vue.js</div><div class="skill-category">Frontend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div><div class="skill-percent">70%</div></div>
+      <div class="skill-card" data-category="frontend"><span class="skill-icon">🔺</span><div class="skill-name">Next.js</div><div class="skill-category">Frontend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="82"></div></div><div class="skill-percent">82%</div></div>
+      <div class="skill-card" data-category="frontend"><span class="skill-icon">💨</span><div class="skill-name">Tailwind CSS</div><div class="skill-category">Frontend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88"></div></div><div class="skill-percent">88%</div></div>
+      <!-- Backend -->
+      <div class="skill-card" data-category="backend"><span class="skill-icon">🟢</span><div class="skill-name">Node.js</div><div class="skill-category">Backend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div><div class="skill-percent">80%</div></div>
+      <div class="skill-card" data-category="backend"><span class="skill-icon">🐍</span><div class="skill-name">Python</div><div class="skill-category">Backend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="72"></div></div><div class="skill-percent">72%</div></div>
+      <div class="skill-card" data-category="backend"><span class="skill-icon">🚂</span><div class="skill-name">Express.js</div><div class="skill-category">Backend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="83"></div></div><div class="skill-percent">83%</div></div>
+      <div class="skill-card" data-category="backend"><span class="skill-icon">🔗</span><div class="skill-name">REST APIs</div><div class="skill-category">Backend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88"></div></div><div class="skill-percent">88%</div></div>
+      <div class="skill-card" data-category="backend"><span class="skill-icon">📡</span><div class="skill-name">GraphQL</div><div class="skill-category">Backend</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="65"></div></div><div class="skill-percent">65%</div></div>
+      <!-- Database -->
+      <div class="skill-card" data-category="database"><span class="skill-icon">🍃</span><div class="skill-name">MongoDB</div><div class="skill-category">Database</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div><div class="skill-percent">80%</div></div>
+      <div class="skill-card" data-category="database"><span class="skill-icon">🐘</span><div class="skill-name">PostgreSQL</div><div class="skill-category">Database</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="74"></div></div><div class="skill-percent">74%</div></div>
+      <div class="skill-card" data-category="database"><span class="skill-icon">🔥</span><div class="skill-name">Firebase</div><div class="skill-category">Database</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="78"></div></div><div class="skill-percent">78%</div></div>
+      <div class="skill-card" data-category="database"><span class="skill-icon">⚡</span><div class="skill-name">Redis</div><div class="skill-category">Database</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="60"></div></div><div class="skill-percent">60%</div></div>
+      <!-- DevOps -->
+      <div class="skill-card" data-category="devops"><span class="skill-icon">🐳</span><div class="skill-name">Docker</div><div class="skill-category">DevOps</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div><div class="skill-percent">70%</div></div>
+      <div class="skill-card" data-category="devops"><span class="skill-icon">☁️</span><div class="skill-name">AWS</div><div class="skill-category">DevOps</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="62"></div></div><div class="skill-percent">62%</div></div>
+      <div class="skill-card" data-category="devops"><span class="skill-icon">🔀</span><div class="skill-name">Git & GitHub</div><div class="skill-category">DevOps</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90"></div></div><div class="skill-percent">90%</div></div>
+      <div class="skill-card" data-category="devops"><span class="skill-icon">⚙️</span><div class="skill-name">CI/CD</div><div class="skill-category">DevOps</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="65"></div></div><div class="skill-percent">65%</div></div>
+      <!-- Design -->
+      <div class="skill-card" data-category="design"><span class="skill-icon">🎭</span><div class="skill-name">Figma</div><div class="skill-category">Design</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="76"></div></div><div class="skill-percent">76%</div></div>
+      <div class="skill-card" data-category="design"><span class="skill-icon">✨</span><div class="skill-name">Framer Motion</div><div class="skill-category">Design</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="72"></div></div><div class="skill-percent">72%</div></div>
+      <div class="skill-card" data-category="design"><span class="skill-icon">🖌️</span><div class="skill-name">Adobe XD</div><div class="skill-category">Design</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="60"></div></div><div class="skill-percent">60%</div></div>
+    </div>
+  </section>
+
+  <!-- PROFICIENCY BARS -->
+  <section class="proficiency-section">
+    <div class="reveal">
+      <div class="section-label">Expertise Level</div>
+      <h2 class="section-title">Core <span>Proficiencies</span></h2>
+      <p class="section-sub">A deeper look at the skills I rely on daily.</p>
+    </div>
+    <div class="prof-grid reveal" id="profGrid">
+      <div class="prof-item"><div class="prof-header"><span class="prof-name">HTML5 / CSS3</span><span class="prof-pct">97%</span></div><div class="prof-track"><div class="prof-fill" data-width="97"></div></div></div>
+      <div class="prof-item"><div class="prof-header"><span class="prof-name">JavaScript (ES6+)</span><span class="prof-pct">92%</span></div><div class="prof-track"><div class="prof-fill" data-width="92"></div></div></div>
+      <div class="prof-item"><div class="prof-header"><span class="prof-name">React & Next.js</span><span class="prof-pct">90%</span></div><div class="prof-track"><div class="prof-fill" data-width="90"></div></div></div>
+      <div class="prof-item"><div class="prof-header"><span class="prof-name">Node.js & Express</span><span class="prof-pct">83%</span></div><div class="prof-track"><div class="prof-fill" data-width="83"></div></div></div>
+      <div class="prof-item"><div class="prof-header"><span class="prof-name">TypeScript</span><span class="prof-pct">78%</span></div><div class="prof-track"><div class="prof-fill" data-width="78"></div></div></div>
+      <div class="prof-item"><div class="prof-header"><span class="prof-name">MongoDB / PostgreSQL</span><span class="prof-pct">77%</span></div><div class="prof-track"><div class="prof-fill" data-width="77"></div></div></div>
+      <div class="prof-item"><div class="prof-header"><span class="prof-name">Git & Version Control</span><span class="prof-pct">90%</span></div><div class="prof-track"><div class="prof-fill" data-width="90"></div></div></div>
+      <div class="prof-item"><div class="prof-header"><span class="prof-name">Docker & AWS</span><span class="prof-pct">66%</span></div><div class="prof-track"><div class="prof-fill" data-width="66"></div></div></div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="tools-section">
+    <div class="reveal">
+      <div class="section-label">Daily Drivers</div>
+      <h2 class="section-title">Tools &amp; <span>Environment</span></h2>
+      <p class="section-sub">The software and platforms I use every day to get things done.</p>
+    </div>
+    <div class="tools-grid reveal">
+      <div class="tool-card"><span class="tool-icon">💻</span><div class="tool-name">VS Code</div><div class="tool-type">Editor</div></div>
+      <div class="tool-card"><span class="tool-icon">🐙</span><div class="tool-name">GitHub</div><div class="tool-type">Version Control</div></div>
+      <div class="tool-card"><span class="tool-icon">🎭</span><div class="tool-name">Figma</div><div class="tool-type">Design</div></div>
+      <div class="tool-card"><span class="tool-icon">📮</span><div class="tool-name">Postman</div><div class="tool-type">API Testing</div></div>
+      <div class="tool-card"><span class="tool-icon">🐳</span><div class="tool-name">Docker</div><div class="tool-type">Containerization</div></div>
+      <div class="tool-card"><span class="tool-icon">🔔</span><div class="tool-name">Slack</div><div class="tool-type">Communication</div></div>
+      <div class="tool-card"><span class="tool-icon">📋</span><div class="tool-name">Notion</div><div class="tool-type">Productivity</div></div>
+      <div class="tool-card"><span class="tool-icon">⚡</span><div class="tool-name">Vite</div><div class="tool-type">Build Tool</div></div>
+      <div class="tool-card"><span class="tool-icon">🧪</span><div class="tool-name">Jest</div><div class="tool-type">Testing</div></div>
+      <div class="tool-card"><span class="tool-icon">🌊</span><div class="tool-name">Vercel</div><div class="tool-type">Deployment</div></div>
+      <div class="tool-card"><span class="tool-icon">🔥</span><div class="tool-name">Firebase</div><div class="tool-type">Backend-as-a-Service</div></div>
+      <div class="tool-card"><span class="tool-icon">🖥️</span><div class="tool-name">Ubuntu</div><div class="tool-type">OS</div></div>
+    </div>
+  </section>
+
+  <!-- CURRENTLY LEARNING -->
+  <section class="learning-section">
+    <div class="reveal">
+      <div class="section-label">What's Next</div>
+      <h2 class="section-title">Currently <span>Learning</span></h2>
+      <p class="section-sub">I never stop growing. Here's what I'm exploring right now.</p>
+    </div>
+    <div class="learning-grid reveal">
+      <div class="learning-card">
+        <span class="learning-icon">🤖</span>
+        <div>
+          <div class="learning-title">AI & LLM Integration</div>
+          <div class="learning-desc">Exploring how to integrate large language models and AI APIs into modern web applications.</div>
+          <div class="learning-progress"><div class="lp-label">Progress: 45%</div><div class="lp-track"><div class="lp-fill" style="width:45%"></div></div></div>
+        </div>
+      </div>
+      <div class="learning-card">
+        <span class="learning-icon">☸️</span>
+        <div>
+          <div class="learning-title">Kubernetes</div>
+          <div class="learning-desc">Learning container orchestration to manage and scale microservices architectures effectively.</div>
+          <div class="learning-progress"><div class="lp-label">Progress: 30%</div><div class="lp-track"><div class="lp-fill" style="width:30%"></div></div></div>
+        </div>
+      </div>
+      <div class="learning-card">
+        <span class="learning-icon">🦀</span>
+        <div>
+          <div class="learning-title">Rust</div>
+          <div class="learning-desc">Diving into systems programming with Rust for performance-critical applications and WebAssembly.</div>
+          <div class="learning-progress"><div class="lp-label">Progress: 20%</div><div class="lp-track"><div class="lp-fill" style="width:20%"></div></div></div>
+        </div>
+      </div>
+      <div class="learning-card">
+        <span class="learning-icon">📱</span>
+        <div>
+          <div class="learning-title">React Native</div>
+          <div class="learning-desc">Expanding into mobile development to build cross-platform apps with my existing React skills.</div>
+          <div class="learning-progress"><div class="lp-label">Progress: 55%</div><div class="lp-track"><div class="lp-fill" style="width:55%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="reveal">
+      <div class="section-label" style="justify-content:center;">Let's Build</div>
+      <h2 class="section-title">Like My <span>Stack?</span></h2>
+      <p>Let's collaborate and build something powerful together using these skills.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="projects.html" class="btn-primary">See My Projects →</a>
+        <a href="contact.html" class="btn-secondary">Hire Me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">DevFolio</div>
+    <div class="footer-text">© 2024 DevFolio. Built with ❤️ and lots of ☕</div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+    (function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+    document.querySelectorAll('a,button,.skill-card,.tool-card,.learning-card').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='50px';ring.style.height='50px';ring.style.opacity='1';});
+      el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='.6';});
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries)=>{
+      entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*100); }});
+    },{threshold:.1});
+    reveals.forEach(r=>revealObserver.observe(r));
+
+    // Filter tabs
+    document.querySelectorAll('.filter-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.skill-card').forEach(card=>{
+          if(filter==='all'||card.dataset.category===filter){ card.classList.remove('hidden'); }
+          else { card.classList.add('hidden'); }
+        });
+      });
+    });
+
+    // Animate skill bars on scroll
+    function animateBars(selector, attr){
+      document.querySelectorAll(selector).forEach(bar=>{
+        bar.style.width = bar.dataset[attr]+'%';
+      });
+    }
+    const skillObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ animateBars('.skill-bar','width'); skillObserver.disconnect(); }});
+    },{threshold:.2});
+    const sg = document.getElementById('skillsGrid');
+    if(sg) skillObserver.observe(sg);
+
+    const profObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ animateBars('.prof-fill','width'); profObserver.disconnect(); }});
+    },{threshold:.2});
+    const pg = document.getElementById('profGrid');
+    if(pg) profObserver.observe(pg);
+  </script>
+</body>
+</html>

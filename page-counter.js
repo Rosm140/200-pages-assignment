@@ -8,7 +8,7 @@ const manualPageCounts = {
     'travel-agency-website': 10,     // ✅ TravelGo - COMPLETED
     'e-commerce': 20,       // ✅ ShopHub - COMPLETED
     'restaurant': 0,
-    'portfolio': 0,
+    'portfolio': 8,     //
     'real-estate': 0,
     'education': 0,
     'fitness': 0,
