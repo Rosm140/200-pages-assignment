@@ -1,0 +1,454 @@
+diff --git a/e-commerce/index.html b/e-commerce/index.html
+index f15d645ba6061397f9ef22adbfab60bcea09d815..fdff285de6d810b2a4bc1e0ce7b6cbecd50dca82 100644
+--- a/e-commerce/index.html
++++ b/e-commerce/index.html
+@@ -1,364 +1,84 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-<head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>ShopHub - Online Shopping for Electronics, Fashion, Home & More</title>
+-    <meta name="description" content="Shop online for electronics, fashion, home essentials and more. Great deals, fast delivery, easy returns.">
+-    <link rel="stylesheet" href="assets/css/main-complete.css">
+-</head>
+-<body>
+-    <!-- Top Banner -->
+-    <div class="top-banner">
+-        <div class="container-fluid">
+-            <span>🎉 MEGA SALE LIVE! Extra 20% OFF on Fashion + Free Shipping | Use: FASHION20</span>
+-            <button class="close-banner" aria-label="Close banner">×</button>
+-        </div>
++<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ShopHub | Smart Shopping Starts Here</title><meta name="description" content="ShopHub e-commerce homepage with curated categories, flash deals, and fast checkout."><link rel="stylesheet" href="assets/css/main-complete.css">
++    <style>
++        :root { --bg:#111827; --card:#1f2937; --muted:#9ca3af; --accent:#f97316; --line:#374151; --ok:#10b981; }
++        body { margin:0; font-family: Inter, Segoe UI, Arial, sans-serif; background:var(--bg); color:#f9fafb; }
++        .container { width:min(1200px, 92%); margin:0 auto; }
++        .top-strip { background:#7c2d12; color:#fff; text-align:center; padding:.6rem; font-weight:700; font-size:.9rem; }
++        .header { position:sticky; top:0; z-index:10; backdrop-filter: blur(8px); background:rgba(17,24,39,.95); border-bottom:1px solid var(--line); }
++        .header-row { display:flex; align-items:center; gap:1rem; padding:1rem 0; }
++        .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; color:#fff; font-weight:900; }
++        .search { flex:1; display:flex; gap:.5rem; }
++        .search input, .search select { background:#0b1220; color:#fff; border:1px solid var(--line); border-radius:8px; padding:.7rem .8rem; }
++        .search input { flex:1; }
++        .search button { border:0; background:var(--accent); color:#fff; border-radius:8px; padding:.7rem 1rem; font-weight:700; cursor:pointer; }
++        .actions { display:flex; gap:.7rem; }
++        .actions a { color:#fff; text-decoration:none; border:1px solid var(--line); padding:.55rem .8rem; border-radius:8px; font-size:.9rem; }
++        .main-nav { display:flex; gap:.45rem; overflow:auto; padding:0 0 1rem; }
++        .main-nav a { color:#e5e7eb; text-decoration:none; border:1px solid var(--line); padding:.45rem .7rem; border-radius:999px; white-space:nowrap; font-size:.85rem; }
++        .main-nav a.hot { background:#7c2d12; border-color:#9a3412; }
++        .hero { padding:2.2rem 0 1.5rem; }
++        .hero-box { border:1px solid var(--line); border-radius:16px; background:linear-gradient(120deg,#1f2937,#111827); padding:2rem; display:grid; gap:1rem; }
++        .hero h1 { margin:0; font-size:2rem; }
++        .hero p { margin:0; color:#d1d5db; max-width:70ch; }
++        .cta-row { display:flex; gap:.7rem; flex-wrap:wrap; margin-top:.6rem; }
++        .btn { text-decoration:none; display:inline-block; padding:.7rem 1rem; border-radius:8px; font-weight:700; }
++        .btn-primary { background:var(--accent); color:#fff; }
++        .btn-secondary { border:1px solid var(--line); color:#fff; }
++        .section { padding:1rem 0 2rem; }
++        .section h2 { margin:.3rem 0 .8rem; }
++        .section p.lead { color:var(--muted); margin-top:0; }
++        .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
++        .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:1rem; }
++        .card h3 { margin:.2rem 0 .5rem; font-size:1rem; }
++        .card p { color:var(--muted); margin:0 0 .8rem; font-size:.92rem; }
++        .price { color:#fdba74; font-weight:800; }
++        .old { color:#6b7280; text-decoration:line-through; margin-left:.4rem; font-size:.9rem; }
++        .meta { color:#cbd5e1; font-size:.85rem; }
++        .breadcrumb { color:#94a3b8; font-size:.9rem; padding-top:1rem; }
++        .breadcrumb a { color:#fdba74; text-decoration:none; }
++        .checklist { display:grid; gap:.55rem; }
++        .checklist li { margin-left:1rem; }
++        footer { margin-top:2rem; border-top:1px solid var(--line); padding:1.4rem 0 2rem; color:#94a3b8; }
++        .footer-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
++        @media (max-width:760px){ .header-row{flex-wrap:wrap;} .search{order:3; width:100%;} }
++    </style>
++</head><body><div class="top-strip">🔥 Step 1: Index regenerated • Step 2: All core pages completed</div>
++<header class="header">
++  <div class="container">
++    <div class="header-row">
++      <a href="index.html" class="logo"><img src="assets/images/shophub-logo.svg" alt="ShopHub" width="120"> <span>ShopHub</span></a>
++      <form class="search" role="search">
++        <select aria-label="Category"><option>All</option><option>Electronics</option><option>Fashion</option><option>Home</option><option>Beauty</option></select>
++        <input type="search" placeholder="Search products, brands and categories">
++        <button type="button">Search</button>
++      </form>
++      <nav class="actions">
++        <a href="pages/account.html">Account</a>
++        <a href="pages/wishlist.html">Wishlist</a>
++        <a href="pages/cart.html" class="cart-btn">Cart <span class="cart-count">0</span></a>
++      </nav>
+     </div>
+-
+-    <!-- Header -->
+-    <header class="header">
+-        <div class="container-fluid">
+-            <div class="header-row">
+-                <!-- Logo -->
+-                <div class="logo-section">
+-                    <a href="index.html" class="logo">
+-                        <img src="assets/images/shophub-logo.svg" alt="ShopHub - Your Shopping Destination" width="180" height="54">
+-                    </a>
+-                </div>
+-
+-                <!-- Search Bar -->
+-                <div class="search-section">
+-                    <div class="search-bar">
+-                        <select class="search-category" aria-label="Select category">
+-                            <option>All Categories</option>
+-                            <option>Electronics</option>
+-                            <option>Fashion</option>
+-                            <option>Home & Living</option>
+-                            <option>Beauty</option>
+-                            <option>Sports</option>
+-                            <option>Books</option>
+-                        </select>
+-                        <input type="search" placeholder="Search for products, brands and more..." class="search-input" aria-label="Search products">
+-                        <button class="search-btn" aria-label="Search">
+-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+-                                <circle cx="11" cy="11" r="8"/>
+-                                <path d="m21 21-4.35-4.35"/>
+-                            </svg>
+-                        </button>
+-                    </div>
+-                </div>
+-
+-                <!-- User Actions -->
+-                <div class="user-actions">
+-                    <a href="pages/login.html" class="action-btn">
+-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+-                            <circle cx="12" cy="7" r="4"/>
+-                        </svg>
+-                        <span>Account</span>
+-                    </a>
+-                    <a href="e-commerce/pages/wishlist.html" class="action-btn">
+-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+-                        </svg>
+-                        <span>Wishlist</span>
+-                    </a>
+-                    <a href="pages/cart.html" class="action-btn cart-btn">
+-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+-                            <circle cx="9" cy="21" r="1"/>
+-                            <circle cx="20" cy="21" r="1"/>
+-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+-                        </svg>
+-                        <span>Cart</span>
+-                        <span class="cart-count">0</span>
+-                    </a>
+-                </div>
+-            </div>
+-
+-            <!-- Navigation -->
+-            <nav class="main-nav">
+-                <a href="pages/deals.html" class="nav-item hot">⚡ Today's Deals</a>
+-                <a href="pages/category-electronics.html" class="nav-item">Electronics</a>
+-                <a href="pages/category-fashion.html" class="nav-item">Fashion</a>
+-                <a href="pages/category-home.html" class="nav-item">Home</a>
+-                <a href="pages/category-beauty.html" class="nav-item">Beauty</a>
+-                <a href="pages/category-sports.html" class="nav-item">Sports</a>
+-                <a href="pages/new-arrivals.html" class="nav-item">🆕 New</a>
+-                <a href="pages/offers.html" class="nav-item">Offers</a>
+-            </nav>
+-        </div>
+-    </header>
+-
+-    <!-- Hero Slider -->
+-    <section class="hero-slider">
+-        <div class="container-fluid">
+-            <div class="slider-wrapper">
+-                <div class="slide active">
+-                    <div class="slide-content">
+-                        <span class="slide-badge">MEGA SALE</span>
+-                        <h1>Electronics Bonanza</h1>
+-                        <p>Up to 70% OFF on Laptops, Mobiles, Headphones & More</p>
+-                        <div class="slide-buttons">
+-                            <a href="pages/category-electronics.html" class="btn-slide">Shop Now →</a>
+-                            <a href="pages/deals.html" class="btn-slide-outline">View All Deals</a>
+-                        </div>
+-                    </div>
+-                    <div class="slide-image">
+-                        <div class="slide-bg">💻</div>
+-                    </div>
+-                </div>
+-            </div>
+-        </div>
+-    </section>
+-
+-    <!-- Categories Grid -->
+-    <section class="categories-section">
+-        <div class="container-fluid">
+-            <h2 class="section-title">Shop by Category</h2>
+-            <div class="categories-grid">
+-                <a href="pages/category-electronics.html" class="cat-card">
+-                    <div class="cat-icon">📱</div>
+-                    <h3>Electronics</h3>
+-                    <p>Mobiles, Laptops & More</p>
+-                    <span class="cat-link">Explore →</span>
+-                </a>
+-                <a href="pages/category-fashion.html" class="cat-card">
+-                    <div class="cat-icon">👕</div>
+-                    <h3>Fashion</h3>
+-                    <p>Clothing & Accessories</p>
+-                    <span class="cat-link">Explore →</span>
+-                </a>
+-                <a href="pages/category-home.html" class="cat-card">
+-                    <div class="cat-icon">🏠</div>
+-                    <h3>Home & Living</h3>
+-                    <p>Furniture & Decor</p>
+-                    <span class="cat-link">Explore →</span>
+-                </a>
+-                <a href="pages/category-beauty.html" class="cat-card">
+-                    <div class="cat-icon">💄</div>
+-                    <h3>Beauty</h3>
+-                    <p>Makeup & Skincare</p>
+-                    <span class="cat-link">Explore →</span>
+-                </a>
+-                <a href="pages/category-sports.html" class="cat-card">
+-                    <div class="cat-icon">⚽</div>
+-                    <h3>Sports</h3>
+-                    <p>Fitness & Equipment</p>
+-                    <span class="cat-link">Explore →</span>
+-                </a>
+-                <a href="pages/category-books.html" class="cat-card">
+-                    <div class="cat-icon">📚</div>
+-                    <h3>Books</h3>
+-                    <p>Fiction & Non-Fiction</p>
+-                    <span class="cat-link">Explore →</span>
+-                </a>
+-            </div>
+-        </div>
+-    </section>
+-
+-    <!-- Flash Deals -->
+-    <section class="deals-section">
+-        <div class="container-fluid">
+-            <div class="deals-header">
+-                <div>
+-                    <h2 class="section-title">⚡ Flash Deals</h2>
+-                    <p class="section-subtitle">Ends in: <span class="countdown">02:45:30</span></p>
+-                </div>
+-                <a href="pages/deals.html" class="link-all">View All →</a>
+-            </div>
+-            <div class="products-row">
+-                <!-- Product 1 -->
+-                <div class="product-card">
+-                    <span class="deal-badge">65% OFF</span>
+-                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+-                    <div class="product-img">
+-                        <div class="placeholder-img">🎧</div>
+-                    </div>
+-                    <div class="product-info">
+-                        <h3 class="product-title">Premium Wireless Headphones</h3>
+-                        <div class="product-rating">
+-                            <span class="stars">★★★★★</span>
+-                            <span class="reviews">(2,847)</span>
+-                        </div>
+-                        <div class="product-price">
+-                            <span class="current-price">$89.99</span>
+-                            <span class="old-price">$259.99</span>
+-                        </div>
+-                        <button class="btn-add-cart" data-product="Premium Wireless Headphones">Add to Cart</button>
+-                    </div>
+-                </div>
+-
+-                <!-- Product 2 -->
+-                <div class="product-card">
+-                    <span class="deal-badge">50% OFF</span>
+-                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+-                    <div class="product-img">
+-                        <div class="placeholder-img">⌚</div>
+-                    </div>
+-                    <div class="product-info">
+-                        <h3 class="product-title">Smart Watch Pro Series 6</h3>
+-                        <div class="product-rating">
+-                            <span class="stars">★★★★★</span>
+-                            <span class="reviews">(5,234)</span>
+-                        </div>
+-                        <div class="product-price">
+-                            <span class="current-price">$199.99</span>
+-                            <span class="old-price">$399.99</span>
+-                        </div>
+-                        <button class="btn-add-cart" data-product="Smart Watch Pro">Add to Cart</button>
+-                    </div>
+-                </div>
+-
+-                <!-- Product 3 -->
+-                <div class="product-card">
+-                    <span class="deal-badge">40% OFF</span>
+-                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+-                    <div class="product-img">
+-                        <div class="placeholder-img">🎒</div>
+-                    </div>
+-                    <div class="product-info">
+-                        <h3 class="product-title">Travel Backpack 35L Waterproof</h3>
+-                        <div class="product-rating">
+-                            <span class="stars">★★★★☆</span>
+-                            <span class="reviews">(1,892)</span>
+-                        </div>
+-                        <div class="product-price">
+-                            <span class="current-price">$49.99</span>
+-                            <span class="old-price">$79.99</span>
+-                        </div>
+-                        <button class="btn-add-cart" data-product="Travel Backpack">Add to Cart</button>
+-                    </div>
+-                </div>
+-
+-                <!-- Product 4 -->
+-                <div class="product-card">
+-                    <span class="deal-badge">30% OFF</span>
+-                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+-                    <div class="product-img">
+-                        <div class="placeholder-img">☕</div>
+-                    </div>
+-                    <div class="product-info">
+-                        <h3 class="product-title">Premium Coffee Maker Deluxe</h3>
+-                        <div class="product-rating">
+-                            <span class="stars">★★★★★</span>
+-                            <span class="reviews">(3,456)</span>
+-                        </div>
+-                        <div class="product-price">
+-                            <span class="current-price">$129.99</span>
+-                            <span class="old-price">$189.99</span>
+-                        </div>
+-                        <button class="btn-add-cart" data-product="Coffee Maker">Add to Cart</button>
+-                    </div>
+-                </div>
+-
+-                <!-- Product 5 -->
+-                <div class="product-card">
+-                    <span class="deal-badge new">NEW</span>
+-                    <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+-                    <div class="product-img">
+-                        <div class="placeholder-img">🔊</div>
+-                    </div>
+-                    <div class="product-info">
+-                        <h3 class="product-title">Portable Bluetooth Speaker</h3>
+-                        <div class="product-rating">
+-                            <span class="stars">★★★★☆</span>
+-                            <span class="reviews">(987)</span>
+-                        </div>
+-                        <div class="product-price">
+-                            <span class="current-price">$79.99</span>
+-                        </div>
+-                        <button class="btn-add-cart" data-product="Bluetooth Speaker">Add to Cart</button>
+-                    </div>
+-                </div>
+-            </div>
+-        </div>
+-    </section>
+-
+-    <!-- Features Bar -->
+-    <section class="features-bar">
+-        <div class="container-fluid">
+-            <div class="features-row">
+-                <div class="feature-item">
+-                    <div class="feature-icon">🚚</div>
+-                    <div class="feature-text">
+-                        <strong>Free Shipping</strong>
+-                        <span>On orders above $50</span>
+-                    </div>
+-                </div>
+-                <div class="feature-item">
+-                    <div class="feature-icon">💳</div>
+-                    <div class="feature-text">
+-                        <strong>Secure Payment</strong>
+-                        <span>100% Protected</span>
+-                    </div>
+-                </div>
+-                <div class="feature-item">
+-                    <div class="feature-icon">↩️</div>
+-                    <div class="feature-text">
+-                        <strong>Easy Returns</strong>
+-                        <span>30-Day Policy</span>
+-                    </div>
+-                </div>
+-                <div class="feature-item">
+-                    <div class="feature-icon">💬</div>
+-                    <div class="feature-text">
+-                        <strong>24/7 Support</strong>
+-                        <span>Always Here</span>
+-                    </div>
+-                </div>
+-            </div>
+-        </div>
+-    </section>
+-
+-    <!-- Footer -->
+-    <footer class="footer">
+-        <div class="container-fluid">
+-            <div class="footer-grid">
+-                <div class="footer-col">
+-                    <img src="assets/images/logo.svg" alt="ShopHub" width="160" height="48" style="margin-bottom: 1rem;">
+-                    <p>Your trusted online shopping destination for quality products at unbeatable prices.</p>
+-                    <div class="social-links">
+-                        <a href="#" aria-label="Facebook">FB</a>
+-                        <a href="#" aria-label="Instagram">IG</a>
+-                        <a href="#" aria-label="Twitter">TW</a>
+-                        <a href="#" aria-label="YouTube">YT</a>
+-                    </div>
+-                </div>
+-                <div class="footer-col">
+-                    <h3>Shop</h3>
+-                    <ul>
+-                        <li><a href="/e-commerce/pages/products.html">All Products</a></li>
+-                        <li><a href="pages/categories.html">Categories</a></li>
+-                        <li><a href="pages/deals.html">Deals</a></li>
+-                        <li><a href="pages/new-arrivals.html">New Arrivals</a></li>
+-                    </ul>
+-                </div>
+-                <div class="footer-col">
+-                    <h3>Help</h3>
+-                    <ul>
+-                        <li><a href="pages/contact.html">Contact Us</a></li>
+-                        <li><a href="pages/faq.html">FAQ</a></li>
+-                        <li><a href="pages/shipping.html">Shipping</a></li>
+-                        <li><a href="pages/returns.html">Returns</a></li>
+-                    </ul>
+-                </div>
+-                <div class="footer-col">
+-                    <h3>Account</h3>
+-                    <ul>
+-                        <li><a href="pages/login.html">Login</a></li>
+-                        <li><a href="pages/register.html">Register</a></li>
+-                        <li><a href="pages/account.html">My Account</a></li>
+-                        <li><a href="pages/orders.html">Track Order</a></li>
+-                    </ul>
+-                </div>
+-            </div>
+-            <div class="footer-bottom">
+-                <p>&copy; 2026 ShopHub. All rights reserved. | Made with ❤️ by Rohit</p>
+-            </div>
+-        </div>
+-    </footer>
+-
+-    <script src="assets/js/ecommerce.js"></script>
+-</body>
+-</html>
+\ No newline at end of file
++    <nav class="main-nav">
++      <a class="hot" href="pages/deals.html">Today Deals</a>
++      <a href="pages/category-electronics.html">Electronics</a>
++      <a href="pages/category-fashion.html">Fashion</a>
++      <a href="pages/category-home.html">Home</a>
++      <a href="pages/category-beauty.html">Beauty</a>
++      <a href="pages/category-sports.html">Sports</a>
++      <a href="pages/category-books.html">Books</a>
++      <a href="pages/new-arrivals.html">New</a>
++      <a href="pages/offers.html">Offers</a>
++    </nav>
++  </div>
++</header>
++<main>
++<section class="hero"><div class="container"><div class="hero-box"><span class="meta">STEP 1 • Regenerated Homepage</span><h1>Everything you need, delivered fast.</h1><p>Discover curated picks across electronics, fashion, beauty, sports and books. This regenerated index page now links correctly to all category and utility pages.</p><div class="cta-row"><a class="btn btn-primary" href="pages/products.html">Browse Products</a><a class="btn btn-secondary" href="pages/deals.html">View Flash Deals</a></div></div></div></section>
++<section class="section"><div class="container"><h2>Shop by Category</h2><p class="lead">Quick jump into your favorite departments.</p><div class="grid">
++<a class="card" href="pages/category-electronics.html"><h3>📱 Electronics</h3><p>Mobiles, laptops, audio and accessories.</p><span class="meta">1,200+ items</span></a>
++<a class="card" href="pages/category-fashion.html"><h3>👕 Fashion</h3><p>Men, women and kids styles for every season.</p><span class="meta">2,500+ items</span></a>
++<a class="card" href="pages/category-home.html"><h3>🏠 Home & Living</h3><p>Furniture, decor, lighting and kitchen tools.</p><span class="meta">980+ items</span></a>
++<a class="card" href="pages/category-beauty.html"><h3>💄 Beauty</h3><p>Skincare, makeup and grooming essentials.</p><span class="meta">700+ items</span></a>
++<a class="card" href="pages/category-sports.html"><h3>⚽ Sports</h3><p>Fitness gear, outdoor and training products.</p><span class="meta">540+ items</span></a>
++<a class="card" href="pages/category-books.html"><h3>📚 Books</h3><p>Bestsellers, learning and self-growth books.</p><span class="meta">3,000+ titles</span></a>
++</div></div></section>
++<section class="section"><div class="container"><h2>Flash Deals</h2><p class="lead">Limited-time offers with instant add-to-cart support.</p><div class="grid"><article class="card product-card"><div class="meta">🎧 Featured</div><h3 class="product-title">Wireless Earbuds Pro</h3><p>4.8 • 3,420 reviews</p><div><span class="price current-price">$79</span><span class="old">$129</span></div><button class="btn btn-primary btn-add-cart" style="margin-top:.8rem;border:0;">Add to Cart</button></article><article class="card product-card"><div class="meta">📺 Featured</div><h3 class="product-title">4K Smart TV 55”</h3><p>4.7 • 1,900 reviews</p><div><span class="price current-price">$499</span><span class="old">$699</span></div><button class="btn btn-primary btn-add-cart" style="margin-top:.8rem;border:0;">Add to Cart</button></article><article class="card product-card"><div class="meta">👟 Featured</div><h3 class="product-title">Running Shoes Lite</h3><p>4.6 • 980 reviews</p><div><span class="price current-price">$59</span><span class="old">$89</span></div><button class="btn btn-primary btn-add-cart" style="margin-top:.8rem;border:0;">Add to Cart</button></article><article class="card product-card"><div class="meta">🌬️ Featured</div><h3 class="product-title">Air Purifier X2</h3><p>4.5 • 1,120 reviews</p><div><span class="price current-price">$129</span><span class="old">$199</span></div><button class="btn btn-primary btn-add-cart" style="margin-top:.8rem;border:0;">Add to Cart</button></article></div></div></section></main><footer><div class="container footer-grid"><div><strong>ShopHub</strong><p>Trusted e-commerce destination for electronics, fashion, home essentials and daily deals.</p></div><div><strong>Customer Care</strong><p>24/7 chat support<br>Easy 7-day returns<br>Secure checkout</p></div><div><strong>Useful Links</strong><p>Shipping Policy<br>Returns & Refunds<br>Privacy Policy</p></div></div></footer><script src="assets/js/ecommerce-full-dynamic.js"></script></body></html>
+\ No newline at end of file
