@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FoodiePlace | Table Reservation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0f0e0b;--surface:#1a1814;--card:#221f19;--accent:#e8a045;--accent2:#c45c2e;--accent3:#6dbf8a;--text:#f5f0e8;--muted:#9a9080;--border:rgba(232,160,69,0.18);--glow:rgba(232,160,69,0.22);}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;overflow-x:hidden;}
+    body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;background:rgba(15,14,11,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+    .nav-logo{display:flex;align-items:center;gap:.7rem;text-decoration:none;}
+    .nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+    .nav-logo-text{font-family:'Playfair Display',serif;font-weight:700;font-size:1.3rem;color:var(--text);}
+    .nav-links{display:flex;gap:2.2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .3s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent);}
+    .nav-order{padding:.55rem 1.4rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50px;color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;text-decoration:none;box-shadow:0 4px 20px var(--glow);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+    /* HERO */
+    .page-hero{min-height:52vh;display:flex;align-items:center;padding:8rem 4rem 4rem;position:relative;overflow:hidden;}
+    .page-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(232,160,69,0.09) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 5% 80%,rgba(196,92,46,0.07) 0%,transparent 60%);}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:50px 50px;opacity:.3;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 80%);}
+    .hero-content{position:relative;z-index:1;max-width:600px;}
+    .breadcrumb{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:1.2rem;animation:fadeUp .7s .1s ease both;}
+    .breadcrumb a{color:var(--accent);text-decoration:none;}
+    .hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,160,69,0.1);border:1px solid rgba(232,160,69,0.25);border-radius:50px;padding:.4rem 1rem;font-size:.78rem;color:var(--accent);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;animation:fadeUp .7s .15s ease both;}
+    .hero-tag::before{content:'';width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.5);}}
+    .hero-content h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.5rem,5vw,4.5rem);letter-spacing:-1.5px;line-height:1.06;animation:fadeUp .7s .2s ease both;}
+    .hero-content h1 em{font-style:italic;color:var(--accent);}
+    .hero-content p{color:var(--muted);font-size:1rem;line-height:1.8;margin-top:1rem;font-weight:300;animation:fadeUp .7s .35s ease both;}
+    .hero-perks{display:flex;gap:1.5rem;margin-top:2rem;flex-wrap:wrap;animation:fadeUp .7s .5s ease both;}
+    .hero-perk{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--muted);}
+    .hero-perk span{color:var(--accent3);}
+
+    /* LAYOUT */
+    .reservation-layout{display:grid;grid-template-columns:1fr 380px;gap:3rem;padding:3rem 4rem;align-items:start;}
+
+    /* FORM */
+    .res-form{display:flex;flex-direction:column;gap:1.5rem;}
+
+    .form-section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.8rem;}
+    .fs-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;margin-bottom:1.4rem;display:flex;align-items:center;gap:.6rem;}
+    .fs-icon{font-size:1.2rem;}
+
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem;}
+    .form-group:last-child{margin-bottom:0;}
+    .form-label{font-size:.78rem;color:var(--muted);font-weight:500;letter-spacing:.3px;}
+    .form-label span{color:var(--accent2);}
+    .form-input,.form-select,.form-textarea{width:100%;padding:.82rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'Jost',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s,box-shadow .3s;}
+    .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,160,69,0.1);}
+    .form-input::placeholder,.form-textarea::placeholder{color:var(--muted);}
+    .form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239a9080' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;background-color:var(--surface);cursor:pointer;}
+    .form-select option{background:var(--card);}
+    .form-textarea{resize:vertical;min-height:90px;line-height:1.6;}
+    .form-input.error{border-color:var(--accent2);}
+    .field-error{font-size:.72rem;color:var(--accent2);display:none;}
+    .field-error.show{display:block;}
+
+    /* GUEST SELECTOR */
+    .guest-selector{display:flex;align-items:center;gap:1rem;}
+    .guest-btn{width:40px;height:40px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;}
+    .guest-btn:hover{border-color:var(--accent);color:var(--accent);}
+    .guest-count{font-family:'Playfair Display',serif;font-weight:700;font-size:1.5rem;min-width:40px;text-align:center;}
+    .guest-label{font-size:.78rem;color:var(--muted);}
+
+    /* TABLE SELECTOR */
+    .table-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:.5rem;}
+    .table-option{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:1rem;text-align:center;cursor:pointer;transition:all .25s;}
+    .table-option:hover{border-color:rgba(232,160,69,0.4);}
+    .table-option.selected{border-color:var(--accent);background:rgba(232,160,69,0.06);}
+    .table-option.unavailable{opacity:.35;cursor:not-allowed;border-color:var(--border)!important;background:transparent!important;}
+    .to-icon{font-size:1.5rem;margin-bottom:.4rem;display:block;}
+    .to-name{font-size:.82rem;font-weight:600;}
+    .to-info{font-size:.7rem;color:var(--muted);margin-top:.2rem;}
+    .to-badge{font-size:.65rem;margin-top:.3rem;display:inline-block;padding:.15rem .5rem;border-radius:50px;}
+    .to-badge.avail{background:rgba(109,191,138,0.15);color:var(--accent3);}
+    .to-badge.taken{background:rgba(196,92,46,0.15);color:var(--accent2);}
+
+    /* TIME SLOTS */
+    .time-slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-top:.5rem;}
+    .ts-btn{padding:.55rem .4rem;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;text-align:center;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .25s;color:var(--muted);}
+    .ts-btn:hover{border-color:rgba(232,160,69,0.4);color:var(--text);}
+    .ts-btn.selected{background:rgba(232,160,69,0.1);border-color:var(--accent);color:var(--accent);}
+    .ts-btn.full{opacity:.3;cursor:not-allowed;text-decoration:line-through;}
+
+    /* OCCASION */
+    .occasion-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;}
+    .occasion-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:.7rem;text-align:center;cursor:pointer;transition:all .25s;}
+    .occasion-btn:hover{border-color:rgba(232,160,69,0.4);}
+    .occasion-btn.selected{border-color:var(--accent);background:rgba(232,160,69,0.06);}
+    .occ-icon{font-size:1.3rem;display:block;margin-bottom:.3rem;}
+    .occ-name{font-size:.72rem;font-weight:500;}
+
+    /* SIDEBAR SUMMARY */
+    .res-summary{background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;position:sticky;top:100px;}
+    .rs-img{height:200px;background:linear-gradient(135deg,#1a0a04,#4a2a14,#2a1a0a);display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;}
+    .rs-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(34,31,25,0.8) 100%);}
+    .rs-body{padding:1.8rem;}
+    .rs-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;margin-bottom:1.2rem;}
+    .rs-row{display:flex;align-items:flex-start;gap:.8rem;margin-bottom:1rem;}
+    .rs-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem;}
+    .rs-label{font-size:.72rem;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:.2rem;}
+    .rs-value{font-size:.88rem;font-weight:500;color:var(--text);}
+    .rs-value.empty{color:var(--muted);font-style:italic;}
+    .rs-divider{height:1px;background:var(--border);margin:1rem 0;}
+    .rs-perks{display:flex;flex-direction:column;gap:.6rem;}
+    .rs-perk{display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--muted);}
+    .rs-perk-icon{font-size:.9rem;}
+
+    /* SUBMIT BTN */
+    .submit-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50px;color:#fff;font-family:'Jost',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;box-shadow:0 6px 28px var(--glow);transition:transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:1.5rem;}
+    .submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 38px var(--glow);}
+
+    /* SUCCESS */
+    .res-success{display:none;text-align:center;padding:4rem 2rem;}
+    .res-success.show{display:block;}
+    .success-icon{font-size:5rem;margin-bottom:1rem;animation:bounceIn .6s ease;}
+    @keyframes bounceIn{0%{transform:scale(0);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+    .success-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;margin-bottom:.5rem;}
+    .success-title em{font-style:italic;color:var(--accent);}
+    .success-msg{color:var(--muted);font-size:.9rem;line-height:1.7;max-width:400px;margin:0 auto 1.5rem;}
+    .res-id-box{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem 2rem;margin-bottom:2rem;}
+    .rid-label{font-size:.7rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+    .rid-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--accent);}
+    .success-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .btn-primary{padding:.85rem 2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50px;color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px var(--glow);transition:transform .2s;}
+    .btn-primary:hover{transform:translateY(-2px);}
+    .btn-outline{padding:.85rem 2rem;background:transparent;border:1.5px solid var(--border);border-radius:50px;color:var(--text);font-family:'Jost',sans-serif;font-weight:500;font-size:.9rem;cursor:pointer;text-decoration:none;transition:all .3s;}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+
+    .reveal{opacity:0;transform:translateY(25px);transition:opacity .6s ease,transform .6s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:3rem;}
+    .footer-logo-text{font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;color:var(--text);}
+    .footer-text{font-size:.82rem;color:var(--muted);}
+    .footer-links{display:flex;gap:1.5rem;}
+    .footer-links a{color:var(--muted);text-decoration:none;font-size:.82rem;transition:color .2s;}
+    .footer-links a:hover{color:var(--accent);}
+
+    @media(max-width:1024px){.reservation-layout{grid-template-columns:1fr;}.res-summary{position:static;}}
+    @media(max-width:768px){nav{padding:1.1rem 1.5rem;}.nav-links{display:none;}.page-hero,.reservation-layout{padding-left:1.5rem;padding-right:1.5rem;}.form-row{grid-template-columns:1fr;}.table-grid{grid-template-columns:repeat(2,1fr);}.time-slots-grid{grid-template-columns:repeat(3,1fr);}.occasion-grid{grid-template-columns:repeat(2,1fr);}footer{padding:2rem 1.5rem;flex-direction:column;text-align:center;}}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">🍽️</div>
+      <span class="nav-logo-text">FoodiePlace</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="chef-specials.html">Chef's Specials</a></li>
+      <li><a href="reservation.html" class="active">Reserve</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="order.html" class="nav-order">Order Online</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div><div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Reservation</span></div>
+      <div class="hero-tag">Reservations Open</div>
+      <h1>Reserve Your<br/><em>Table</em> Tonight</h1>
+      <p>Join us for an unforgettable dining experience. Book your table in advance and we'll make sure everything is perfect for your arrival.</p>
+      <div class="hero-perks">
+        <div class="hero-perk"><span>✓</span> Instant confirmation</div>
+        <div class="hero-perk"><span>✓</span> Free complimentary dessert</div>
+        <div class="hero-perk"><span>✓</span> Flexible cancellation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESERVATION LAYOUT -->
+  <div class="reservation-layout" id="reservationLayout">
+    <div class="res-form" id="resForm">
+
+      <!-- STEP 1: Date, Time, Guests -->
+      <div class="form-section reveal">
+        <div class="fs-title"><span class="fs-icon">📅</span> Date & Time</div>
+        <div class="form-row" style="margin-bottom:1.2rem;">
+          <div class="form-group">
+            <label class="form-label">Date <span>*</span></label>
+            <input type="date" class="form-input" id="resDate" onchange="updateSummary()"/>
+            <span class="field-error" id="dateErr">Please select a date.</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Number of Guests <span>*</span></label>
+            <div class="guest-selector">
+              <button class="guest-btn" onclick="changeGuests(-1)">−</button>
+              <div><div class="guest-count" id="guestCount">2</div><div class="guest-label">guests</div></div>
+              <button class="guest-btn" onclick="changeGuests(1)">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Time Slot <span>*</span></label>
+          <div class="time-slots-grid">
+            <div class="ts-btn full">12:00 PM</div>
+            <div class="ts-btn full">12:30 PM</div>
+            <div class="ts-btn" onclick="selectTime(this,'1:00 PM')">1:00 PM</div>
+            <div class="ts-btn" onclick="selectTime(this,'1:30 PM')">1:30 PM</div>
+            <div class="ts-btn" onclick="selectTime(this,'2:00 PM')">2:00 PM</div>
+            <div class="ts-btn full">2:30 PM</div>
+            <div class="ts-btn" onclick="selectTime(this,'7:00 PM')">7:00 PM</div>
+            <div class="ts-btn selected" onclick="selectTime(this,'7:30 PM')">7:30 PM</div>
+            <div class="ts-btn" onclick="selectTime(this,'8:00 PM')">8:00 PM</div>
+            <div class="ts-btn" onclick="selectTime(this,'8:30 PM')">8:30 PM</div>
+            <div class="ts-btn" onclick="selectTime(this,'9:00 PM')">9:00 PM</div>
+            <div class="ts-btn full">9:30 PM</div>
+          </div>
+          <span class="field-error" id="timeErr">Please select a time slot.</span>
+        </div>
+      </div>
+
+      <!-- STEP 2: Table Preference -->
+      <div class="form-section reveal">
+        <div class="fs-title"><span class="fs-icon">🪑</span> Table Preference</div>
+        <div class="table-grid">
+          <div class="table-option selected" onclick="selectTable(this,'Indoor Window','🪟')">
+            <span class="to-icon">🪟</span>
+            <div class="to-name">Indoor Window</div>
+            <div class="to-info">Cozy with a street view</div>
+            <span class="to-badge avail">Available</span>
+          </div>
+          <div class="table-option" onclick="selectTable(this,'Outdoor Terrace','🌿')">
+            <span class="to-icon">🌿</span>
+            <div class="to-name">Outdoor Terrace</div>
+            <div class="to-info">Open-air dining</div>
+            <span class="to-badge avail">Available</span>
+          </div>
+          <div class="table-option" onclick="selectTable(this,'Private Booth','🛋️')">
+            <span class="to-icon">🛋️</span>
+            <div class="to-name">Private Booth</div>
+            <div class="to-info">Intimate & secluded</div>
+            <span class="to-badge avail">Available</span>
+          </div>
+          <div class="table-option unavailable">
+            <span class="to-icon">🍷</span>
+            <div class="to-name">Wine Cellar</div>
+            <div class="to-info">Exclusive atmosphere</div>
+            <span class="to-badge taken">Fully Booked</span>
+          </div>
+          <div class="table-option" onclick="selectTable(this,'Chef\'s Table','👨‍🍳')">
+            <span class="to-icon">👨‍🍳</span>
+            <div class="to-name">Chef's Table</div>
+            <div class="to-info">Watch the kitchen live</div>
+            <span class="to-badge avail">2 Left</span>
+          </div>
+          <div class="table-option" onclick="selectTable(this,'Garden Room','🌸')">
+            <span class="to-icon">🌸</span>
+            <div class="to-name">Garden Room</div>
+            <div class="to-info">Surrounded by nature</div>
+            <span class="to-badge avail">Available</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Occasion -->
+      <div class="form-section reveal">
+        <div class="fs-title"><span class="fs-icon">🎉</span> Special Occasion <span style="font-size:.8rem;color:var(--muted);font-family:'Jost',sans-serif;font-weight:400;">(optional)</span></div>
+        <div class="occasion-grid">
+          <div class="occasion-btn" onclick="selectOccasion(this,'Birthday')"><span class="occ-icon">🎂</span><div class="occ-name">Birthday</div></div>
+          <div class="occasion-btn" onclick="selectOccasion(this,'Anniversary')"><span class="occ-icon">💑</span><div class="occ-name">Anniversary</div></div>
+          <div class="occasion-btn" onclick="selectOccasion(this,'Date Night')"><span class="occ-icon">🕯️</span><div class="occ-name">Date Night</div></div>
+          <div class="occasion-btn" onclick="selectOccasion(this,'Business Dinner')"><span class="occ-icon">💼</span><div class="occ-name">Business</div></div>
+          <div class="occasion-btn" onclick="selectOccasion(this,'Family Gathering')"><span class="occ-icon">👨‍👩‍👧</span><div class="occ-name">Family</div></div>
+          <div class="occasion-btn" onclick="selectOccasion(this,'Just Dining')"><span class="occ-icon">🍽️</span><div class="occ-name">Just Dining</div></div>
+        </div>
+        <div class="form-group" style="margin-top:1.2rem;">
+          <label class="form-label">Special Message for Our Team</label>
+          <textarea class="form-textarea" id="specialMsg" placeholder="E.g. Birthday cake decoration, candles, flower arrangement..."></textarea>
+        </div>
+      </div>
+
+      <!-- STEP 4: Guest Details -->
+      <div class="form-section reveal">
+        <div class="fs-title"><span class="fs-icon">👤</span> Your Details</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name <span>*</span></label>
+            <input type="text" class="form-input" id="resName" placeholder="Your full name" oninput="updateSummary()"/>
+            <span class="field-error" id="nameErr">Please enter your name.</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number <span>*</span></label>
+            <input type="tel" class="form-input" id="resPhone" placeholder="+91 99999 00000" oninput="updateSummary()"/>
+            <span class="field-error" id="phoneErr">Please enter phone number.</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address <span>*</span></label>
+          <input type="email" class="form-input" id="resEmail" placeholder="your@email.com" oninput="updateSummary()"/>
+          <span class="field-error" id="emailErr">Please enter a valid email.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dietary Requirements</label>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+            <label style="display:flex;align-items:center;gap:.4rem;font-size:.82rem;cursor:pointer;"><input type="checkbox" style="accent-color:var(--accent);"/> Vegetarian</label>
+            <label style="display:flex;align-items:center;gap:.4rem;font-size:.82rem;cursor:pointer;"><input type="checkbox" style="accent-color:var(--accent);"/> Vegan</label>
+            <label style="display:flex;align-items:center;gap:.4rem;font-size:.82rem;cursor:pointer;"><input type="checkbox" style="accent-color:var(--accent);"/> Gluten-Free</label>
+            <label style="display:flex;align-items:center;gap:.4rem;font-size:.82rem;cursor:pointer;"><input type="checkbox" style="accent-color:var(--accent);"/> Nut Allergy</label>
+            <label style="display:flex;align-items:center;gap:.4rem;font-size:.82rem;cursor:pointer;"><input type="checkbox" style="accent-color:var(--accent);"/> Halal</label>
+          </div>
+        </div>
+      </div>
+
+      <button class="submit-btn" onclick="submitReservation()">
+        <span id="submitText">🍽️ Confirm Reservation</span>
+        <span id="submitLoader" style="display:none;">⏳ Booking your table...</span>
+      </button>
+    </div>
+
+    <!-- SIDEBAR SUMMARY -->
+    <div class="res-summary reveal">
+      <div class="rs-img">🕯️</div>
+      <div class="rs-body">
+        <div class="rs-title">Reservation Summary</div>
+        <div class="rs-row">
+          <span class="rs-icon">📅</span>
+          <div><div class="rs-label">Date</div><div class="rs-value empty" id="sumDate">Not selected</div></div>
+        </div>
+        <div class="rs-row">
+          <span class="rs-icon">🕐</span>
+          <div><div class="rs-label">Time</div><div class="rs-value" id="sumTime">7:30 PM</div></div>
+        </div>
+        <div class="rs-row">
+          <span class="rs-icon">👥</span>
+          <div><div class="rs-label">Guests</div><div class="rs-value" id="sumGuests">2 Guests</div></div>
+        </div>
+        <div class="rs-row">
+          <span class="rs-icon">🪑</span>
+          <div><div class="rs-label">Table</div><div class="rs-value" id="sumTable">Indoor Window 🪟</div></div>
+        </div>
+        <div class="rs-row">
+          <span class="rs-icon">🎉</span>
+          <div><div class="rs-label">Occasion</div><div class="rs-value empty" id="sumOccasion">Not specified</div></div>
+        </div>
+        <div class="rs-row">
+          <span class="rs-icon">👤</span>
+          <div><div class="rs-label">Name</div><div class="rs-value empty" id="sumName">Not entered</div></div>
+        </div>
+        <div class="rs-divider"></div>
+        <div class="rs-perks">
+          <div class="rs-perk"><span class="rs-perk-icon">🎁</span> Free complimentary dessert for all bookings</div>
+          <div class="rs-perk"><span class="rs-perk-icon">🕐</span> Table held for 15 minutes after booking time</div>
+          <div class="rs-perk"><span class="rs-perk-icon">❌</span> Free cancellation up to 2 hours before</div>
+          <div class="rs-perk"><span class="rs-perk-icon">📱</span> SMS & email confirmation sent instantly</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="res-success" id="resSuccess" style="padding:4rem;">
+    <div class="success-icon">🎊</div>
+    <div class="success-title">Table <em>Booked!</em></div>
+    <p class="success-msg">Your reservation has been confirmed. We've sent a confirmation to your email and phone. We look forward to hosting you!</p>
+    <div class="res-id-box">
+      <div class="rid-label">Reservation ID</div>
+      <div class="rid-val" id="resId">#RES-000000</div>
+    </div>
+    <div class="success-actions">
+      <a href="index.html" class="btn-primary">Back to Home</a>
+      <a href="menu.html" class="btn-outline">View Menu</a>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-logo-text">FoodiePlace</span>
+    <span class="footer-text">© 2024 FoodiePlace. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a><a href="menu.html">Menu</a><a href="order.html">Order</a><a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    let guests=2; let selectedTime='7:30 PM'; let selectedTable='Indoor Window 🪟'; let selectedOccasion='';
+
+    // Set min date
+    const today=new Date().toISOString().split('T')[0];
+    document.getElementById('resDate').min=today;
+
+    function changeGuests(d){guests=Math.max(1,Math.min(20,guests+d));document.getElementById('guestCount').textContent=guests;updateSummary();}
+    function selectTime(el,t){document.querySelectorAll('.ts-btn:not(.full)').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');selectedTime=t;document.getElementById('sumTime').textContent=t;document.getElementById('sumTime').classList.remove('empty');}
+    function selectTable(el,name,icon){document.querySelectorAll('.table-option:not(.unavailable)').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');selectedTable=name+' '+icon;document.getElementById('sumTable').textContent=selectedTable;document.getElementById('sumTable').classList.remove('empty');}
+    function selectOccasion(el,occ){document.querySelectorAll('.occasion-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');selectedOccasion=occ;document.getElementById('sumOccasion').textContent=occ;document.getElementById('sumOccasion').classList.remove('empty');}
+
+    function updateSummary(){
+      const date=document.getElementById('resDate').value;
+      const name=document.getElementById('resName').value;
+      if(date){const d=new Date(date);document.getElementById('sumDate').textContent=d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'long',year:'numeric'});document.getElementById('sumDate').classList.remove('empty');}
+      document.getElementById('sumGuests').textContent=guests+' Guest'+(guests!==1?'s':'');
+      if(name){document.getElementById('sumName').textContent=name;document.getElementById('sumName').classList.remove('empty');}
+    }
+
+    function submitReservation(){
+      let ok=true;
+      const checks=[
+        [()=>!document.getElementById('resDate').value,'dateErr'],
+        [()=>!document.getElementById('resName').value.trim(),'nameErr'],
+        [()=>!document.getElementById('resPhone').value.trim(),'phoneErr'],
+        [()=>!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('resEmail').value),'emailErr'],
+      ];
+      checks.forEach(([fn,err])=>{
+        const el=document.getElementById(err);
+        if(fn()){el.classList.add('show');ok=false;}else{el.classList.remove('show');}
+      });
+      if(!ok)return;
+
+      const btn=document.getElementById('submitText');
+      const loader=document.getElementById('submitLoader');
+      btn.style.display='none'; loader.style.display='inline';
+
+      // Save reservation
+      const resData={
+        id:'RES-'+Math.random().toString(36).substring(2,8).toUpperCase(),
+        name:document.getElementById('resName').value,
+        phone:document.getElementById('resPhone').value,
+        email:document.getElementById('resEmail').value,
+        date:document.getElementById('resDate').value,
+        time:selectedTime,guests,table:selectedTable,
+        occasion:selectedOccasion||'Just Dining',
+        message:document.getElementById('specialMsg').value,
+        status:'confirmed',bookedAt:new Date().toISOString()
+      };
+      localStorage.setItem('fp_reservation',JSON.stringify(resData));
+
+      setTimeout(()=>{
+        document.getElementById('reservationLayout').style.display='none';
+        document.getElementById('resId').textContent='#'+resData.id;
+        document.getElementById('resSuccess').classList.add('show');
+        window.scrollTo({top:0,behavior:'smooth'});
+      },2000);
+    }
+
+    const ro=new IntersectionObserver((e)=>{e.forEach((en,i)=>{if(en.isIntersecting)setTimeout(()=>en.target.classList.add('visible'),i*80);});},{threshold:.06});
+    document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+  </script>
+</body>
+</html>

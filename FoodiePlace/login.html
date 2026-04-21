@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FoodiePlace | Login / Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0f0e0b;--surface:#1a1814;--card:#221f19;--accent:#e8a045;--accent2:#c45c2e;--accent3:#6dbf8a;--text:#f5f0e8;--muted:#9a9080;--border:rgba(232,160,69,0.18);--glow:rgba(232,160,69,0.22);}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
+    body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");}
+
+    /* BG GRADIENT */
+    .page-bg{position:fixed;inset:0;z-index:0;
+      background:radial-gradient(ellipse 60% 60% at 20% 50%,rgba(232,160,69,0.07) 0%,transparent 70%),
+                radial-gradient(ellipse 50% 50% at 80% 80%,rgba(196,92,46,0.06) 0%,transparent 70%),
+                var(--bg);}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;background:rgba(15,14,11,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+    .nav-logo{display:flex;align-items:center;gap:.7rem;text-decoration:none;}
+    .nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+    .nav-logo-text{font-family:'Playfair Display',serif;font-weight:700;font-size:1.3rem;color:var(--text);}
+
+    /* MAIN LAYOUT */
+    .login-wrap{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:100vh;position:relative;z-index:1;}
+
+    /* LEFT PANEL */
+    .login-visual{background:linear-gradient(145deg,#1a0e04 0%,#2a1a0a 40%,#1a1210 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6rem 4rem;position:relative;overflow:hidden;}
+    .lv-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 30% 60%,rgba(232,160,69,0.12) 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 80% 20%,rgba(196,92,46,0.08) 0%,transparent 70%);}
+    .lv-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;opacity:.2;}
+    .lv-content{position:relative;z-index:1;text-align:center;}
+    .lv-plate{font-size:8rem;margin-bottom:2rem;display:block;animation:floatPlate 5s ease-in-out infinite;}
+    @keyframes floatPlate{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-18px) rotate(3deg);}}
+    .lv-title{font-family:'Playfair Display',serif;font-weight:900;font-size:2.5rem;letter-spacing:-1px;margin-bottom:1rem;}
+    .lv-title em{font-style:italic;color:var(--accent);}
+    .lv-sub{color:var(--muted);font-size:.95rem;line-height:1.7;max-width:340px;margin:0 auto 2.5rem;font-weight:300;}
+    .lv-features{display:flex;flex-direction:column;gap:.9rem;text-align:left;max-width:300px;margin:0 auto;}
+    .lv-feature{display:flex;align-items:center;gap:.9rem;background:rgba(232,160,69,0.06);border:1px solid var(--border);border-radius:14px;padding:.9rem 1.2rem;}
+    .lv-f-icon{font-size:1.3rem;flex-shrink:0;}
+    .lv-f-text{font-size:.84rem;color:var(--muted);line-height:1.4;}
+    .lv-f-text strong{color:var(--text);display:block;font-size:.88rem;}
+
+    /* RIGHT PANEL */
+    .login-panel{display:flex;flex-direction:column;justify-content:center;padding:6rem 4rem;overflow-y:auto;}
+    .lp-inner{max-width:420px;margin:0 auto;width:100%;}
+
+    /* TABS */
+    .auth-tabs{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:.3rem;margin-bottom:2rem;}
+    .auth-tab{flex:1;padding:.65rem;text-align:center;border-radius:50px;cursor:pointer;font-size:.88rem;font-weight:600;color:var(--muted);transition:all .3s;}
+    .auth-tab.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 16px var(--glow);}
+
+    .lp-title{font-family:'Playfair Display',serif;font-weight:900;font-size:2rem;letter-spacing:-.5px;margin-bottom:.4rem;}
+    .lp-title em{font-style:italic;color:var(--accent);}
+    .lp-sub{font-size:.88rem;color:var(--muted);margin-bottom:2rem;line-height:1.6;}
+
+    /* SOCIAL LOGIN */
+    .social-btns{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.5rem;}
+    .social-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.8rem;background:var(--card);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .25s;text-decoration:none;}
+    .social-btn:hover{border-color:rgba(232,160,69,0.4);background:rgba(232,160,69,0.05);}
+    .social-icon{font-size:1.1rem;}
+
+    .divider{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;}
+    .divider-line{flex:1;height:1px;background:var(--border);}
+    .divider-text{font-size:.75rem;color:var(--muted);letter-spacing:.5px;}
+
+    /* FORM */
+    .form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.1rem;}
+    .form-label{font-size:.78rem;color:var(--muted);font-weight:500;letter-spacing:.3px;}
+    .form-label span{color:var(--accent2);}
+    .input-wrap{position:relative;}
+    .form-input{width:100%;padding:.85rem 1rem .85rem 2.8rem;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-family:'Jost',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s,box-shadow .3s;}
+    .form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,160,69,0.1);}
+    .form-input::placeholder{color:var(--muted);}
+    .form-input.error{border-color:var(--accent2);}
+    .input-icon{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none;}
+    .input-toggle{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);font-size:.9rem;cursor:pointer;color:var(--muted);transition:color .2s;}
+    .input-toggle:hover{color:var(--accent);}
+    .field-error{font-size:.72rem;color:var(--accent2);display:none;}
+    .field-error.show{display:block;}
+
+    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+
+    /* PASSWORD STRENGTH */
+    .pwd-strength{margin-top:.4rem;}
+    .pwd-bar{height:4px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:.3rem;}
+    .pwd-fill{height:100%;border-radius:4px;transition:width .3s,background .3s;width:0;}
+    .pwd-label{font-size:.7rem;color:var(--muted);}
+
+    /* REMEMBER & FORGOT */
+    .form-extras{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem;}
+    .remember{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--muted);cursor:pointer;}
+    .remember input{accent-color:var(--accent);}
+    .forgot{font-size:.82rem;color:var(--accent);text-decoration:none;transition:opacity .2s;}
+    .forgot:hover{opacity:.8;}
+
+    /* SUBMIT */
+    .submit-btn{width:100%;padding:.95rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50px;color:#fff;font-family:'Jost',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;box-shadow:0 6px 28px var(--glow);transition:transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+    .submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 38px var(--glow);}
+
+    .terms{font-size:.74rem;color:var(--muted);text-align:center;margin-top:1rem;line-height:1.5;}
+    .terms a{color:var(--accent);text-decoration:none;}
+
+    /* SUCCESS */
+    .login-success{display:none;text-align:center;padding:2rem 0;}
+    .login-success.show{display:block;}
+    .ls-icon{font-size:4rem;margin-bottom:1rem;animation:bounceIn .6s ease;}
+    @keyframes bounceIn{0%{transform:scale(0);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+    .ls-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;margin-bottom:.5rem;}
+    .ls-title em{font-style:italic;color:var(--accent);}
+    .ls-msg{color:var(--muted);font-size:.9rem;margin-bottom:2rem;line-height:1.6;}
+    .btn-primary{display:inline-block;padding:.85rem 2.2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50px;color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px var(--glow);transition:transform .2s;}
+    .btn-primary:hover{transform:translateY(-2px);}
+
+    /* OTP */
+    .otp-wrap{display:none;}
+    .otp-wrap.show{display:block;}
+    .otp-inputs{display:flex;gap:.6rem;justify-content:center;margin:1.2rem 0;}
+    .otp-input{width:48px;height:52px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-family:'Jost',sans-serif;font-size:1.3rem;font-weight:700;text-align:center;outline:none;transition:border-color .3s;}
+    .otp-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,160,69,0.1);}
+
+    @media(max-width:900px){.login-wrap{grid-template-columns:1fr;}.login-visual{display:none;}.login-panel{padding:6rem 2rem 3rem;}}
+    @media(max-width:480px){.social-btns{grid-template-columns:1fr;}.form-row-2{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+  <div class="page-bg"></div>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">🍽️</div>
+      <span class="nav-logo-text">FoodiePlace</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:1.5rem;">
+      <a href="menu.html" style="color:var(--muted);font-size:.88rem;text-decoration:none;font-weight:500;transition:color .3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Browse Menu</a>
+      <a href="order.html" style="padding:.55rem 1.4rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50px;color:#fff;font-weight:600;font-size:.85rem;text-decoration:none;">Order Now</a>
+    </div>
+  </nav>
+
+  <div class="login-wrap">
+
+    <!-- LEFT VISUAL -->
+    <div class="login-visual">
+      <div class="lv-bg"></div>
+      <div class="lv-grid"></div>
+      <div class="lv-content">
+        <span class="lv-plate">🍽️</span>
+        <div class="lv-title">Welcome to<br/><em>FoodiePlace</em></div>
+        <p class="lv-sub">Sign in to unlock exclusive member benefits, track your orders, and enjoy a personalised dining experience.</p>
+        <div class="lv-features">
+          <div class="lv-feature">
+            <span class="lv-f-icon">📋</span>
+            <div class="lv-f-text"><strong>Order History</strong>Reorder your favourites in one click</div>
+          </div>
+          <div class="lv-feature">
+            <span class="lv-f-icon">📍</span>
+            <div class="lv-f-text"><strong>Live Tracking</strong>Track your delivery in real time</div>
+          </div>
+          <div class="lv-feature">
+            <span class="lv-f-icon">🎁</span>
+            <div class="lv-f-text"><strong>Rewards</strong>Earn points on every order</div>
+          </div>
+          <div class="lv-feature">
+            <span class="lv-f-icon">❤️</span>
+            <div class="lv-f-text"><strong>Favourites</strong>Save dishes you love</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="login-panel">
+      <div class="lp-inner">
+
+        <!-- TABS -->
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Sign In</div>
+          <div class="auth-tab" id="tabRegister" onclick="switchTab('register')">Create Account</div>
+        </div>
+
+        <!-- ── LOGIN FORM ── -->
+        <div id="loginForm">
+          <div class="lp-title">Welcome <em>Back!</em></div>
+          <p class="lp-sub">Sign in to your account to continue ordering your favourites.</p>
+
+          <div class="social-btns">
+            <button class="social-btn" onclick="socialLogin('Google')"><span class="social-icon">🔵</span> Google</button>
+            <button class="social-btn" onclick="socialLogin('Facebook')"><span class="social-icon">📘</span> Facebook</button>
+          </div>
+
+          <div class="divider"><div class="divider-line"></div><span class="divider-text">OR SIGN IN WITH EMAIL</span><div class="divider-line"></div></div>
+
+          <div class="form-group">
+            <label class="form-label">Email / Phone <span>*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">📧</span>
+              <input type="text" class="form-input" id="loginEmail" placeholder="your@email.com or +91 99999 00000"/>
+            </div>
+            <span class="field-error" id="loginEmailErr">Please enter email or phone.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password <span>*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">🔒</span>
+              <input type="password" class="form-input" id="loginPwd" placeholder="Your password" style="padding-right:2.8rem;"/>
+              <span class="input-toggle" onclick="togglePwd('loginPwd',this)">👁️</span>
+            </div>
+            <span class="field-error" id="loginPwdErr">Please enter your password.</span>
+          </div>
+
+          <div class="form-extras">
+            <label class="remember"><input type="checkbox" id="rememberMe"/> Remember me</label>
+            <a href="#" class="forgot" onclick="showForgot()">Forgot password?</a>
+          </div>
+
+          <button class="submit-btn" onclick="submitLogin()">
+            <span id="loginBtnText">🚀 Sign In</span>
+            <span id="loginLoader" style="display:none;">⏳ Signing in...</span>
+          </button>
+
+          <div class="terms">By signing in, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</div>
+        </div>
+
+        <!-- ── REGISTER FORM ── -->
+        <div id="registerForm" style="display:none;">
+          <div class="lp-title">Join <em>FoodiePlace</em></div>
+          <p class="lp-sub">Create your account and start enjoying exclusive member benefits today.</p>
+
+          <div class="social-btns">
+            <button class="social-btn" onclick="socialLogin('Google')"><span class="social-icon">🔵</span> Continue with Google</button>
+            <button class="social-btn" onclick="socialLogin('Facebook')"><span class="social-icon">📘</span> Facebook</button>
+          </div>
+
+          <div class="divider"><div class="divider-line"></div><span class="divider-text">OR REGISTER WITH EMAIL</span><div class="divider-line"></div></div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">First Name <span>*</span></label>
+              <div class="input-wrap">
+                <span class="input-icon">👤</span>
+                <input type="text" class="form-input" id="regFirst" placeholder="First name"/>
+              </div>
+              <span class="field-error" id="regFirstErr">Required.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <div class="input-wrap">
+                <span class="input-icon">👤</span>
+                <input type="text" class="form-input" id="regLast" placeholder="Last name"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address <span>*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">📧</span>
+              <input type="email" class="form-input" id="regEmail" placeholder="your@email.com"/>
+            </div>
+            <span class="field-error" id="regEmailErr">Please enter a valid email.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Phone Number <span>*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">📱</span>
+              <input type="tel" class="form-input" id="regPhone" placeholder="+91 99999 00000"/>
+            </div>
+            <span class="field-error" id="regPhoneErr">Please enter phone number.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password <span>*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">🔒</span>
+              <input type="password" class="form-input" id="regPwd" placeholder="Min. 8 characters" oninput="checkStrength(this.value)" style="padding-right:2.8rem;"/>
+              <span class="input-toggle" onclick="togglePwd('regPwd',this)">👁️</span>
+            </div>
+            <div class="pwd-strength">
+              <div class="pwd-bar"><div class="pwd-fill" id="pwdFill"></div></div>
+              <div class="pwd-label" id="pwdLabel">Enter a password</div>
+            </div>
+            <span class="field-error" id="regPwdErr">Password must be at least 8 characters.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Confirm Password <span>*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">🔒</span>
+              <input type="password" class="form-input" id="regConfirm" placeholder="Repeat your password" style="padding-right:2.8rem;"/>
+              <span class="input-toggle" onclick="togglePwd('regConfirm',this)">👁️</span>
+            </div>
+            <span class="field-error" id="regConfirmErr">Passwords do not match.</span>
+          </div>
+
+          <div style="margin-bottom:1.4rem;">
+            <label style="display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--muted);cursor:pointer;line-height:1.5;">
+              <input type="checkbox" id="agreeTerms" style="accent-color:var(--accent);margin-top:.15rem;flex-shrink:0;"/>
+              I agree to the <a href="#" style="color:var(--accent);text-decoration:none;">Terms of Service</a> and <a href="#" style="color:var(--accent);text-decoration:none;">Privacy Policy</a>
+            </label>
+            <span class="field-error" id="termsErr">Please accept terms to continue.</span>
+          </div>
+
+          <button class="submit-btn" onclick="submitRegister()">
+            <span id="regBtnText">🎉 Create Account</span>
+            <span id="regLoader" style="display:none;">⏳ Creating account...</span>
+          </button>
+        </div>
+
+        <!-- ── FORGOT PASSWORD ── -->
+        <div id="forgotForm" style="display:none;">
+          <div class="lp-title">Reset <em>Password</em></div>
+          <p class="lp-sub">Enter your email and we'll send you a link to reset your password.</p>
+          <div class="form-group">
+            <label class="form-label">Email Address <span>*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">📧</span>
+              <input type="email" class="form-input" id="forgotEmail" placeholder="your@email.com"/>
+            </div>
+          </div>
+          <button class="submit-btn" onclick="submitForgot()">📨 Send Reset Link</button>
+          <div style="text-align:center;margin-top:1rem;"><a href="#" onclick="showLoginForm()" style="color:var(--accent);font-size:.85rem;text-decoration:none;">← Back to Sign In</a></div>
+        </div>
+
+        <!-- ── OTP VERIFY ── -->
+        <div id="otpForm" style="display:none;">
+          <div class="lp-title">Verify <em>OTP</em></div>
+          <p class="lp-sub">Enter the 6-digit code sent to your email/phone.</p>
+          <div class="otp-inputs">
+            <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,1)" id="otp1"/>
+            <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,2)" id="otp2"/>
+            <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,3)" id="otp3"/>
+            <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,4)" id="otp4"/>
+            <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,5)" id="otp5"/>
+            <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,6)" id="otp6"/>
+          </div>
+          <button class="submit-btn" onclick="verifyOTP()">✅ Verify OTP</button>
+          <div style="text-align:center;margin-top:1rem;font-size:.82rem;color:var(--muted);">Didn't receive it? <a href="#" style="color:var(--accent);text-decoration:none;">Resend OTP</a></div>
+        </div>
+
+        <!-- SUCCESS -->
+        <div class="login-success" id="loginSuccess">
+          <div class="ls-icon">🎉</div>
+          <div class="ls-title">Welcome to <em>FoodiePlace!</em></div>
+          <p class="ls-msg" id="successMsg">You've been signed in successfully. Enjoy your meal!</p>
+          <a href="index.html" class="btn-primary">Go to Homepage →</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── TAB SWITCHING ──
+    function switchTab(tab){
+      document.getElementById('tabLogin').classList.toggle('active',tab==='login');
+      document.getElementById('tabRegister').classList.toggle('active',tab==='register');
+      document.getElementById('loginForm').style.display=tab==='login'?'block':'none';
+      document.getElementById('registerForm').style.display=tab==='register'?'block':'none';
+      document.getElementById('forgotForm').style.display='none';
+      document.getElementById('otpForm').style.display='none';
+    }
+    function showForgot(){document.getElementById('loginForm').style.display='none';document.getElementById('forgotForm').style.display='block';}
+    function showLoginForm(){document.getElementById('forgotForm').style.display='none';document.getElementById('loginForm').style.display='block';}
+
+    // ── PASSWORD TOGGLE ──
+    function togglePwd(id,el){const inp=document.getElementById(id);inp.type=inp.type==='password'?'text':'password';el.textContent=inp.type==='password'?'👁️':'🙈';}
+
+    // ── PASSWORD STRENGTH ──
+    function checkStrength(val){
+      const fill=document.getElementById('pwdFill');const label=document.getElementById('pwdLabel');
+      if(!val){fill.style.width='0';label.textContent='Enter a password';fill.style.background='var(--border)';return;}
+      let score=0;
+      if(val.length>=8)score++;if(/[A-Z]/.test(val))score++;if(/[0-9]/.test(val))score++;if(/[^A-Za-z0-9]/.test(val))score++;
+      const levels=[{w:'20%',c:'#e74c3c',t:'Weak'},{w:'45%',c:'#f39c12',t:'Fair'},{w:'70%',c:'#e8a045',t:'Good'},{w:'100%',c:'#6dbf8a',t:'Strong'}];
+      const l=levels[score-1]||levels[0];
+      fill.style.width=l.w;fill.style.background=l.c;label.textContent=l.t;label.style.color=l.c;
+    }
+
+    // ── OTP NAVIGATION ──
+    function otpNext(el,num){
+      if(el.value.length===1&&num<6)document.getElementById('otp'+(num+1)).focus();
+      if(num===6){const otp=[1,2,3,4,5,6].map(n=>document.getElementById('otp'+n).value).join('');if(otp.length===6)verifyOTP();}
+    }
+
+    // ── LOGIN SUBMIT ──
+    function submitLogin(){
+      const email=document.getElementById('loginEmail').value.trim();
+      const pwd=document.getElementById('loginPwd').value;
+      let ok=true;
+      if(!email){document.getElementById('loginEmailErr').classList.add('show');document.getElementById('loginEmail').classList.add('error');ok=false;}
+      else{document.getElementById('loginEmailErr').classList.remove('show');document.getElementById('loginEmail').classList.remove('error');}
+      if(!pwd){document.getElementById('loginPwdErr').classList.add('show');document.getElementById('loginPwd').classList.add('error');ok=false;}
+      else{document.getElementById('loginPwdErr').classList.remove('show');document.getElementById('loginPwd').classList.remove('error');}
+      if(!ok)return;
+
+      document.getElementById('loginBtnText').style.display='none';
+      document.getElementById('loginLoader').style.display='inline';
+
+      setTimeout(()=>{
+        // Save user session
+        const user={name:email.split('@')[0]||email,email,loggedIn:true};
+        localStorage.setItem('fp_user',JSON.stringify(user));
+        document.getElementById('loginForm').style.display='none';
+        document.getElementById('successMsg').textContent=`Welcome back, ${user.name}! Redirecting...`;
+        document.getElementById('loginSuccess').classList.add('show');
+        setTimeout(()=>window.location.href='index.html',2000);
+      },1800);
+    }
+
+    // ── REGISTER SUBMIT ──
+    function submitRegister(){
+      let ok=true;
+      const first=document.getElementById('regFirst').value.trim();
+      const email=document.getElementById('regEmail').value.trim();
+      const phone=document.getElementById('regPhone').value.trim();
+      const pwd=document.getElementById('regPwd').value;
+      const confirm=document.getElementById('regConfirm').value;
+      const terms=document.getElementById('agreeTerms').checked;
+
+      const checks=[
+        [!first,'regFirstErr',document.getElementById('regFirst')],
+        [!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),'regEmailErr',document.getElementById('regEmail')],
+        [!phone,'regPhoneErr',document.getElementById('regPhone')],
+        [pwd.length<8,'regPwdErr',document.getElementById('regPwd')],
+        [pwd!==confirm,'regConfirmErr',document.getElementById('regConfirm')],
+      ];
+      checks.forEach(([cond,errId,inp])=>{
+        if(cond){document.getElementById(errId).classList.add('show');inp&&inp.classList.add('error');ok=false;}
+        else{document.getElementById(errId).classList.remove('show');inp&&inp.classList.remove('error');}
+      });
+      if(!terms){document.getElementById('termsErr').classList.add('show');ok=false;}
+      else document.getElementById('termsErr').classList.remove('show');
+      if(!ok)return;
+
+      document.getElementById('regBtnText').style.display='none';
+      document.getElementById('regLoader').style.display='inline';
+
+      setTimeout(()=>{
+        // Show OTP verification
+        document.getElementById('registerForm').style.display='none';
+        document.getElementById('otpForm').style.display='block';
+        document.getElementById('regLoader').style.display='none';
+        document.getElementById('regBtnText').style.display='inline';
+        setTimeout(()=>document.getElementById('otp1').focus(),200);
+      },1500);
+    }
+
+    // ── OTP VERIFY ──
+    function verifyOTP(){
+      const otp=[1,2,3,4,5,6].map(n=>document.getElementById('otp'+n).value).join('');
+      // Accept any 6-digit code for demo
+      if(otp.length===6){
+        const user={name:document.getElementById('regFirst').value||'User',email:document.getElementById('regEmail').value,loggedIn:true,isNew:true};
+        localStorage.setItem('fp_user',JSON.stringify(user));
+        document.getElementById('otpForm').style.display='none';
+        document.getElementById('successMsg').textContent=`Account created! Welcome to FoodiePlace, ${user.name}!`;
+        document.getElementById('loginSuccess').classList.add('show');
+        setTimeout(()=>window.location.href='index.html',2500);
+      } else {
+        document.querySelectorAll('.otp-input').forEach(i=>{i.style.borderColor='var(--accent2)';});
+      }
+    }
+
+    // ── FORGOT ──
+    function submitForgot(){
+      const email=document.getElementById('forgotEmail').value;
+      if(!email.includes('@')){document.getElementById('forgotEmail').classList.add('error');return;}
+      document.getElementById('forgotForm').style.display='none';
+      document.getElementById('successMsg').textContent=`Password reset link sent to ${email}. Check your inbox!`;
+      document.getElementById('loginSuccess').classList.add('show');
+    }
+
+    // ── SOCIAL LOGIN ──
+    function socialLogin(provider){
+      const user={name:provider+' User',email:provider.toLowerCase()+'@demo.com',loggedIn:true,provider};
+      localStorage.setItem('fp_user',JSON.stringify(user));
+      document.getElementById('loginForm').style.display='none';
+      document.getElementById('registerForm').style.display='none';
+      document.getElementById('successMsg').textContent=`Signed in with ${provider}! Welcome to FoodiePlace!`;
+      document.getElementById('loginSuccess').classList.add('show');
+      setTimeout(()=>window.location.href='index.html',2000);
+    }
+
+    // Check if already logged in
+    const user=JSON.parse(localStorage.getItem('fp_user')||'null');
+    if(user&&user.loggedIn){
+      document.getElementById('tabLogin').style.display='none';
+      document.getElementById('tabRegister').style.display='none';
+      document.getElementById('loginForm').style.display='none';
+      document.getElementById('successMsg').textContent=`You're already signed in as ${user.name}!`;
+      document.getElementById('loginSuccess').classList.add('show');
+    }
+  </script>
+</body>
+</html>
