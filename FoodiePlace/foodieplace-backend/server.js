@@ -4,10 +4,9 @@ const express   = require('express');
 const cors      = require('cors');
 const helmet    = require('helmet');
 const morgan    = require('morgan');
-const connectDB = require(__dirname + '/config/db');
-//const { apiLimiter, orderLimiter } = require('./middleware/rateLimiter');
-const path = require('path');
-const orderRoutes = require(path.join(__dirname, 'routes', 'orders'));
+const connectDB = require('./config/db');
+const { apiLimiter, orderLimiter } = require('./middleware/rateLimiter');
+const orderRoutes = require('./routes/orders');
 
 const app  = express();
 const PORT = process.env.PORT || 5000;
@@ -19,16 +18,7 @@ connectDB();
 app.use(helmet());
 
 // ── CORS ──
-app.use(cors({
-  origin: [
-    process.env.CLIENT_URL || 'http://127.0.0.1:5500',
-    'http://localhost:5500',
-    'http://localhost:3000',
-  ],
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
+app.use(cors());
 // ── Body Parser ──
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -37,11 +27,11 @@ app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
 // ── Global Rate Limit ──
-//app.use('/api/', apiLimiter);
+app.use('/api/', apiLimiter);
 
 // ── Routes ──
-//app.use('/api/orders', orderLimiter, orderRoutes);
-app.use('/api/orders', orderRoutes);
+app.use('/api/orders', orderLimiter, orderRoutes);
+
 // ── Health Check ──
 app.get('/api/health', (req, res) => {
   res.json({

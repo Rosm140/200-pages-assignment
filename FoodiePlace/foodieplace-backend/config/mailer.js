@@ -1,11 +1,26 @@
-// Dummy mailer (no real email, just avoids crash)
+const nodemailer = require('nodemailer');
 
-const sendOrderConfirmation = async () => {
-  console.log("📧 Order confirmation email skipped (dummy)");
+const sendOrderEmail = async (to, order) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_FROM,
+      to,
+      subject: `Order Confirmed - ${order.orderId}`,
+      text: `Your order ${order.orderId} has been placed successfully!`,
+    });
+
+    console.log('📧 Email sent');
+  } catch (err) {
+    console.error('Email error:', err.message);
+  }
 };
 
-const sendStatusUpdate = async () => {
-  console.log("📧 Status update email skipped (dummy)");
-};
-
-module.exports = { sendOrderConfirmation, sendStatusUpdate };
+module.exports = { sendOrderEmail };

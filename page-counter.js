@@ -7,7 +7,9 @@
 const manualPageCounts = {
     'travel-agency-website': 10,     // ✅ TravelGo - COMPLETED
     'e-commerce': 20,       // ✅ ShopHub - COMPLETED
-    'restaurant': 0,
+    'FoodiePlace': 12,      // ✅ FoodiePlace - COMPLETED
+    'portfolio': 8,         // ✅ DevFolio - COMPLETED
+    'real-estate': 0,
     'portfolio': 8,     //
     'real-estate': 0,
     'education': 0,
@@ -26,7 +28,7 @@ const manualPageCounts = {
 const websiteConfig = [
     { id: 1, name: "TravelGo", folder: "travel-agency-website", icon: "✈️", description: "Modern travel agency with booking system", techStack: ["HTML5", "CSS3", "JavaScript", "Responsive"], features: ["User authentication system", "Travel packages catalog", "Booking forms & gallery", "Blog & FAQ sections"], expectedPages: 10 },
     { id: 2, name: "ShopHub", folder: "e-commerce", icon: "🛒", description: "Full-featured e-commerce platform", techStack: ["HTML5", "CSS3", "JavaScript", "Cart System"], features: ["Product catalog & filters", "Shopping cart functionality", "User accounts & wishlist", "Checkout & payment UI"], expectedPages: 20 },
-    { id: 3, name: "FoodiePlace", folder: "restaurant", icon: "🍽️", description: "Restaurant with online ordering", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Digital menu & categories", "Online ordering system", "Table reservations", "Chef specials & gallery"], expectedPages: 12 },
+    { id: 3, name: "FoodiePlace", folder: "FoodiePlace", icon: "🍽️", description: "Restaurant with online ordering", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Digital menu & categories", "Online ordering system", "Table reservations", "Chef specials & gallery"], expectedPages: 12 },
     { id: 4, name: "DevFolio", folder: "portfolio", icon: "💼", description: "Professional developer portfolio", techStack: ["HTML5", "CSS3", "JavaScript", "Animations"], features: ["Project showcase", "Skills & experience", "Contact form", "Blog & testimonials"], expectedPages: 8 },
     { id: 5, name: "HomeQuest", folder: "real-estate", icon: "🏠", description: "Real estate property listings", techStack: ["HTML5", "CSS3", "JavaScript", "Search"], features: ["Property listings & filters", "Advanced search", "Agent profiles", "Virtual tours"], expectedPages: 18 },
     { id: 6, name: "EduLearn", folder: "education", icon: "🎓", description: "Online learning platform", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Course catalog", "Student dashboard", "Video lessons", "Quizzes & certificates"], expectedPages: 22 },
