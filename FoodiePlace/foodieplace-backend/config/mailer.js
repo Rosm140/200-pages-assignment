@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
  */
 const sendOrderConfirmation = async (order) => {
   const mailOptions = {
-    from: `"FoodiePlace" <${process.env.EMAIL_USER}>`,
+    from: process.env.EMAIL_FROM || `"FoodiePlace" <${process.env.EMAIL_USER}>`,
     to: order.customerEmail,
     subject: `Order Confirmed - #${order.orderId}`,
     html: `
@@ -35,7 +35,7 @@ const sendOrderConfirmation = async (order) => {
  */
 const sendStatusUpdate = async (update) => {
   const mailOptions = {
-    from: `"FoodiePlace" <${process.env.EMAIL_USER}>`,
+    from: process.env.EMAIL_FROM || `"FoodiePlace" <${process.env.EMAIL_USER}>`,
     to: update.email,
     subject: `Order Status Update - #${update.orderId}`,
     html: `

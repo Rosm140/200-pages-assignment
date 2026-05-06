@@ -11,8 +11,22 @@ const orderRoutes = require('./routes/orders');
 const app  = express();
 const PORT = process.env.PORT || 5000;
 
-// ── Connect MongoDB ──
-connectDB();
+// ── Start Server ──
+const startServer = async () => {
+  try {
+    // Ensure DB connects before server starts
+    await connectDB();
+    
+    app.listen(PORT, () => {
+      console.log(`\n🍽️  FoodiePlace Backend running on port ${PORT}`);
+      console.log(`📡 Environment : ${process.env.NODE_ENV}`);
+      console.log(`🌐 Health check: http://localhost:${PORT}/api/health\n`);
+    });
+  } catch (err) {
+    console.error('❌ Server Startup Error:', err.name, '-', err.message);
+    process.exit(1);
+  }
+};
 
 // ── Security ──
 app.use(helmet());
@@ -56,8 +70,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`\n🍽️  FoodiePlace Backend running on port ${PORT}`);
-  console.log(`📡 Environment : ${process.env.NODE_ENV}`);
-  console.log(`🌐 Health check: http://localhost:${PORT}/api/health\n`);
-});
+startServer();

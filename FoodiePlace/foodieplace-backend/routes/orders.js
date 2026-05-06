@@ -106,13 +106,13 @@ router.post('/', orderValidation, async (req, res) => {
     const order = await Order.create(orderData);
 
     // ── SEND CONFIRMATION EMAIL (non-blocking) ──
-    if (customerEmail) {
+    if (order.customerEmail) {
       sendOrderConfirmation({
         orderId: order.orderId,
-        customerName,
-        customerEmail,
-        orderType,
-        deliveryAddress: orderData.deliveryAddress || {},
+        customerName: order.customerName,
+        customerEmail: order.customerEmail,
+        orderType: order.orderType,
+        deliveryAddress: order.deliveryAddress || {},
         items: order.items,
         subtotal: order.subtotal,
         deliveryFee: order.deliveryFee,

@@ -36,7 +36,6 @@ const orderSchema = new mongoose.Schema(
     // Auto-generated order ID
     orderId: {
       type: String,
-      unique: true,
     },
 
     // ── CUSTOMER DETAILS ──
@@ -128,8 +127,9 @@ const orderSchema = new mongoose.Schema(
 );
 
 // ── AUTO-GENERATE orderId BEFORE SAVE ──
-orderSchema.pre('save', async function (next) {
+orderSchema.pre('save', async function (next) { // Use 'save' for both new and updates
   if (!this.orderId) {
+    // For production-level reliability, a dedicated counter collection is recommended.
     const count = await mongoose.model('Order').countDocuments();
     this.orderId = 'FP-' + String(count + 1).padStart(5, '0');
   }
@@ -151,7 +151,7 @@ orderSchema.virtual('formattedDate').get(function () {
 });
 
 // ── INDEX for fast lookups ──
-orderSchema.index({ orderId: 1 });
+orderSchema.index({ orderId: 1 }, { unique: true, sparse: true }); // Combine unique and sparse
 orderSchema.index({ customerPhone: 1 });
 orderSchema.index({ status: 1 });
 orderSchema.index({ createdAt: -1 });
