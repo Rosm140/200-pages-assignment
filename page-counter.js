@@ -16,7 +16,7 @@ const manualPageCounts = {
     'FitZone': 14,     // ✅ FitZone - COMPLETED      
     'TechBlog': 25,    // ✅ TechBlog - COMPLETED
     'MediCare': 16,   // ✅ MediCare - COMPLETED
-    'events': 0,
+    'EventPro': 15,    // ✅ EventPro - COMPLETED
     'photography': 0,
     'music': 0,
     'fashion': 0,
@@ -35,7 +35,7 @@ const websiteConfig = [
     { id: 7, name: "FitZone", folder: "FitZone", icon: "💪", description: "Gym & fitness center", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Class schedules", "Trainer profiles", "Membership plans", "BMI calculator"], expectedPages: 14 },
     { id: 8, name: "TechBlog", folder: "TechBlog", icon: "📰", description: "Technology news & articles", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Article listings", "Categories & tags", "Author profiles", "Comments system UI"], expectedPages: 25 },
     { id: 9, name: "MediCare", folder: "MediCare", icon: "🏥", description: "Hospital & healthcare services", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Doctor profiles", "Appointment booking", "Services & departments", "Health tips blog"], expectedPages: 16 },
-    { id: 10, name: "EventPro", folder: "events", icon: "🎉", description: "Event planning & management", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Event listings", "Ticket booking", "Venue showcase", "Gallery & reviews"], expectedPages: 15 },
+    { id: 10, name: "EventPro", folder: "EventPro", icon: "🎉", description: "Event planning & management", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Event listings", "Ticket booking", "Venue showcase", "Gallery & reviews"], expectedPages: 15 },
     { id: 11, name: "LensArt", folder: "photography", icon: "📸", description: "Photography portfolio", techStack: ["HTML5", "CSS3", "JavaScript", "Gallery"], features: ["Photo galleries", "Service packages", "Booking system", "Client testimonials"], expectedPages: 10 },
     { id: 12, name: "SoundWave", folder: "music", icon: "🎵", description: "Music streaming platform", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Music player UI", "Playlists & albums", "Artist profiles", "Search & discovery"], expectedPages: 18 },
     { id: 13, name: "StyleHub", folder: "fashion", icon: "👗", description: "Fashion e-commerce", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Product catalog", "Size guides", "Lookbook & trends", "Shopping cart"], expectedPages: 17 },
