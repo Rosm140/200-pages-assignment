@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoundWave – Music Streaming Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #080610;
+      --bg2: #0D0B1A;
+      --card: #12101F;
+      --card2: #1A1730;
+      --purple: #7B2FFF;
+      --purple2: #9D5FFF;
+      --pink: #FF2D78;
+      --cyan: #00E5FF;
+      --green: #1DB954;
+      --white: #F0EDF8;
+      --muted: #6B6585;
+      --border: rgba(123,47,255,0.2);
+      --border2: rgba(255,255,255,0.06);
+      --glow-purple: 0 0 40px rgba(123,47,255,0.3);
+      --glow-pink: 0 0 40px rgba(255,45,120,0.3);
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'Figtree', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 2px; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(8,6,16,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border2);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-head); font-size: 1.4rem; font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo-icon {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-link {
+      padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 500;
+      color: var(--muted); transition: all 0.2s;
+    }
+    .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-nav-login {
+      padding: 9px 20px; border-radius: 8px; font-size: 0.82rem; font-weight: 600;
+      color: var(--white); border: 1px solid var(--border2); transition: all 0.2s;
+    }
+    .btn-nav-login:hover { border-color: var(--purple); color: var(--purple); }
+    .btn-nav-start {
+      padding: 9px 20px; border-radius: 8px; font-size: 0.82rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white; transition: all 0.2s;
+      box-shadow: var(--glow-purple);
+    }
+    .btn-nav-start:hover { transform: translateY(-1px); box-shadow: 0 0 60px rgba(123,47,255,0.5); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; position: relative; overflow: hidden;
+      display: flex; align-items: center; padding: 120px 48px 80px;
+    }
+    /* Animated gradient orbs */
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(80px);
+      pointer-events: none; animation: orb-float 8s ease-in-out infinite;
+    }
+    .orb-1 { width: 500px; height: 500px; background: rgba(123,47,255,0.25); top: -100px; right: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: rgba(255,45,120,0.2); bottom: -50px; left: 30%; animation-delay: -4s; }
+    .orb-3 { width: 300px; height: 300px; background: rgba(0,229,255,0.1); top: 40%; left: -80px; animation-delay: -2s; }
+    @keyframes orb-float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
+
+    /* Animated waveform BG */
+    .waveform-bg {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+      display: flex; align-items: flex-end; gap: 3px; padding: 0 48px;
+      opacity: 0.08;
+    }
+    .wave-bar {
+      flex: 1; background: linear-gradient(to top, var(--purple), var(--pink));
+      border-radius: 2px 2px 0 0;
+      animation: wave-anim 1.4s ease-in-out infinite alternate;
+    }
+    @keyframes wave-anim { from { transform: scaleY(0.2); } to { transform: scaleY(1); } }
+
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 2; width: 100%; }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(123,47,255,0.15); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 16px;
+      font-size: 0.75rem; font-weight: 600; color: var(--purple2);
+      margin-bottom: 24px; width: fit-content;
+    }
+    .hero-label-dot { width: 6px; height: 6px; background: var(--purple2); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .hero h1 {
+      font-family: var(--font-head); font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(135deg, var(--purple2), var(--pink), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted); line-height: 1.8; margin-bottom: 40px; max-width: 460px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+    .btn-primary-hero {
+      padding: 14px 32px; border-radius: 12px; font-size: 0.92rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white; display: inline-flex; align-items: center; gap: 10px;
+      box-shadow: var(--glow-purple); transition: all 0.3s;
+    }
+    .btn-primary-hero:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(123,47,255,0.5); }
+    .btn-ghost-hero {
+      padding: 14px 32px; border-radius: 12px; font-size: 0.92rem; font-weight: 600;
+      border: 1px solid var(--border2); color: var(--white);
+      display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s;
+    }
+    .btn-ghost-hero:hover { border-color: var(--purple); background: rgba(123,47,255,0.1); }
+    .hero-trust { display: flex; gap: 28px; align-items: center; }
+    .trust-divider { width: 1px; height: 32px; background: var(--border2); }
+    .trust-stat-num { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; }
+    .trust-stat-label { font-size: 0.72rem; color: var(--muted); }
+
+    /* ── NOW PLAYING CARD ── */
+    .now-playing {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 20px; padding: 24px; position: relative; overflow: hidden;
+      box-shadow: var(--glow-purple);
+    }
+    .now-playing::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(123,47,255,0.05), rgba(255,45,120,0.05));
+    }
+    .np-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .np-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); }
+    .np-live {
+      display: flex; align-items: center; gap: 6px; font-size: 0.65rem; font-weight: 700;
+      color: var(--green); text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .live-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 1s infinite; }
+    .np-album-art {
+      width: 100%; aspect-ratio: 1; border-radius: 14px; object-fit: cover;
+      margin-bottom: 20px; position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      animation: spin-slow 20s linear infinite paused;
+    }
+    .np-album-art.playing { animation-play-state: running; }
+    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .np-track-info { margin-bottom: 16px; }
+    .np-track-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .np-artist { font-size: 0.82rem; color: var(--muted); }
+    .np-progress-wrap { margin-bottom: 12px; }
+    .np-progress-bar {
+      width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;
+      margin-bottom: 6px; cursor: pointer; position: relative; overflow: hidden;
+    }
+    .np-progress-fill {
+      height: 100%; background: linear-gradient(to right, var(--purple), var(--pink));
+      border-radius: 2px; transition: width 1s linear;
+    }
+    .np-times { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--muted); }
+    .np-controls { display: flex; align-items: center; justify-content: center; gap: 24px; }
+    .ctrl-btn {
+      background: none; border: none; color: var(--muted); font-size: 0.9rem; cursor: pointer;
+      transition: color 0.2s; padding: 4px;
+    }
+    .ctrl-btn:hover { color: var(--white); }
+    .ctrl-play {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border: none; color: white; font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--glow-purple); transition: all 0.2s;
+    }
+    .ctrl-play:hover { transform: scale(1.08); }
+    .np-volume { display: flex; align-items: center; gap: 8px; margin-top: 16px; }
+    .np-volume i { font-size: 0.82rem; color: var(--muted); }
+    .np-volume-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer; }
+    .np-volume-fill { height: 100%; width: 70%; background: var(--purple2); border-radius: 2px; }
+
+    /* ── SECTION SHARED ── */
+    .section { padding: 80px 48px; position: relative; }
+    .section-label {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.2em; color: var(--purple2); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::before { content: ''; width: 24px; height: 2px; background: linear-gradient(to right, var(--purple), var(--pink)); }
+    .section-title {
+      font-family: var(--font-head); font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800; letter-spacing: -0.02em; margin-bottom: 48px;
+    }
+    .section-title .accent {
+      background: linear-gradient(135deg, var(--purple2), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ── FEATURED ALBUMS ── */
+    .albums-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .album-card {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 16px; overflow: hidden; transition: all 0.3s; cursor: pointer;
+    }
+    .album-card:hover { transform: translateY(-6px); border-color: var(--border); box-shadow: var(--glow-purple); }
+    .album-cover-wrap { position: relative; aspect-ratio: 1; overflow: hidden; }
+    .album-cover { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .album-card:hover .album-cover { transform: scale(1.07); }
+    .album-play-btn {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+      background: rgba(0,0,0,0.4);
+    }
+    .album-card:hover .album-play-btn { opacity: 1; }
+    .album-play-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.2rem;
+      box-shadow: 0 8px 32px rgba(123,47,255,0.5);
+      transform: scale(0.8); transition: transform 0.3s;
+    }
+    .album-card:hover .album-play-icon { transform: scale(1); }
+    .album-body { padding: 16px; }
+    .album-title { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .album-artist { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
+    .album-meta { display: flex; justify-content: space-between; align-items: center; }
+    .album-year { font-size: 0.68rem; color: var(--muted); }
+    .album-genre {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 4px; letter-spacing: 0.08em;
+    }
+    .genre-pop { background: rgba(255,45,120,0.15); color: var(--pink); }
+    .genre-hiphop { background: rgba(123,47,255,0.15); color: var(--purple2); }
+    .genre-indie { background: rgba(0,229,255,0.15); color: var(--cyan); }
+    .genre-rnb { background: rgba(29,185,84,0.15); color: var(--green); }
+
+    /* ── FEATURED PLAYLISTS ── */
+    .playlists-wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; }
+    .playlist-featured {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 20px; overflow: hidden; position: relative; cursor: pointer;
+      transition: all 0.3s;
+    }
+    .playlist-featured:hover { box-shadow: var(--glow-purple); border-color: var(--border); }
+    .playlist-featured-img {
+      width: 100%; height: 260px; object-fit: cover;
+      transition: transform 0.5s; filter: saturate(1.2);
+    }
+    .playlist-featured:hover .playlist-featured-img { transform: scale(1.04); }
+    .playlist-featured-body { padding: 24px; }
+    .playlist-feat-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--purple2); margin-bottom: 8px;
+    }
+    .playlist-feat-name { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; }
+    .playlist-feat-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; }
+    .playlist-feat-meta { display: flex; align-items: center; gap: 16px; font-size: 0.75rem; color: var(--muted); }
+    .playlist-stack { display: flex; flex-direction: column; gap: 12px; }
+    .playlist-row {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: all 0.25s;
+    }
+    .playlist-row:hover { border-color: var(--border); background: var(--card2); transform: translateX(4px); }
+    .playlist-row-img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+    .playlist-row-name { font-weight: 600; font-size: 0.88rem; margin-bottom: 3px; }
+    .playlist-row-meta { font-size: 0.72rem; color: var(--muted); }
+    .playlist-row-play {
+      margin-left: auto; width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(123,47,255,0.15); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--purple2); font-size: 0.75rem; flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .playlist-row:hover .playlist-row-play { background: var(--purple); color: white; }
+
+    /* ── ARTISTS ── */
+    .artists-section { background: var(--bg2); }
+    .artists-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 12px; scrollbar-width: none; }
+    .artists-scroll::-webkit-scrollbar { display: none; }
+    .artist-card {
+      flex-shrink: 0; width: 180px; text-align: center; cursor: pointer;
+      transition: all 0.3s;
+    }
+    .artist-card:hover { transform: translateY(-6px); }
+    .artist-img-wrap {
+      width: 140px; height: 140px; margin: 0 auto 14px;
+      border-radius: 50%; overflow: hidden;
+      border: 2px solid var(--border2); transition: all 0.3s;
+      position: relative;
+    }
+    .artist-card:hover .artist-img-wrap {
+      border-color: var(--purple);
+      box-shadow: 0 0 30px rgba(123,47,255,0.4);
+    }
+    .artist-img { width: 100%; height: 100%; object-fit: cover; }
+    .artist-ring {
+      position: absolute; inset: -4px; border-radius: 50%;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, var(--purple), var(--pink)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out; mask-composite: exclude;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .artist-card:hover .artist-ring { opacity: 1; }
+    .artist-name { font-family: var(--font-head); font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; }
+    .artist-genre { font-size: 0.72rem; color: var(--muted); }
+    .artist-followers { font-size: 0.68rem; color: var(--purple2); font-weight: 600; margin-top: 6px; }
+
+    /* ── SEARCH & DISCOVERY ── */
+    .search-section { background: var(--bg2); }
+    .search-hero-box {
+      background: linear-gradient(135deg, rgba(123,47,255,0.15), rgba(255,45,120,0.15));
+      border: 1px solid var(--border); border-radius: 20px; padding: 48px;
+      text-align: center; margin-bottom: 48px; position: relative; overflow: hidden;
+    }
+    .search-hero-box::before {
+      content: ''; position: absolute; top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 300px; height: 300px; background: rgba(123,47,255,0.15);
+      border-radius: 50%; filter: blur(60px);
+    }
+    .search-hero-box h3 {
+      font-family: var(--font-head); font-size: 1.8rem; font-weight: 800;
+      margin-bottom: 8px; position: relative;
+    }
+    .search-hero-box p { color: var(--muted); margin-bottom: 28px; position: relative; }
+    .search-input-wrap { display: flex; gap: 12px; max-width: 560px; margin: 0 auto; position: relative; }
+    .search-input {
+      flex: 1; background: rgba(255,255,255,0.06); border: 1px solid var(--border2);
+      border-radius: 12px; padding: 14px 20px; color: var(--white);
+      font-family: var(--font-body); font-size: 0.95rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--purple); }
+    .search-input::placeholder { color: var(--muted); }
+    .search-btn {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border: none; border-radius: 12px; padding: 14px 28px;
+      color: white; font-family: var(--font-body); font-size: 0.88rem;
+      font-weight: 700; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .search-btn:hover { transform: translateY(-1px); box-shadow: var(--glow-purple); }
+    .genres-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .genre-card {
+      border-radius: 14px; padding: 20px; cursor: pointer;
+      position: relative; overflow: hidden; transition: all 0.3s; min-height: 100px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .genre-card:hover { transform: scale(1.03); }
+    .genre-card-bg { position: absolute; inset: 0; object-fit: cover; opacity: 0.4; transition: opacity 0.3s; }
+    .genre-card:hover .genre-card-bg { opacity: 0.6; }
+    .genre-card-overlay { position: absolute; inset: 0; opacity: 0.7; }
+    .genre-card-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; position: relative; z-index: 2; }
+    .genre-card-count { font-size: 0.72rem; color: rgba(255,255,255,0.7); position: relative; z-index: 2; margin-top: 4px; }
+
+    /* ── TRACK LIST ── */
+    .tracklist-section { background: var(--card); border-radius: 20px; margin: 0 48px; }
+    .tracklist-header { padding: 28px 28px 0; display: flex; justify-content: space-between; align-items: center; }
+    .tracklist-header h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; }
+    .track-row {
+      display: grid; grid-template-columns: 40px 1fr auto auto; gap: 16px;
+      align-items: center; padding: 12px 28px; transition: background 0.2s; cursor: pointer;
+    }
+    .track-row:hover { background: rgba(255,255,255,0.04); }
+    .track-row:hover .track-num { display: none; }
+    .track-row:hover .track-play-hover { display: block; }
+    .track-num { font-size: 0.82rem; color: var(--muted); text-align: center; }
+    .track-play-hover { display: none; color: var(--purple2); font-size: 0.82rem; text-align: center; }
+    .track-info { display: flex; align-items: center; gap: 14px; }
+    .track-thumb { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+    .track-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 3px; }
+    .track-artist { font-size: 0.75rem; color: var(--muted); }
+    .track-album { font-size: 0.78rem; color: var(--muted); }
+    .track-duration { font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .track-heart { font-size: 0.82rem; color: var(--muted); cursor: pointer; transition: color 0.2s; padding: 4px; }
+    .track-heart:hover, .track-heart.liked { color: var(--pink); }
+    .track-divider { border: none; border-top: 1px solid var(--border2); margin: 0 28px; }
+
+    /* ── PRICING ── */
+    .pricing-section { padding: 80px 48px; }
+    .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .plan-card {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 20px; padding: 36px 32px; transition: all 0.3s; position: relative;
+    }
+    .plan-card:hover { border-color: var(--border); transform: translateY(-4px); }
+    .plan-card.featured { border-color: var(--purple); box-shadow: var(--glow-purple); }
+    .plan-popular {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white; font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 4px 16px; border-radius: 20px; white-space: nowrap;
+    }
+    .plan-name { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 16px; }
+    .plan-price { font-family: var(--font-head); font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+    .plan-price sup { font-size: 1.2rem; vertical-align: super; }
+    .plan-period { font-size: 0.82rem; color: var(--muted); margin-bottom: 28px; }
+    .plan-features { display: flex; flex-direction: column; gap: 12px; padding: 24px 0; border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); margin-bottom: 28px; }
+    .plan-feat { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+    .plan-feat i { color: var(--purple2); width: 16px; font-size: 0.75rem; }
+    .plan-feat.no i { color: var(--muted); }
+    .plan-feat.no span { color: var(--muted); }
+    .plan-btn {
+      display: block; text-align: center; border-radius: 10px; padding: 13px;
+      font-weight: 700; font-size: 0.88rem; transition: all 0.2s;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border2); color: var(--white);
+    }
+    .plan-card.featured .plan-btn { background: linear-gradient(135deg, var(--purple), var(--pink)); border: none; box-shadow: var(--glow-purple); }
+    .plan-btn:hover { transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2); border-top: 1px solid var(--border2);
+      padding: 60px 48px 32px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand { font-family: var(--font-head); font-size: 1.5rem; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .footer-icon { width: 32px; height: 32px; background: linear-gradient(135deg,var(--purple),var(--pink)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
+    .footer-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; margin-bottom: 24px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .footer-social {
+      width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 0.85rem; transition: all 0.2s;
+    }
+    .footer-social:hover { border-color: var(--purple); color: var(--purple); background: rgba(123,47,255,0.1); }
+    .footer-col h5 { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--white); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 10px; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--purple2); }
+    .footer-bottom { border-top: 1px solid var(--border2); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--muted); flex-wrap: wrap; gap: 10px; }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white; padding: 12px 24px; border-radius: 10px;
+      font-size: 0.85rem; font-weight: 600;
+      transform: translateY(60px); opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .now-playing { max-width: 400px; margin: 0 auto; }
+      .albums-grid { grid-template-columns: repeat(2,1fr); }
+      .playlists-wrap { grid-template-columns: 1fr; }
+      .genres-grid { grid-template-columns: repeat(2,1fr); }
+      .plans-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .tracklist-section { margin: 0 24px; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 20px 60px; }
+      .section { padding: 60px 20px; }
+      .albums-grid { grid-template-columns: repeat(2,1fr); }
+      .pricing-section { padding: 60px 20px; }
+      .plans-grid { grid-template-columns: 1fr; }
+      footer { padding: 48px 20px 24px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .tracklist-section { margin: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- WAVEFORM BG -->
+<div class="waveform-bg" id="waveform-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🎵</div>
+    SoundWave
+  </div>
+  <div class="nav-links">
+    <a href="#music" class="nav-link">Discover</a>
+    <a href="#playlists" class="nav-link">Playlists</a>
+    <a href="#artists" class="nav-link">Artists</a>
+    <a href="#search" class="nav-link">Search</a>
+    <a href="#pricing" class="nav-link">Premium</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="btn-nav-login" onclick="showToast('Login coming soon!');return false;">Log In</a>
+    <a href="#pricing" class="btn-nav-start">Start Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-grid">
+    <div>
+      <div class="hero-label reveal"><div class="hero-label-dot"></div> 80M+ songs · Zero ads on Premium</div>
+      <h1 class="reveal"><span class="grad">Music</span> Without<br>Limits</h1>
+      <p class="hero-sub reveal">Stream 80 million songs, discover new artists, build your perfect playlists, and listen offline anywhere in the world.</p>
+      <div class="hero-btns reveal">
+        <a href="#pricing" class="btn-primary-hero"><i class="fas fa-play"></i> Start Listening Free</a>
+        <a href="#music" class="btn-ghost-hero"><i class="fas fa-headphones"></i> Browse Music</a>
+      </div>
+      <div class="hero-trust reveal">
+        <div><div class="trust-stat-num">80M+</div><div class="trust-stat-label">Songs</div></div>
+        <div class="trust-divider"></div>
+        <div><div class="trust-stat-num">4M+</div><div class="trust-stat-label">Artists</div></div>
+        <div class="trust-divider"></div>
+        <div><div class="trust-stat-num">5B+</div><div class="trust-stat-label">Streams</div></div>
+      </div>
+    </div>
+    <!-- NOW PLAYING WIDGET -->
+    <div class="reveal reveal-delay-1">
+      <div class="now-playing">
+        <div class="np-header">
+          <span class="np-label">Now Playing</span>
+          <span class="np-live"><div class="live-dot"></div>Live</span>
+        </div>
+        <img class="np-album-art" id="np-art" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80" alt="Album Art">
+        <div class="np-track-info">
+          <div class="np-track-name" id="np-name">Midnight Frequencies</div>
+          <div class="np-artist" id="np-artist">The Neon Collective</div>
+        </div>
+        <div class="np-progress-wrap">
+          <div class="np-progress-bar" onclick="seekTrack(event, this)">
+            <div class="np-progress-fill" id="np-progress" style="width:35%"></div>
+          </div>
+          <div class="np-times">
+            <span id="np-current">1:24</span>
+            <span>4:02</span>
+          </div>
+        </div>
+        <div class="np-controls">
+          <button class="ctrl-btn" onclick="prevTrack()" title="Previous"><i class="fas fa-step-backward"></i></button>
+          <button class="ctrl-btn" onclick="showToast('Shuffle on!')" title="Shuffle"><i class="fas fa-random"></i></button>
+          <button class="ctrl-play" id="play-btn" onclick="togglePlay()"><i class="fas fa-play" id="play-icon"></i></button>
+          <button class="ctrl-btn" onclick="showToast('Repeat on!')" title="Repeat"><i class="fas fa-redo"></i></button>
+          <button class="ctrl-btn" onclick="nextTrack()" title="Next"><i class="fas fa-step-forward"></i></button>
+        </div>
+        <div class="np-volume">
+          <i class="fas fa-volume-down"></i>
+          <div class="np-volume-bar" onclick="setVolume(event, this)">
+            <div class="np-volume-fill" id="volume-fill"></div>
+          </div>
+          <i class="fas fa-volume-up"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED MUSIC -->
+<section class="section" id="music">
+  <div class="section-label reveal">New Releases</div>
+  <div class="section-title reveal">Featured <span class="accent">Albums</span></div>
+  <div class="albums-grid">
+    <div class="album-card reveal" onclick="playAlbum('Midnight Frequencies','The Neon Collective','https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80')">
+      <div class="album-cover-wrap">
+        <img class="album-cover" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80" alt="">
+        <div class="album-play-btn"><div class="album-play-icon"><i class="fas fa-play"></i></div></div>
+      </div>
+      <div class="album-body">
+        <div class="album-title">Midnight Frequencies</div>
+        <div class="album-artist">The Neon Collective</div>
+        <div class="album-meta"><span class="album-year">2024</span><span class="album-genre genre-indie">Indie</span></div>
+      </div>
+    </div>
+    <div class="album-card reveal reveal-delay-1" onclick="playAlbum('Ultraviolet','Zara Nova','https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&q=80')">
+      <div class="album-cover-wrap">
+        <img class="album-cover" src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&q=80" alt="">
+        <div class="album-play-btn"><div class="album-play-icon"><i class="fas fa-play"></i></div></div>
+      </div>
+      <div class="album-body">
+        <div class="album-title">Ultraviolet</div>
+        <div class="album-artist">Zara Nova</div>
+        <div class="album-meta"><span class="album-year">2024</span><span class="album-genre genre-pop">Pop</span></div>
+      </div>
+    </div>
+    <div class="album-card reveal reveal-delay-2" onclick="playAlbum('Street Chronicles','D-Flow','https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80')">
+      <div class="album-cover-wrap">
+        <img class="album-cover" src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80" alt="">
+        <div class="album-play-btn"><div class="album-play-icon"><i class="fas fa-play"></i></div></div>
+      </div>
+      <div class="album-body">
+        <div class="album-title">Street Chronicles</div>
+        <div class="album-artist">D-Flow</div>
+        <div class="album-meta"><span class="album-year">2024</span><span class="album-genre genre-hiphop">Hip-Hop</span></div>
+      </div>
+    </div>
+    <div class="album-card reveal reveal-delay-3" onclick="playAlbum('Soulful Nights','Asha Ray','https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80')">
+      <div class="album-cover-wrap">
+        <img class="album-cover" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80" alt="">
+        <div class="album-play-btn"><div class="album-play-icon"><i class="fas fa-play"></i></div></div>
+      </div>
+      <div class="album-body">
+        <div class="album-title">Soulful Nights</div>
+        <div class="album-artist">Asha Ray</div>
+        <div class="album-meta"><span class="album-year">2024</span><span class="album-genre genre-rnb">R&B</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP TRACKS -->
+<div class="tracklist-section">
+  <div class="tracklist-header reveal">
+    <h3>🔥 Trending Tracks</h3>
+    <a href="#" onclick="showToast('Full tracklist coming!');return false;" style="font-size:0.78rem;color:var(--purple2);font-weight:600">See all →</a>
+  </div>
+  <div style="padding-top:16px">
+    <div class="track-row reveal" onclick="playTrack('Midnight Frequencies','The Neon Collective')">
+      <div class="track-num">1</div><div class="track-play-hover"><i class="fas fa-play"></i></div>
+      <div class="track-info">
+        <img class="track-thumb" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=80&q=80" alt="">
+        <div><div class="track-name">Midnight Frequencies</div><div class="track-artist">The Neon Collective</div></div>
+      </div>
+      <div class="track-album">Midnight Frequencies</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <i class="track-heart fas fa-heart" onclick="likeTrack(event,this)"></i>
+        <div class="track-duration">4:02</div>
+      </div>
+    </div>
+    <hr class="track-divider">
+    <div class="track-row reveal" onclick="playTrack('Love in Neon','Zara Nova')">
+      <div class="track-num">2</div><div class="track-play-hover"><i class="fas fa-play"></i></div>
+      <div class="track-info">
+        <img class="track-thumb" src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=80&q=80" alt="">
+        <div><div class="track-name">Love in Neon</div><div class="track-artist">Zara Nova</div></div>
+      </div>
+      <div class="track-album">Ultraviolet</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <i class="track-heart fas fa-heart liked" onclick="likeTrack(event,this)"></i>
+        <div class="track-duration">3:45</div>
+      </div>
+    </div>
+    <hr class="track-divider">
+    <div class="track-row reveal" onclick="playTrack('City Lights','D-Flow')">
+      <div class="track-num">3</div><div class="track-play-hover"><i class="fas fa-play"></i></div>
+      <div class="track-info">
+        <img class="track-thumb" src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=80&q=80" alt="">
+        <div><div class="track-name">City Lights</div><div class="track-artist">D-Flow</div></div>
+      </div>
+      <div class="track-album">Street Chronicles</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <i class="track-heart fas fa-heart" onclick="likeTrack(event,this)"></i>
+        <div class="track-duration">3:28</div>
+      </div>
+    </div>
+    <hr class="track-divider">
+    <div class="track-row reveal" onclick="playTrack('Soul Whisper','Asha Ray')">
+      <div class="track-num">4</div><div class="track-play-hover"><i class="fas fa-play"></i></div>
+      <div class="track-info">
+        <img class="track-thumb" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=80&q=80" alt="">
+        <div><div class="track-name">Soul Whisper</div><div class="track-artist">Asha Ray</div></div>
+      </div>
+      <div class="track-album">Soulful Nights</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <i class="track-heart fas fa-heart" onclick="likeTrack(event,this)"></i>
+        <div class="track-duration">4:17</div>
+      </div>
+    </div>
+    <hr class="track-divider">
+    <div class="track-row reveal" onclick="playTrack('Sunrise Session','The Neon Collective')">
+      <div class="track-num">5</div><div class="track-play-hover"><i class="fas fa-play"></i></div>
+      <div class="track-info">
+        <img class="track-thumb" src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=80&q=80" alt="">
+        <div><div class="track-name">Sunrise Session</div><div class="track-artist">The Neon Collective</div></div>
+      </div>
+      <div class="track-album">Midnight Frequencies</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <i class="track-heart fas fa-heart" onclick="likeTrack(event,this)"></i>
+        <div class="track-duration">3:54</div>
+      </div>
+    </div>
+    <div style="padding:20px 28px">
+      <a href="#" onclick="showToast('Full library coming soon!');return false;" style="font-size:0.82rem;font-weight:600;color:var(--purple2);display:flex;align-items:center;gap:6px">View all trending tracks <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYLISTS -->
+<section class="section" id="playlists">
+  <div class="section-label reveal">Curated Collections</div>
+  <div class="section-title reveal">Featured <span class="accent">Playlists</span></div>
+  <div class="playlists-wrap">
+    <div class="playlist-featured reveal" onclick="playAlbum('Chill Vibes','SoundWave Editorial','https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&q=80')">
+      <img class="playlist-featured-img" src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&q=80" alt="">
+      <div class="playlist-featured-body">
+        <div class="playlist-feat-label">SoundWave Editorial</div>
+        <div class="playlist-feat-name">Chill Vibes Only</div>
+        <div class="playlist-feat-desc">The perfect soundtrack for late nights, slow mornings, and everything in between.</div>
+        <div class="playlist-feat-meta">
+          <span><i class="fas fa-music"></i> 48 tracks</span>
+          <span><i class="fas fa-clock"></i> 3h 12m</span>
+          <span><i class="fas fa-users"></i> 2.4M followers</span>
+        </div>
+      </div>
+    </div>
+    <div class="playlist-stack">
+      <div class="playlist-row reveal" onclick="playAlbum('Workout Bangers','SoundWave','https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&q=80')">
+        <img class="playlist-row-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&q=80" alt="">
+        <div>
+          <div class="playlist-row-name">Workout Bangers</div>
+          <div class="playlist-row-meta">62 tracks · 1.8M followers</div>
+        </div>
+        <div class="playlist-row-play"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="playlist-row reveal" onclick="playAlbum('Late Night Drive','SoundWave','https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=80&q=80')">
+        <img class="playlist-row-img" src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=80&q=80" alt="">
+        <div>
+          <div class="playlist-row-name">Late Night Drive</div>
+          <div class="playlist-row-meta">34 tracks · 3.2M followers</div>
+        </div>
+        <div class="playlist-row-play"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="playlist-row reveal" onclick="playAlbum('Indie Discoveries','SoundWave','https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=80&q=80')">
+        <img class="playlist-row-img" src="https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=80&q=80" alt="">
+        <div>
+          <div class="playlist-row-name">Indie Discoveries</div>
+          <div class="playlist-row-meta">55 tracks · 980K followers</div>
+        </div>
+        <div class="playlist-row-play"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="playlist-row reveal" onclick="playAlbum('Hindi Hits 2024','SoundWave','https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=80&q=80')">
+        <img class="playlist-row-img" src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=80&q=80" alt="">
+        <div>
+          <div class="playlist-row-name">Hindi Hits 2024</div>
+          <div class="playlist-row-meta">80 tracks · 5.6M followers</div>
+        </div>
+        <div class="playlist-row-play"><i class="fas fa-play"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTISTS -->
+<section class="section artists-section" id="artists">
+  <div class="section-label reveal">Popular This Week</div>
+  <div class="section-title reveal">Trending <span class="accent">Artists</span></div>
+  <div class="artists-scroll reveal">
+    <div class="artist-card" onclick="showToast('Opening artist profile...')">
+      <div class="artist-img-wrap"><img class="artist-img" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Zara Nova"><div class="artist-ring"></div></div>
+      <div class="artist-name">Zara Nova</div>
+      <div class="artist-genre">Pop · Electronic</div>
+      <div class="artist-followers">4.2M followers</div>
+    </div>
+    <div class="artist-card" onclick="showToast('Opening artist profile...')">
+      <div class="artist-img-wrap"><img class="artist-img" src="https://randomuser.me/api/portraits/men/32.jpg" alt="D-Flow"><div class="artist-ring"></div></div>
+      <div class="artist-name">D-Flow</div>
+      <div class="artist-genre">Hip-Hop · Rap</div>
+      <div class="artist-followers">3.8M followers</div>
+    </div>
+    <div class="artist-card" onclick="showToast('Opening artist profile...')">
+      <div class="artist-img-wrap"><img class="artist-img" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Asha Ray"><div class="artist-ring"></div></div>
+      <div class="artist-name">Asha Ray</div>
+      <div class="artist-genre">R&B · Soul</div>
+      <div class="artist-followers">2.9M followers</div>
+    </div>
+    <div class="artist-card" onclick="showToast('Opening artist profile...')">
+      <div class="artist-img-wrap"><img class="artist-img" src="https://randomuser.me/api/portraits/men/56.jpg" alt="Rohan V"><div class="artist-ring"></div></div>
+      <div class="artist-name">Rohan V</div>
+      <div class="artist-genre">Indie · Alternative</div>
+      <div class="artist-followers">1.6M followers</div>
+    </div>
+    <div class="artist-card" onclick="showToast('Opening artist profile...')">
+      <div class="artist-img-wrap"><img class="artist-img" src="https://randomuser.me/api/portraits/women/28.jpg" alt="Meera K"><div class="artist-ring"></div></div>
+      <div class="artist-name">Meera K</div>
+      <div class="artist-genre">Classical Fusion</div>
+      <div class="artist-followers">890K followers</div>
+    </div>
+    <div class="artist-card" onclick="showToast('Opening artist profile...')">
+      <div class="artist-img-wrap"><img class="artist-img" src="https://randomuser.me/api/portraits/men/22.jpg" alt="Arjun Beat"><div class="artist-ring"></div></div>
+      <div class="artist-name">Arjun Beat</div>
+      <div class="artist-genre">EDM · House</div>
+      <div class="artist-followers">2.1M followers</div>
+    </div>
+    <div class="artist-card" onclick="showToast('Opening artist profile...')">
+      <div class="artist-img-wrap"><img class="artist-img" src="https://randomuser.me/api/portraits/women/52.jpg" alt="Priya M"><div class="artist-ring"></div></div>
+      <div class="artist-name">Priya M</div>
+      <div class="artist-genre">Bollywood · Pop</div>
+      <div class="artist-followers">5.4M followers</div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<section class="section search-section" id="search">
+  <div class="search-hero-box reveal">
+    <h3>Find Your Sound</h3>
+    <p>Search 80 million songs, artists, albums, and podcasts</p>
+    <div class="search-input-wrap">
+      <input class="search-input" id="main-search" type="text" placeholder="Artists, songs, podcasts...">
+      <button class="search-btn" onclick="doSearch()"><i class="fas fa-search"></i> Search</button>
+    </div>
+  </div>
+  <div class="section-label reveal">Browse by Genre</div>
+  <div class="genres-grid">
+    <div class="genre-card reveal" onclick="showToast('Browsing Pop...')" style="background:#FF2D78">
+      <div class="genre-card-overlay" style="background:linear-gradient(135deg,#FF2D78,#FF6B35)"></div>
+      <div class="genre-card-name">Pop</div><div class="genre-card-count">18M+ tracks</div>
+    </div>
+    <div class="genre-card reveal reveal-delay-1" onclick="showToast('Browsing Hip-Hop...')" style="background:#7B2FFF">
+      <div class="genre-card-overlay" style="background:linear-gradient(135deg,#7B2FFF,#9D5FFF)"></div>
+      <div class="genre-card-name">Hip-Hop</div><div class="genre-card-count">12M+ tracks</div>
+    </div>
+    <div class="genre-card reveal reveal-delay-2" onclick="showToast('Browsing Electronic...')" style="background:#00E5FF">
+      <div class="genre-card-overlay" style="background:linear-gradient(135deg,#00E5FF,#0057FF)"></div>
+      <div class="genre-card-name">Electronic</div><div class="genre-card-count">9M+ tracks</div>
+    </div>
+    <div class="genre-card reveal reveal-delay-3" onclick="showToast('Browsing R&B...')" style="background:#1DB954">
+      <div class="genre-card-overlay" style="background:linear-gradient(135deg,#1DB954,#00A884)"></div>
+      <div class="genre-card-name">R&B & Soul</div><div class="genre-card-count">7M+ tracks</div>
+    </div>
+    <div class="genre-card reveal" onclick="showToast('Browsing Rock...')" style="background:#FF6B35">
+      <div class="genre-card-overlay" style="background:linear-gradient(135deg,#FF6B35,#FF4500)"></div>
+      <div class="genre-card-name">Rock</div><div class="genre-card-count">15M+ tracks</div>
+    </div>
+    <div class="genre-card reveal reveal-delay-1" onclick="showToast('Browsing Bollywood...')" style="background:#FFB800">
+      <div class="genre-card-overlay" style="background:linear-gradient(135deg,#FFB800,#FF8C00)"></div>
+      <div class="genre-card-name">Bollywood</div><div class="genre-card-count">5M+ tracks</div>
+    </div>
+    <div class="genre-card reveal reveal-delay-2" onclick="showToast('Browsing Classical...')" style="background:#9B59B6">
+      <div class="genre-card-overlay" style="background:linear-gradient(135deg,#9B59B6,#6C3483)"></div>
+      <div class="genre-card-name">Classical</div><div class="genre-card-count">3M+ tracks</div>
+    </div>
+    <div class="genre-card reveal reveal-delay-3" onclick="showToast('Browsing Podcasts...')" style="background:#2ECC71">
+      <div class="genre-card-overlay" style="background:linear-gradient(135deg,#2ECC71,#27AE60)"></div>
+      <div class="genre-card-name">Podcasts</div><div class="genre-card-count">2M+ shows</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="section-label reveal">Go Premium</div>
+  <div class="section-title reveal">Choose Your <span class="accent">Plan</span></div>
+  <div class="plans-grid">
+    <div class="plan-card reveal">
+      <div class="plan-name">Free</div>
+      <div class="plan-price">₹0</div>
+      <div class="plan-period">Forever free</div>
+      <div class="plan-features">
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Stream with ads</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Shuffle play only</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Normal audio quality</span></div>
+        <div class="plan-feat no"><i class="fas fa-times"></i><span>Offline listening</span></div>
+        <div class="plan-feat no"><i class="fas fa-times"></i><span>Skip unlimited tracks</span></div>
+        <div class="plan-feat no"><i class="fas fa-times"></i><span>Hi-Fi audio</span></div>
+      </div>
+      <a href="#" onclick="showToast('Starting Free plan!');return false;" class="plan-btn">Get Started Free</a>
+    </div>
+    <div class="plan-card featured reveal reveal-delay-1">
+      <div class="plan-popular">⚡ Most Popular</div>
+      <div class="plan-name">Premium</div>
+      <div class="plan-price"><sup>₹</sup>119</div>
+      <div class="plan-period">per month · cancel anytime</div>
+      <div class="plan-features">
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Ad-free streaming</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Offline listening</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Unlimited skips</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>High quality audio</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Play any song</span></div>
+        <div class="plan-feat no"><i class="fas fa-times"></i><span>Hi-Fi lossless audio</span></div>
+      </div>
+      <a href="#" onclick="showToast('🎉 Starting Premium! 1 month free trial!');return false;" class="plan-btn">Try 1 Month Free</a>
+    </div>
+    <div class="plan-card reveal reveal-delay-2">
+      <div class="plan-name">Hi-Fi</div>
+      <div class="plan-price"><sup>₹</sup>299</div>
+      <div class="plan-period">per month · for audiophiles</div>
+      <div class="plan-features">
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Everything in Premium</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Lossless Hi-Fi audio</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Dolby Atmos support</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Exclusive early access</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Priority support</span></div>
+        <div class="plan-feat"><i class="fas fa-check"></i><span>Family sharing (6 accounts)</span></div>
+      </div>
+      <a href="#" onclick="showToast('Upgrading to Hi-Fi!');return false;" class="plan-btn">Go Hi-Fi</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand"><div class="footer-icon">🎵</div>SoundWave</div>
+      <p class="footer-desc">The world's most immersive music streaming experience. 80M+ songs, 4M+ artists, zero compromises.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="footer-social"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="footer-social"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Press</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="#">Mobile App</a>
+      <a href="#">Desktop App</a>
+      <a href="#">Premium Plans</a>
+      <a href="#">Family Plan</a>
+    </div>
+    <div class="footer-col">
+      <h5>Artists</h5>
+      <a href="#">For Artists</a>
+      <a href="#">Upload Music</a>
+      <a href="#">Artist Dashboard</a>
+      <a href="#">Royalties</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 SoundWave Inc. All rights reserved.</span>
+    <span>🎵 80M+ Songs · 4M+ Artists · 190+ Countries</span>
+  </div>
+</footer>
+
+<script>
+  /* ── WAVEFORM GENERATOR ── */
+  const wfBg = document.getElementById('waveform-bg');
+  for (let i = 0; i < 80; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'wave-bar';
+    const h = Math.random() * 80 + 20;
+    bar.style.height = h + '%';
+    bar.style.animationDelay = (Math.random() * 1.4) + 's';
+    bar.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
+    wfBg.appendChild(bar);
+  }
+
+  /* ── PLAYER STATE ── */
+  let isPlaying = false;
+  let progress = 35;
+  let progressInterval;
+  const tracks = [
+    { name:'Midnight Frequencies', artist:'The Neon Collective', art:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80', duration:242 },
+    { name:'Love in Neon', artist:'Zara Nova', art:'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&q=80', duration:225 },
+    { name:'City Lights', artist:'D-Flow', art:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80', duration:208 },
+    { name:'Soul Whisper', artist:'Asha Ray', art:'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80', duration:257 },
+  ];
+  let currentTrack = 0;
+
+  function formatTime(secs) {
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s.toString().padStart(2,'0')}`;
+  }
+
+  function updateProgress() {
+    progress += (100 / tracks[currentTrack].duration);
+    if (progress >= 100) { progress = 0; nextTrack(); return; }
+    document.getElementById('np-progress').style.width = progress + '%';
+    const elapsed = Math.floor((progress / 100) * tracks[currentTrack].duration);
+    document.getElementById('np-current').textContent = formatTime(elapsed);
+  }
+
+  function togglePlay() {
+    isPlaying = !isPlaying;
+    document.getElementById('play-icon').className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+    document.getElementById('np-art').classList.toggle('playing', isPlaying);
+    if (isPlaying) {
+      progressInterval = setInterval(updateProgress, 1000);
+      showToast(`▶ Now playing: ${tracks[currentTrack].name}`);
+    } else {
+      clearInterval(progressInterval);
+      showToast('⏸ Paused');
+    }
+  }
+
+  function nextTrack() {
+    clearInterval(progressInterval);
+    currentTrack = (currentTrack + 1) % tracks.length;
+    progress = 0;
+    loadTrack();
+    if (isPlaying) progressInterval = setInterval(updateProgress, 1000);
+  }
+
+  function prevTrack() {
+    clearInterval(progressInterval);
+    currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+    progress = 0;
+    loadTrack();
+    if (isPlaying) progressInterval = setInterval(updateProgress, 1000);
+  }
+
+  function loadTrack() {
+    const t = tracks[currentTrack];
+    document.getElementById('np-name').textContent = t.name;
+    document.getElementById('np-artist').textContent = t.artist;
+    document.getElementById('np-art').src = t.art;
+    document.getElementById('np-progress').style.width = '0%';
+    document.getElementById('np-current').textContent = '0:00';
+    showToast(`🎵 ${t.name} — ${t.artist}`);
+  }
+
+  function playTrack(name, artist) {
+    const idx = tracks.findIndex(t => t.name === name);
+    if (idx !== -1) { currentTrack = idx; }
+    clearInterval(progressInterval);
+    progress = 0; loadTrack();
+    if (!isPlaying) togglePlay();
+  }
+
+  function playAlbum(name, artist, art) {
+    document.getElementById('np-name').textContent = name;
+    document.getElementById('np-artist').textContent = artist;
+    document.getElementById('np-art').src = art;
+    progress = 0;
+    document.getElementById('np-progress').style.width = '0%';
+    if (!isPlaying) togglePlay();
+    else showToast(`▶ Playing: ${name}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function seekTrack(e, bar) {
+    const rect = bar.getBoundingClientRect();
+    progress = ((e.clientX - rect.left) / rect.width) * 100;
+    document.getElementById('np-progress').style.width = progress + '%';
+  }
+
+  function setVolume(e, bar) {
+    const rect = bar.getBoundingClientRect();
+    const pct = ((e.clientX - rect.left) / rect.width) * 100;
+    document.getElementById('volume-fill').style.width = Math.max(0, Math.min(100, pct)) + '%';
+  }
+
+  function likeTrack(e, el) {
+    e.stopPropagation();
+    el.classList.toggle('liked');
+    showToast(el.classList.contains('liked') ? '❤️ Added to Liked Songs' : '💔 Removed from Liked Songs');
+  }
+
+  function doSearch() {
+    const q = document.getElementById('main-search').value.trim();
+    if (!q) { showToast('Please enter a search term'); return; }
+    showToast(`🔍 Searching for "${q}"...`);
+  }
+
+  document.getElementById('main-search').addEventListener('keypress', e => {
+    if (e.key === 'Enter') doSearch();
+  });
+
+  /* ── REVEAL ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+
+  /* ── TOAST ── */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+</script>
+</body>
+</html>
