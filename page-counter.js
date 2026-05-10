@@ -10,10 +10,10 @@ const manualPageCounts = {
     'FoodiePlace': 12,      // ✅ FoodiePlace - COMPLETED
     'portfolio': 8,         // ✅ DevFolio - COMPLETED
     'real-estate': 0,
-    'portfolio': 8,     //
+    'portfolio': 8,     //   
     'real-estate': 0,
     'education': 0,
-    'fitness': 0,
+    'FitZone': 14,      
     'blog': 0,
     'healthcare': 0,
     'events': 0,
