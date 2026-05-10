@@ -29,7 +29,7 @@ const propertySchema = new mongoose.Schema({
   agent: { type: mongoose.Schema.Types.ObjectId, ref: 'Agent' },
   postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
-  isNew: { type: Boolean, default: true },
+  isRecentlyAdded: { type: Boolean, default: true },
   isFeatured: { type: Boolean, default: false },
   views: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },

@@ -100,7 +100,7 @@ const seedData = async () => {
       address: { street: '14, Linking Road', locality: 'Bandra West', city: 'Mumbai', state: 'Maharashtra', pincode: '400050' },
       images: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'],
       amenities: ['Gym', 'Swimming Pool', 'Power Backup', 'Security', 'Lift', 'Parking', 'Clubhouse'],
-      agent: agents[0]._id, postedBy: admin._id, status: 'approved', isFeatured: true, isNew: true
+      agent: agents[0]._id, postedBy: admin._id, status: 'approved', isFeatured: true, isRecentlyAdded: true
     },
     {
       title: 'Modern Villa with Private Pool – DLF Phase 5',
@@ -110,7 +110,7 @@ const seedData = async () => {
       address: { locality: 'DLF Phase 5', city: 'Gurgaon', state: 'Haryana', pincode: '122009' },
       images: ['https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80'],
       amenities: ['Private Pool', 'Garden', 'Power Backup', 'Security', 'Gym', 'Clubhouse'],
-      agent: agents[2]._id, postedBy: admin._id, status: 'approved', isFeatured: true, isNew: false
+      agent: agents[2]._id, postedBy: admin._id, status: 'approved', isFeatured: true, isRecentlyAdded: false
     },
     {
       title: 'Premium 2BHK Flat in Koramangala',
@@ -120,7 +120,7 @@ const seedData = async () => {
       address: { locality: 'Koramangala 4th Block', city: 'Bangalore', state: 'Karnataka', pincode: '560034' },
       images: ['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80'],
       amenities: ['Power Backup', 'Lift', 'Security', 'CCTV'],
-      agent: agents[1]._id, postedBy: admin._id, status: 'approved', isFeatured: false, isNew: true
+      agent: agents[1]._id, postedBy: admin._id, status: 'approved', isFeatured: false, isRecentlyAdded: true
     },
     {
       title: 'Spacious Plot in Baner – Ready to Build',
@@ -130,7 +130,7 @@ const seedData = async () => {
       address: { locality: 'Baner', city: 'Pune', state: 'Maharashtra', pincode: '411045' },
       images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80'],
       amenities: ['RERA Approved', 'Road Facing', 'Corner Plot'],
-      agent: agents[3]._id, postedBy: admin._id, status: 'approved', isFeatured: false, isNew: true
+      agent: agents[3]._id, postedBy: admin._id, status: 'approved', isFeatured: false, isRecentlyAdded: true
     },
     {
       title: 'Studio Apartment – Andheri West',
@@ -140,7 +140,7 @@ const seedData = async () => {
       address: { locality: 'Andheri West', city: 'Mumbai', state: 'Maharashtra', pincode: '400058' },
       images: ['https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80'],
       amenities: ['WiFi Ready', 'Power Backup', 'Security'],
-      agent: agents[0]._id, postedBy: admin._id, status: 'approved', isFeatured: false, isNew: false
+      agent: agents[0]._id, postedBy: admin._id, status: 'approved', isFeatured: false, isRecentlyAdded: false
     },
     {
       title: 'Commercial Office Space – Hitech City',
@@ -150,7 +150,7 @@ const seedData = async () => {
       address: { locality: 'Hitech City', city: 'Hyderabad', state: 'Telangana', pincode: '500081' },
       images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80'],
       amenities: ['Power Backup', 'Lift', 'Security', 'Parking', 'Conference Room', 'Cafeteria'],
-      agent: agents[1]._id, postedBy: admin._id, status: 'approved', isFeatured: true, isNew: false
+      agent: agents[1]._id, postedBy: admin._id, status: 'approved', isFeatured: true, isRecentlyAdded: false
     }
   ]);
   console.log(`🏠 ${properties.length} properties created`);

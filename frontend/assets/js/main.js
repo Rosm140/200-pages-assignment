@@ -142,7 +142,7 @@ function renderPropertyCard(p) {
         <img src="${p.images && p.images[0] ? p.images[0] : 'assets/images/placeholder.jpg'}" alt="${p.title}" loading="lazy">
         <span class="property-badge badge-${p.listingType === 'Rent' ? 'rent' : 'buy'}">${p.listingType}</span>
         ${p.isFeatured ? '<span class="property-badge badge-featured" style="top:14px;left:80px">Featured</span>' : ''}
-        ${p.isNew ? '<span class="property-badge badge-new" style="top:14px;left:${p.isFeatured?\"150px\":\"80px\"}">New</span>' : ''}
+        ${p.isRecentlyAdded ? `<span class="property-badge badge-new" style="top:14px;left:${p.isFeatured ? '150px' : '80px'}">New</span>` : ''}
         <span class="property-wishlist ${inWishlist ? 'active' : ''}" onclick="toggleWishlist('${p._id}', this)">
           ${inWishlist ? '❤️' : '🤍'}
         </span>
