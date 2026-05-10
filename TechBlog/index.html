@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechBlog – Technology News & Articles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #FAFAF8;
+      --bg2: #F2F0EB;
+      --ink: #0D0D0B;
+      --ink2: #2A2A25;
+      --muted: #7A7A6E;
+      --border: #E0DDD6;
+      --accent: #FF4D1C;
+      --accent2: #0057FF;
+      --tag-bg: #EEECEA;
+      --font-head: 'Fraunces', serif;
+      --font-body: 'Outfit', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,250,248,0.92); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+    }
+    .nav-logo {
+      font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
+      color: var(--ink); letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-center { display: flex; gap: 4px; }
+    .nav-link {
+      padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+      font-weight: 500; color: var(--muted); transition: all 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { background: var(--tag-bg); color: var(--ink); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .search-bar {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--tag-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 14px;
+      font-size: 0.85rem; color: var(--muted); cursor: text;
+    }
+    .nav-subscribe {
+      background: var(--ink); color: var(--bg);
+      padding: 8px 18px; border-radius: 8px;
+      font-size: 0.82rem; font-weight: 600; transition: all 0.2s;
+    }
+    .nav-subscribe:hover { background: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 60px 48px 0;
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px;
+      max-width: 1320px; margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 60px;
+    }
+    .hero-featured {
+      display: flex; flex-direction: column;
+      border-right: 1px solid var(--border); padding-right: 48px;
+    }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+    .hero-label::before { content:''; width:20px; height:2px; background:var(--accent); }
+    .hero-img {
+      width: 100%; height: 340px; object-fit: cover;
+      border-radius: 12px; margin-bottom: 28px;
+      transition: transform 0.5s ease;
+    }
+    .hero-img:hover { transform: scale(1.02); }
+    .hero-cat {
+      font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--accent); margin-bottom: 12px; font-weight: 500;
+    }
+    .hero-title {
+      font-family: var(--font-head); font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
+      color: var(--ink); margin-bottom: 14px;
+    }
+    .hero-title a:hover { color: var(--accent); }
+    .hero-excerpt { font-size: 0.97rem; color: var(--muted); line-height: 1.8; margin-bottom: 20px; }
+    .article-meta { display: flex; align-items: center; gap: 14px; font-size: 0.78rem; color: var(--muted); }
+    .meta-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+    .meta-dot { width: 3px; height: 3px; background: var(--border); border-radius: 50%; }
+    .read-more {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 20px;
+      font-size: 0.85rem; font-weight: 600; color: var(--ink);
+      border-bottom: 2px solid var(--ink); padding-bottom: 2px;
+      transition: all 0.2s; width: fit-content;
+    }
+    .read-more:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* Hero sidebar */
+    .hero-sidebar { display: flex; flex-direction: column; gap: 0; }
+    .hero-sidebar-label {
+      font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted); margin-bottom: 20px; font-weight: 500;
+    }
+    .sidebar-article {
+      display: flex; gap: 16px; padding: 18px 0;
+      border-bottom: 1px solid var(--border); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sidebar-article:hover .sidebar-title { color: var(--accent); }
+    .sidebar-num {
+      font-family: var(--font-head); font-size: 2rem; color: var(--border);
+      line-height: 1; flex-shrink: 0; font-weight: 700; transition: color 0.2s;
+      width: 36px;
+    }
+    .sidebar-article:hover .sidebar-num { color: var(--accent); }
+    .sidebar-cat { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 5px; }
+    .sidebar-title { font-family: var(--font-head); font-size: 1rem; font-weight: 600; line-height: 1.3; color: var(--ink); margin-bottom: 6px; transition: color 0.2s; }
+    .sidebar-meta { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── CATEGORIES ── */
+    .cats-bar {
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex; gap: 0; overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .cats-bar::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      padding: 16px 20px; font-size: 0.82rem; font-weight: 600;
+      color: var(--muted); white-space: nowrap; cursor: pointer;
+      border-bottom: 2px solid transparent; transition: all 0.2s;
+      background: none; border-top: none; border-left: none; border-right: none;
+      font-family: var(--font-body);
+    }
+    .cat-btn:hover, .cat-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+    /* ── ARTICLES GRID ── */
+    .articles-wrap { max-width: 1320px; margin: 0 auto; padding: 60px 48px; }
+    .articles-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+    .articles-header h2 { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; }
+    .sort-select {
+      border: 1px solid var(--border); background: white; border-radius: 8px;
+      padding: 8px 14px; font-size: 0.82rem; font-family: var(--font-body); color: var(--ink); outline: none;
+    }
+    .articles-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    }
+    .article-card { display: flex; flex-direction: column; cursor: pointer; }
+    .article-card:hover .article-img { transform: scale(1.04); }
+    .article-img-wrap { border-radius: 10px; overflow: hidden; height: 200px; margin-bottom: 18px; }
+    .article-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .article-cat {
+      font-family: var(--font-mono); font-size: 0.67rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--accent); margin-bottom: 8px; font-weight: 500;
+    }
+    .article-title {
+      font-family: var(--font-head); font-size: 1.15rem; font-weight: 600;
+      line-height: 1.3; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+    .article-card:hover .article-title { color: var(--accent); }
+    .article-excerpt { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 14px; flex: 1; }
+    .article-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--border); }
+    .article-author { display: flex; align-items: center; gap: 8px; }
+    .author-avatar { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+    .author-name { font-size: 0.78rem; font-weight: 600; color: var(--ink2); }
+    .article-time { font-size: 0.72rem; color: var(--muted); }
+    .article-tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+    .tag {
+      display: inline-block; padding: 3px 10px; border-radius: 4px;
+      background: var(--tag-bg); font-size: 0.68rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+      transition: all 0.2s;
+    }
+    .tag:hover { background: var(--ink); color: var(--bg); }
+
+    /* ── FEATURED AUTHOR ── */
+    .author-section {
+      background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 60px 48px;
+    }
+    .author-grid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .author-card {
+      background: white; border: 1px solid var(--border); border-radius: 12px;
+      padding: 28px; text-align: center; transition: all 0.2s; cursor: pointer;
+    }
+    .author-card:hover { border-color: var(--ink); transform: translateY(-3px); }
+    .author-card-img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; margin: 0 auto 14px; border: 2px solid var(--border); }
+    .author-card-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
+    .author-card-role { font-size: 0.75rem; color: var(--muted); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-mono); }
+    .author-card-stats { display: flex; justify-content: center; gap: 20px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .author-stat-num { font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; }
+    .author-stat-lbl { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .author-follow {
+      margin-top: 16px; display: block; text-align: center;
+      padding: 8px; border: 1px solid var(--border); border-radius: 6px;
+      font-size: 0.78rem; font-weight: 600; transition: all 0.2s;
+    }
+    .author-follow:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      padding: 80px 48px; text-align: center;
+      background: var(--ink); color: var(--bg);
+      position: relative; overflow: hidden;
+    }
+    .newsletter::before {
+      content: 'TECH'; position: absolute;
+      font-family: var(--font-head); font-size: 20rem; font-weight: 900;
+      color: rgba(255,255,255,0.02); top: 50%; left: 50%;
+      transform: translate(-50%,-50%); white-space: nowrap; pointer-events: none;
+    }
+    .newsletter-inner { position: relative; z-index: 2; max-width: 560px; margin: 0 auto; }
+    .newsletter-label { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 16px; }
+    .newsletter h2 { font-family: var(--font-head); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .newsletter p { color: rgba(250,250,248,0.6); font-size: 0.95rem; margin-bottom: 36px; }
+    .newsletter-form { display: flex; gap: 10px; max-width: 420px; margin: 0 auto; }
+    .newsletter-input {
+      flex: 1; padding: 13px 18px; background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+      color: white; font-family: var(--font-body); font-size: 0.9rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    .newsletter-input:focus { border-color: rgba(255,255,255,0.4); }
+    .newsletter-input::placeholder { color: rgba(255,255,255,0.3); }
+    .newsletter-btn {
+      padding: 13px 24px; background: var(--accent); color: white; border: none;
+      border-radius: 8px; font-family: var(--font-body); font-size: 0.85rem;
+      font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .newsletter-btn:hover { background: #ff6b40; transform: translateY(-1px); }
+
+    /* ── TRENDING ── */
+    .trending-section { background: var(--bg2); border-bottom: 1px solid var(--border); }
+    .trending-inner { max-width: 1320px; margin: 0 auto; padding: 40px 48px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+    .trending-label { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .trending-label::after { content:''; width:1px; height:20px; background:var(--border); }
+    .trending-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .trending-tag {
+      padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px;
+      font-size: 0.8rem; font-weight: 500; color: var(--ink2); background: white;
+      transition: all 0.2s; cursor: pointer;
+    }
+    .trending-tag:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+    /* ── COMMENTS PREVIEW ── */
+    .comments-section { max-width: 1320px; margin: 0 auto; padding: 60px 48px; }
+    .comments-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .comment-card { border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 14px; transition: all 0.2s; }
+    .comment-card:hover { border-color: var(--ink); }
+    .comment-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .comment-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .comment-user { font-weight: 600; font-size: 0.88rem; }
+    .comment-post { font-size: 0.72rem; color: var(--muted); }
+    .comment-text { font-size: 0.88rem; color: var(--ink2); line-height: 1.7; margin-bottom: 12px; }
+    .comment-actions { display: flex; gap: 16px; font-size: 0.75rem; color: var(--muted); }
+    .comment-action { cursor: pointer; display: flex; align-items: center; gap: 4px; transition: color 0.2s; }
+    .comment-action:hover { color: var(--accent); }
+    .comment-form-section h3 { font-family: var(--font-head); font-size: 1.6rem; margin-bottom: 20px; }
+    .comment-form { display: flex; flex-direction: column; gap: 14px; }
+    .comment-form input, .comment-form textarea {
+      width: 100%; padding: 12px 16px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-family: var(--font-body); font-size: 0.9rem; color: var(--ink);
+      background: white; outline: none; resize: vertical; transition: border-color 0.2s;
+    }
+    .comment-form input:focus, .comment-form textarea:focus { border-color: var(--ink); }
+    .comment-submit {
+      background: var(--ink); color: white; border: none; border-radius: 8px;
+      padding: 12px 24px; font-family: var(--font-body); font-size: 0.88rem;
+      font-weight: 600; cursor: pointer; transition: all 0.2s; align-self: flex-start;
+    }
+    .comment-submit:hover { background: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink2); color: var(--bg);
+      padding: 48px; border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-inner { max-width: 1320px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand { font-family: var(--font-head); font-size: 1.5rem; margin-bottom: 12px; }
+    .footer-brand span { color: var(--accent); }
+    .footer-desc { font-size: 0.85rem; color: rgba(250,250,248,0.5); line-height: 1.7; }
+    .footer-col-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); margin-bottom: 14px; font-family: var(--font-mono); }
+    .footer-col a { display: block; font-size: 0.85rem; color: rgba(250,250,248,0.6); margin-bottom: 8px; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom-bar { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: rgba(250,250,248,0.35); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: var(--ink); color: var(--bg);
+      padding: 12px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 500;
+      border-left: 3px solid var(--accent);
+      transform: translateY(60px); opacity: 0; transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-featured { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 40px; margin-bottom: 40px; }
+      .articles-grid { grid-template-columns: 1fr 1fr; }
+      .author-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-center { display: none; }
+      .hero { padding: 40px 20px; }
+      .cats-bar { padding: 0 20px; }
+      .articles-wrap { padding: 40px 20px; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .author-section { padding: 40px 20px; }
+      .author-grid { grid-template-columns: 1fr 1fr; }
+      .newsletter { padding: 60px 20px; }
+      .newsletter-form { flex-direction: column; }
+      .comments-section { padding: 40px 20px; }
+      .comments-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      footer { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Tech<span>Blog</span></div>
+  <div class="nav-center">
+    <a href="#" class="nav-link active">Home</a>
+    <a href="#articles" class="nav-link">Articles</a>
+    <a href="#authors" class="nav-link">Authors</a>
+    <a href="#comments" class="nav-link">Discuss</a>
+  </div>
+  <div class="nav-right">
+    <div class="search-bar" onclick="focusSearch()">
+      <i class="fas fa-search" style="font-size:0.8rem"></i>
+      <span>Search articles...</span>
+    </div>
+    <a href="#newsletter" class="nav-subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<!-- TRENDING BAR -->
+<div class="trending-section">
+  <div class="trending-inner">
+    <div class="trending-label"><i class="fas fa-fire" style="color:var(--accent)"></i> Trending</div>
+    <div class="trending-tags">
+      <span class="trending-tag" onclick="filterCat('AI')">#AI & Machine Learning</span>
+      <span class="trending-tag" onclick="filterCat('Web3')">#Web3 & Blockchain</span>
+      <span class="trending-tag" onclick="filterCat('Cybersecurity')">#Cybersecurity</span>
+      <span class="trending-tag" onclick="filterCat('Cloud')">#Cloud Computing</span>
+      <span class="trending-tag" onclick="filterCat('React')">#React & Next.js</span>
+      <span class="trending-tag" onclick="filterCat('DevOps')">#DevOps</span>
+      <span class="trending-tag" onclick="filterCat('OpenSource')">#Open Source</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-featured">
+    <div class="hero-label">Editor's Pick</div>
+    <img class="hero-img" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=900&q=80" alt="AI Article">
+    <div class="hero-cat">Artificial Intelligence</div>
+    <div class="hero-title"><a href="#">GPT-5 and the New Era of Reasoning: What It Means for Developers in 2024</a></div>
+    <p class="hero-excerpt">OpenAI's latest model doesn't just generate text — it reasons through complex problems step by step. We break down the architectural changes, benchmark results, and practical implications for software engineers.</p>
+    <div class="article-meta">
+      <img class="meta-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
+      <span style="font-weight:600;font-size:0.82rem">Arjun Mehta</span>
+      <div class="meta-dot"></div>
+      <span>Dec 12, 2024</span>
+      <div class="meta-dot"></div>
+      <span>12 min read</span>
+      <div class="meta-dot"></div>
+      <span><i class="fas fa-eye"></i> 48.2K</span>
+    </div>
+    <a href="#" class="read-more">Read Full Article <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="hero-sidebar">
+    <div class="hero-sidebar-label">Most Read This Week</div>
+    <div class="sidebar-article">
+      <div class="sidebar-num">01</div>
+      <div>
+        <div class="sidebar-cat">Web Development</div>
+        <div class="sidebar-title">React 19 Features That Will Change How You Build Apps</div>
+        <div class="sidebar-meta">Priya Sharma · 8 min read</div>
+      </div>
+    </div>
+    <div class="sidebar-article">
+      <div class="sidebar-num">02</div>
+      <div>
+        <div class="sidebar-cat">Cybersecurity</div>
+        <div class="sidebar-title">The 2024 Security Breach Report: Lessons for Every Developer</div>
+        <div class="sidebar-meta">Vikram Joshi · 10 min read</div>
+      </div>
+    </div>
+    <div class="sidebar-article">
+      <div class="sidebar-num">03</div>
+      <div>
+        <div class="sidebar-cat">Cloud Computing</div>
+        <div class="sidebar-title">AWS vs Azure vs GCP in 2024: A Comprehensive Cost Analysis</div>
+        <div class="sidebar-meta">Neha Patel · 14 min read</div>
+      </div>
+    </div>
+    <div class="sidebar-article">
+      <div class="sidebar-num">04</div>
+      <div>
+        <div class="sidebar-cat">Open Source</div>
+        <div class="sidebar-title">10 Open Source Projects That Blew Up in 2024</div>
+        <div class="sidebar-meta">Rohit Kumar · 7 min read</div>
+      </div>
+    </div>
+    <div class="sidebar-article">
+      <div class="sidebar-num">05</div>
+      <div>
+        <div class="sidebar-cat">DevOps</div>
+        <div class="sidebar-title">Kubernetes in Production: Everything They Don't Tell You</div>
+        <div class="sidebar-meta">Sunita Rao · 11 min read</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES BAR -->
+<div class="cats-bar">
+  <button class="cat-btn active" onclick="filterCat('All',this)">All Articles</button>
+  <button class="cat-btn" onclick="filterCat('AI',this)">AI & ML</button>
+  <button class="cat-btn" onclick="filterCat('Web Dev',this)">Web Dev</button>
+  <button class="cat-btn" onclick="filterCat('Security',this)">Security</button>
+  <button class="cat-btn" onclick="filterCat('Cloud',this)">Cloud</button>
+  <button class="cat-btn" onclick="filterCat('Mobile',this)">Mobile</button>
+  <button class="cat-btn" onclick="filterCat('Blockchain',this)">Blockchain</button>
+  <button class="cat-btn" onclick="filterCat('Open Source',this)">Open Source</button>
+  <button class="cat-btn" onclick="filterCat('DevOps',this)">DevOps</button>
+  <button class="cat-btn" onclick="filterCat('Career',this)">Career</button>
+</div>
+
+<!-- ARTICLES GRID -->
+<div class="articles-wrap" id="articles">
+  <div class="articles-header">
+    <h2>Latest Articles</h2>
+    <select class="sort-select" onchange="sortArticles(this.value)">
+      <option>Most Recent</option>
+      <option>Most Popular</option>
+      <option>Most Discussed</option>
+    </select>
+  </div>
+  <div class="articles-grid" id="articles-grid">
+
+    <div class="article-card">
+      <div class="article-img-wrap"><img class="article-img" src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80" alt="AI"></div>
+      <div class="article-cat">AI & Machine Learning</div>
+      <div class="article-title">Building LLM-Powered Apps: A Practical Guide with LangChain & Node.js</div>
+      <p class="article-excerpt">Step-by-step tutorial to build production-ready AI applications using LangChain, vector databases, and retrieval-augmented generation (RAG) techniques.</p>
+      <div class="article-tags"><span class="tag">LangChain</span><span class="tag">Node.js</span><span class="tag">RAG</span></div>
+      <div class="article-footer">
+        <div class="article-author"><img class="author-avatar" src="https://randomuser.me/api/portraits/men/41.jpg"><span class="author-name">Arjun Mehta</span></div>
+        <div class="article-time">10 min · Dec 10</div>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-img-wrap"><img class="article-img" src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&q=80" alt="React"></div>
+      <div class="article-cat">Web Development</div>
+      <div class="article-title">React 19 Deep Dive: Server Components, Actions & the New Hooks API</div>
+      <p class="article-excerpt">React 19 isn't just an update — it's a paradigm shift. We dig deep into every new feature and show you exactly how to migrate your existing codebase.</p>
+      <div class="article-tags"><span class="tag">React 19</span><span class="tag">Next.js</span><span class="tag">TypeScript</span></div>
+      <div class="article-footer">
+        <div class="article-author"><img class="author-avatar" src="https://randomuser.me/api/portraits/women/63.jpg"><span class="author-name">Priya Sharma</span></div>
+        <div class="article-time">14 min · Dec 9</div>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-img-wrap"><img class="article-img" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80" alt="Security"></div>
+      <div class="article-cat">Cybersecurity</div>
+      <div class="article-title">Zero Trust Architecture: Why Your VPN Is Not Enough Anymore</div>
+      <p class="article-excerpt">Traditional perimeter-based security is dead. Learn how to implement Zero Trust principles in your organisation to protect against modern threats.</p>
+      <div class="article-tags"><span class="tag">Zero Trust</span><span class="tag">IAM</span><span class="tag">Security</span></div>
+      <div class="article-footer">
+        <div class="article-author"><img class="author-avatar" src="https://randomuser.me/api/portraits/men/22.jpg"><span class="author-name">Vikram Joshi</span></div>
+        <div class="article-time">9 min · Dec 8</div>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-img-wrap"><img class="article-img" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80" alt="Cloud"></div>
+      <div class="article-cat">Cloud Computing</div>
+      <div class="article-title">Serverless vs Containers in 2024: When to Choose What</div>
+      <p class="article-excerpt">After years of hype, both serverless and containers have matured. Here's the definitive framework for choosing the right architecture for your use case.</p>
+      <div class="article-tags"><span class="tag">AWS Lambda</span><span class="tag">Docker</span><span class="tag">K8s</span></div>
+      <div class="article-footer">
+        <div class="article-author"><img class="author-avatar" src="https://randomuser.me/api/portraits/women/47.jpg"><span class="author-name">Neha Patel</span></div>
+        <div class="article-time">11 min · Dec 7</div>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-img-wrap"><img class="article-img" src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=600&q=80" alt="Mobile"></div>
+      <div class="article-cat">Mobile Development</div>
+      <div class="article-title">Flutter 3.x vs React Native 0.74: The 2024 Comparison</div>
+      <p class="article-excerpt">Both frameworks have had major releases this year. We put them head-to-head on performance, developer experience, and real-world app quality.</p>
+      <div class="article-tags"><span class="tag">Flutter</span><span class="tag">React Native</span><span class="tag">Mobile</span></div>
+      <div class="article-footer">
+        <div class="article-author"><img class="author-avatar" src="https://randomuser.me/api/portraits/men/56.jpg"><span class="author-name">Rohit Kumar</span></div>
+        <div class="article-time">12 min · Dec 6</div>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-img-wrap"><img class="article-img" src="https://images.unsplash.com/photo-1644361566696-3d442b5b482a?w=600&q=80" alt="Web3"></div>
+      <div class="article-cat">Blockchain & Web3</div>
+      <div class="article-title">Building Smart Contracts with Solidity: From Zero to Deployed</div>
+      <p class="article-excerpt">A complete hands-on guide to writing, testing, and deploying Ethereum smart contracts using Solidity, Hardhat, and Ethers.js in 2024.</p>
+      <div class="article-tags"><span class="tag">Solidity</span><span class="tag">Ethereum</span><span class="tag">Web3</span></div>
+      <div class="article-footer">
+        <div class="article-author"><img class="author-avatar" src="https://randomuser.me/api/portraits/women/28.jpg"><span class="author-name">Sunita Rao</span></div>
+        <div class="article-time">15 min · Dec 5</div>
+      </div>
+    </div>
+
+  </div>
+  <div style="text-align:center;margin-top:48px">
+    <button onclick="loadMore()" style="padding:13px 36px;border:2px solid var(--ink);border-radius:8px;font-family:var(--font-body);font-size:0.88rem;font-weight:600;cursor:pointer;transition:all 0.2s;background:white" onmouseover="this.style.background=getComputedStyle(document.documentElement).getPropertyValue('--ink');this.style.color='white'" onmouseout="this.style.background='white';this.style.color=getComputedStyle(document.documentElement).getPropertyValue('--ink')">
+      Load More Articles
+    </button>
+  </div>
+</div>
+
+<!-- AUTHORS -->
+<div class="author-section" id="authors">
+  <div style="max-width:1320px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px">
+      <div>
+        <div style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:8px">Meet the Team</div>
+        <h2 style="font-family:var(--font-head);font-size:2rem;font-weight:700;letter-spacing:-0.02em">Featured Authors</h2>
+      </div>
+      <a href="#" style="font-size:0.85rem;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border)">View all authors →</a>
+    </div>
+    <div class="author-grid">
+      <div class="author-card">
+        <img class="author-card-img" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Arjun">
+        <div class="author-card-name">Arjun Mehta</div>
+        <div class="author-card-role">AI & Systems Expert</div>
+        <div class="author-card-stats">
+          <div><div class="author-stat-num">48</div><div class="author-stat-lbl">Articles</div></div>
+          <div><div class="author-stat-num">124K</div><div class="author-stat-lbl">Readers</div></div>
+        </div>
+        <a href="#" onclick="followAuthor(event,'Arjun')" class="author-follow">+ Follow</a>
+      </div>
+      <div class="author-card">
+        <img class="author-card-img" src="https://randomuser.me/api/portraits/women/63.jpg" alt="Priya">
+        <div class="author-card-name">Priya Sharma</div>
+        <div class="author-card-role">Frontend Architect</div>
+        <div class="author-card-stats">
+          <div><div class="author-stat-num">62</div><div class="author-stat-lbl">Articles</div></div>
+          <div><div class="author-stat-num">89K</div><div class="author-stat-lbl">Readers</div></div>
+        </div>
+        <a href="#" onclick="followAuthor(event,'Priya')" class="author-follow">+ Follow</a>
+      </div>
+      <div class="author-card">
+        <img class="author-card-img" src="https://randomuser.me/api/portraits/men/22.jpg" alt="Vikram">
+        <div class="author-card-name">Vikram Joshi</div>
+        <div class="author-card-role">Security Researcher</div>
+        <div class="author-card-stats">
+          <div><div class="author-stat-num">35</div><div class="author-stat-lbl">Articles</div></div>
+          <div><div class="author-stat-num">67K</div><div class="author-stat-lbl">Readers</div></div>
+        </div>
+        <a href="#" onclick="followAuthor(event,'Vikram')" class="author-follow">+ Follow</a>
+      </div>
+      <div class="author-card">
+        <img class="author-card-img" src="https://randomuser.me/api/portraits/women/47.jpg" alt="Neha">
+        <div class="author-card-name">Neha Patel</div>
+        <div class="author-card-role">Cloud & DevOps Lead</div>
+        <div class="author-card-stats">
+          <div><div class="author-stat-num">41</div><div class="author-stat-lbl">Articles</div></div>
+          <div><div class="author-stat-num">78K</div><div class="author-stat-lbl">Readers</div></div>
+        </div>
+        <a href="#" onclick="followAuthor(event,'Neha')" class="author-follow">+ Follow</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter" id="newsletter">
+  <div class="newsletter-inner">
+    <div class="newsletter-label">Stay in the Loop</div>
+    <h2>Get the Best of TechBlog Every Week</h2>
+    <p>Join 120,000+ developers and tech enthusiasts who get our curated newsletter every Tuesday morning.</p>
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" id="nl-email" placeholder="your@email.com">
+      <button class="newsletter-btn" onclick="subscribe()">Subscribe Free</button>
+    </div>
+  </div>
+</div>
+
+<!-- COMMENTS -->
+<div class="comments-section" id="comments">
+  <div class="comments-grid">
+    <div>
+      <h3 style="font-family:var(--font-head);font-size:1.8rem;margin-bottom:24px;letter-spacing:-0.02em">Recent Discussions</h3>
+      <div class="comment-card">
+        <div class="comment-header">
+          <img class="comment-avatar" src="https://randomuser.me/api/portraits/men/44.jpg" alt="">
+          <div>
+            <div class="comment-user">Karan Mehta</div>
+            <div class="comment-post">on: GPT-5 and the New Era of Reasoning</div>
+          </div>
+        </div>
+        <p class="comment-text">"The reasoning improvements in GPT-5 are real — I've been testing it against our internal benchmark. Chain-of-thought is noticeably better. The article does a great job explaining the architectural changes."</p>
+        <div class="comment-actions">
+          <div class="comment-action"><i class="fas fa-heart"></i> 42</div>
+          <div class="comment-action"><i class="fas fa-reply"></i> Reply</div>
+          <span style="font-size:0.7rem;color:var(--muted);margin-left:auto">2 hours ago</span>
+        </div>
+      </div>
+      <div class="comment-card">
+        <div class="comment-header">
+          <img class="comment-avatar" src="https://randomuser.me/api/portraits/women/36.jpg" alt="">
+          <div>
+            <div class="comment-user">Deepa Nair</div>
+            <div class="comment-post">on: React 19 Deep Dive</div>
+          </div>
+        </div>
+        <p class="comment-text">"Finally someone explains Server Components without the marketing fluff! The migration section is going straight into our team's shared docs. Bookmarked."</p>
+        <div class="comment-actions">
+          <div class="comment-action"><i class="fas fa-heart"></i> 28</div>
+          <div class="comment-action"><i class="fas fa-reply"></i> Reply</div>
+          <span style="font-size:0.7rem;color:var(--muted);margin-left:auto">5 hours ago</span>
+        </div>
+      </div>
+      <div class="comment-card">
+        <div class="comment-header">
+          <img class="comment-avatar" src="https://randomuser.me/api/portraits/men/67.jpg" alt="">
+          <div>
+            <div class="comment-user">Suresh Pillai</div>
+            <div class="comment-post">on: Zero Trust Architecture</div>
+          </div>
+        </div>
+        <p class="comment-text">"We just completed a Zero Trust migration at our company. This article would have saved us weeks of research. Great breakdown of identity providers and policy enforcement points."</p>
+        <div class="comment-actions">
+          <div class="comment-action"><i class="fas fa-heart"></i> 19</div>
+          <div class="comment-action"><i class="fas fa-reply"></i> Reply</div>
+          <span style="font-size:0.7rem;color:var(--muted);margin-left:auto">Yesterday</span>
+        </div>
+      </div>
+    </div>
+    <div class="comment-form-section">
+      <h3>Leave a Comment</h3>
+      <div class="comment-form">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <input type="text" id="c-name" placeholder="Your name *">
+          <input type="email" id="c-email" placeholder="Email address *">
+        </div>
+        <input type="text" id="c-article" placeholder="Article you're commenting on">
+        <textarea id="c-text" placeholder="Share your thoughts..." rows="5"></textarea>
+        <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted)">
+          <input type="checkbox" id="c-notify" style="accent-color:var(--accent)">
+          <label for="c-notify">Notify me of replies via email</label>
+        </div>
+        <button class="comment-submit" onclick="postComment()">Post Comment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Tech<span>Blog</span></div>
+        <p class="footer-desc">The internet's most trusted source for in-depth technology articles, tutorials, and career advice for developers and tech enthusiasts.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Topics</div>
+        <a href="#">AI & Machine Learning</a>
+        <a href="#">Web Development</a>
+        <a href="#">Cybersecurity</a>
+        <a href="#">Cloud & DevOps</a>
+        <a href="#">Mobile Dev</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="#">About TechBlog</a>
+        <a href="#">Authors</a>
+        <a href="#">Advertise</a>
+        <a href="#">Write for Us</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Legal</div>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">RSS Feed</a>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+      <span>© 2024 TechBlog. All rights reserved.</span>
+      <span>120K+ Monthly Readers · 500+ Articles</span>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+function filterCat(cat, btn) {
+  if (btn) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  showToast(`Showing articles in: ${cat}`);
+}
+
+function sortArticles(val) { showToast(`Sorted by: ${val}`); }
+
+function loadMore() { showToast('Loading more articles...'); }
+
+function followAuthor(e, name) {
+  e.preventDefault();
+  const btn = e.target;
+  btn.textContent = '✓ Following';
+  btn.style.background = 'var(--ink)';
+  btn.style.color = 'white';
+  showToast(`Following ${name}! You'll get notified of new articles.`);
+}
+
+function subscribe() {
+  const email = document.getElementById('nl-email').value;
+  if (!email.includes('@')) { showToast('Please enter a valid email'); return; }
+  showToast('🎉 Subscribed! First newsletter arrives Tuesday.');
+  document.getElementById('nl-email').value = '';
+}
+
+function postComment() {
+  const name = document.getElementById('c-name').value.trim();
+  const text = document.getElementById('c-text').value.trim();
+  if (!name || !text) { showToast('Please fill in your name and comment'); return; }
+  showToast(`✅ Comment posted! It's pending review.`);
+  document.getElementById('c-name').value = '';
+  document.getElementById('c-email').value = '';
+  document.getElementById('c-article').value = '';
+  document.getElementById('c-text').value = '';
+}
+
+function focusSearch() { showToast('🔍 Search coming soon!'); }
+</script>
+</body>
+</html>

@@ -14,7 +14,7 @@ const manualPageCounts = {
     'real-estate': 0,
     'education': 0,
     'FitZone': 14,     // ✅ FitZone - COMPLETED      
-    'blog': 0,
+    'TechBlog': 25,    // ✅ TechBlog - COMPLETED
     'MediCare': 16,   // ✅ MediCare - COMPLETED
     'events': 0,
     'photography': 0,
@@ -33,7 +33,7 @@ const websiteConfig = [
     { id: 5, name: "HomeQuest", folder: "real-estate", icon: "🏠", description: "Real estate property listings", techStack: ["HTML5", "CSS3", "JavaScript", "Search"], features: ["Property listings & filters", "Advanced search", "Agent profiles", "Virtual tours"], expectedPages: 18 },
     { id: 6, name: "EduLearn", folder: "education", icon: "🎓", description: "Online learning platform", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Course catalog", "Student dashboard", "Video lessons", "Quizzes & certificates"], expectedPages: 22 },
     { id: 7, name: "FitZone", folder: "FitZone", icon: "💪", description: "Gym & fitness center", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Class schedules", "Trainer profiles", "Membership plans", "BMI calculator"], expectedPages: 14 },
-    { id: 8, name: "TechBlog", folder: "blog", icon: "📰", description: "Technology news & articles", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Article listings", "Categories & tags", "Author profiles", "Comments system UI"], expectedPages: 25 },
+    { id: 8, name: "TechBlog", folder: "TechBlog", icon: "📰", description: "Technology news & articles", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Article listings", "Categories & tags", "Author profiles", "Comments system UI"], expectedPages: 25 },
     { id: 9, name: "MediCare", folder: "MediCare", icon: "🏥", description: "Hospital & healthcare services", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Doctor profiles", "Appointment booking", "Services & departments", "Health tips blog"], expectedPages: 16 },
     { id: 10, name: "EventPro", folder: "events", icon: "🎉", description: "Event planning & management", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Event listings", "Ticket booking", "Venue showcase", "Gallery & reviews"], expectedPages: 15 },
     { id: 11, name: "LensArt", folder: "photography", icon: "📸", description: "Photography portfolio", techStack: ["HTML5", "CSS3", "JavaScript", "Gallery"], features: ["Photo galleries", "Service packages", "Booking system", "Client testimonials"], expectedPages: 10 },
