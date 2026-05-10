@@ -17,8 +17,8 @@ const manualPageCounts = {
     'EventPro': 15,    // ✅ EventPro - COMPLETED
     'LensArt': 10,     // ✅ LensArt - COMPLETED
     'SoundWave': 18,   // ✅ SoundWave - COMPLETED
-    'fashion': 0,
-    'gaming': 0,
+    'StyleHub': 17,    // ✅ StyleHub - COMPLETED
+    'GameVerse': 0,  
     'corporate': 0
 };
 
@@ -36,7 +36,7 @@ const websiteConfig = [
     { id: 10, name: "EventPro", folder: "EventPro", icon: "🎉", description: "Event planning & management", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Event listings", "Ticket booking", "Venue showcase", "Gallery & reviews"], expectedPages: 15 },
     { id: 11, name: "LensArt", folder: "LensArt", icon: "📸", description: "Photography portfolio", techStack: ["HTML5", "CSS3", "JavaScript", "Gallery"], features: ["Photo galleries", "Service packages", "Booking system", "Client testimonials"], expectedPages: 10 },
     { id: 12, name: "SoundWave", folder: "SoundWave", icon: "🎵", description: "Music streaming platform", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Music player UI", "Playlists & albums", "Artist profiles", "Search & discovery"], expectedPages: 18 },
-    { id: 13, name: "StyleHub", folder: "fashion", icon: "👗", description: "Fashion e-commerce", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Product catalog", "Size guides", "Lookbook & trends", "Shopping cart"], expectedPages: 17 },
+    { id: 13, name: "StyleHub", folder: "StyleHub", icon: "👗", description: "Fashion e-commerce", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Product catalog", "Size guides", "Lookbook & trends", "Shopping cart"], expectedPages: 17 },
     { id: 14, name: "GameVerse", folder: "gaming", icon: "🎮", description: "Gaming community platform", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Game library", "User profiles", "Leaderboards", "Community forums"], expectedPages: 19 },
     { id: 15, name: "BizCorp", folder: "corporate", icon: "🏢", description: "Corporate business website", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Company profile", "Services showcase", "Team & careers", "Client portfolio"], expectedPages: 11 }
 ];
