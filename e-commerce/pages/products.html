@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Products - ShopHub</title>
+<link rel="stylesheet" href="/e-commerce/assets/css/main-complete.css">
+</head>
+
+<body>
+
+<!-- HEADER SAME -->
+<header class="header">
+  <div class="container-fluid">
+    <h2>ShopHub - Products</h2>
+  </div>
+</header>
+
+<section class="deals-section">
+  <div class="container-fluid">
+    <h2 class="section-title">All Products</h2>
+
+    <div class="products-row">
+
+      <div class="product-card">
+        <div class="product-img"><div class="placeholder-img">📱</div></div>
+        <div class="product-info">
+          <h3 class="product-title">Smartphone X</h3>
+          <div class="product-price">
+            <span class="current-price">$699</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Smartphone X')">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img"><div class="placeholder-img">👟</div></div>
+        <div class="product-info">
+          <h3 class="product-title">Running Shoes</h3>
+          <div class="product-price">
+            <span class="current-price">$99</span>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Shoes')">Add to Cart</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+function addToCart(product){
+  alert(product + " added to cart");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!-- ENHANCED HEADER WITH MODERN DESIGN -->
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    
+    <!-- Logo/Brand -->
+    <a class="brand" href="../index.html" aria-label="TravelGo home">
+      <span style="background: linear-gradient(135deg, #FF6B35 0%, #F7B801 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Travel</span><span style="color: #004E89;">Go</span>
+    </a>
+
+    <!-- Mobile Navigation Toggle -->
+    <button id="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation menu" class="nav-toggle">
+      <span class="hamburger" aria-hidden="true"></span>
+    </button>
+
+    <!-- Main Navigation -->
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../pages/about.html">About</a></li>
+        <li><a href="../pages/packages.html">Packages</a></li>
+        <li><a href="../pages/destinations.html">Destinations</a></li>
+        <li><a href="../pages/gallery.html">Gallery</a></li>
+        <li><a href="../pages/blog.html">Blog</a></li>
+        <li><a href="../pages/faq.html">FAQ</a></li>
+        <li><a href="../pages/contact.html">Contact</a></li>
+        <li><a class="btn btn-sm cta" href="../pages/booking.html">Book Now</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
+<!-- Mobile Navigation Overlay -->
+<div id="nav-overlay" class="nav-overlay" aria-hidden="true"></div>
+
+<style>
+/* Mobile Navigation Overlay */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 46, 0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 99;
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Enhanced mobile menu for smaller screens */
+@media (max-width: 900px) {
+  .site-nav {
+    overflow-y: auto;
+  }
+  
+  .site-nav ul {
+    padding-top: 2rem;
+  }
+}
+</style>
+
+<script>
+// Enhanced Navigation Toggle with Accessibility
+(function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const siteNav = document.getElementById('site-nav');
+  const navOverlay = document.getElementById('nav-overlay');
+  
+  if (!navToggle || !siteNav) return;
+  
+  function toggleNav() {
+    const isOpen = siteNav.classList.contains('open');
+    
+    if (isOpen) {
+      closeNav();
+    } else {
+      openNav();
+    }
+  }
+  
+  function openNav() {
+    siteNav.classList.add('open');
+    navToggle.classList.add('active');
+    navToggle.setAttribute('aria-expanded', 'true');
+    
+    if (navOverlay) {
+      navOverlay.classList.add('active');
+      navOverlay.setAttribute('aria-hidden', 'false');
+    }
+    
+    // Prevent body scroll when mobile menu is open
+    document.body.style.overflow = 'hidden';
+    
+    // Focus first link in nav
+    const firstLink = siteNav.querySelector('a');
+    if (firstLink) {
+      setTimeout(() => firstLink.focus(), 100);
+    }
+  }
+  
+  function closeNav() {
+    siteNav.classList.remove('open');
+    navToggle.classList.remove('active');
+    navToggle.setAttribute('aria-expanded', 'false');
+    
+    if (navOverlay) {
+      navOverlay.classList.remove('active');
+      navOverlay.setAttribute('aria-hidden', 'true');
+    }
+    
+    // Restore body scroll
+    document.body.style.overflow = '';
+    
+    // Return focus to toggle button
+    navToggle.focus();
+  }
+  
+  // Toggle button click
+  navToggle.addEventListener('click', toggleNav);
+  
+  // Overlay click to close
+  if (navOverlay) {
+    navOverlay.addEventListener('click', closeNav);
+  }
+  
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && siteNav.classList.contains('open')) {
+      closeNav();
+    }
+  });
+  
+  // Close menu when clicking nav links (for smooth UX)
+  const navLinks = siteNav.querySelectorAll('a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 900) {
+        closeNav();
+      }
+    });
+  });
+  
+  // Close menu on window resize if open
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 900 && siteNav.classList.contains('open')) {
+      closeNav();
+    }
+  });
+  
+  // Header scroll effect
+  let lastScroll = 0;
+  const header = document.querySelector('.site-header');
+  
+  window.addEventListener('scroll', function() {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+  });
+  
+})();
+</script>

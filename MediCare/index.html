@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediCare – Hospital & Healthcare Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #006B5B;
+      --primary-light: #008F78;
+      --primary-pale: #E8F5F2;
+      --primary-muted: #B2D9D2;
+      --accent: #FF6B35;
+      --accent-light: #FFF0EA;
+      --blue: #1A5CFF;
+      --blue-light: #EEF3FF;
+      --white: #FFFFFF;
+      --off: #F7FAF9;
+      --ink: #0E1C1A;
+      --ink2: #2D4440;
+      --muted: #6B8882;
+      --border: #D9E8E5;
+      --shadow: 0 4px 24px rgba(0,107,91,0.08);
+      --shadow-lg: 0 12px 48px rgba(0,107,91,0.12);
+      --font-head: 'Lora', serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --radius: 16px;
+      --radius-lg: 24px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--white); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ── EMERGENCY BANNER ── */
+    .emergency-bar {
+      background: #D32F2F; color: white;
+      padding: 10px 48px; display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.82rem; font-weight: 600;
+    }
+    .emergency-bar a { color: white; text-decoration: underline; }
+    .emergency-pulse {
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .pulse-dot {
+      width: 8px; height: 8px; background: white; border-radius: 50%;
+      animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 70px;
+      box-shadow: 0 2px 12px rgba(0,107,91,0.06);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-icon {
+      width: 40px; height: 40px; background: var(--primary);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.1rem;
+    }
+    .nav-logo-text { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--ink); }
+    .nav-logo-text span { color: var(--primary); }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-link {
+      padding: 8px 16px; border-radius: 8px; font-size: 0.85rem;
+      font-weight: 600; color: var(--muted); transition: all 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { background: var(--primary-pale); color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .nav-emergency {
+      background: #D32F2F; color: white;
+      padding: 9px 20px; border-radius: 8px; font-size: 0.82rem; font-weight: 700;
+      display: flex; align-items: center; gap: 7px; transition: all 0.2s;
+    }
+    .nav-emergency:hover { background: #B71C1C; }
+    .nav-appt {
+      background: var(--primary); color: white;
+      padding: 9px 20px; border-radius: 8px; font-size: 0.82rem; font-weight: 700;
+      display: flex; align-items: center; gap: 7px; transition: all 0.2s;
+    }
+    .nav-appt:hover { background: var(--primary-light); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #003D33 0%, var(--primary) 50%, #008F78 100%);
+      padding: 80px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 480px; height: 480px; background: rgba(255,255,255,0.04); border-radius: 50%;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -120px; left: 30%;
+      width: 320px; height: 320px; background: rgba(255,255,255,0.03); border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25); border-radius: 20px;
+      padding: 7px 16px; font-size: 0.78rem; font-weight: 600; color: white;
+      margin-bottom: 24px;
+    }
+    .hero-badge-dot { width: 7px; height: 7px; background: #4CAF50; border-radius: 50%; animation: pulse 1.5s infinite; }
+    .hero h1 {
+      font-family: var(--font-head); font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 700; color: white; line-height: 1.2; letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: italic; color: #A8DDD5; }
+    .hero-sub { font-size: 1rem; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 36px; max-width: 480px; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+    .btn-white {
+      background: white; color: var(--primary); padding: 13px 28px;
+      border-radius: 10px; font-size: 0.9rem; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline-white {
+      border: 2px solid rgba(255,255,255,0.35); color: white; padding: 13px 28px;
+      border-radius: 10px; font-size: 0.9rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+
+    .hero-trust { display: flex; gap: 32px; }
+    .trust-item { text-align: center; }
+    .trust-num { font-family: var(--font-head); font-size: 2rem; font-weight: 700; color: white; line-height: 1; }
+    .trust-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+    .hero-visual { position: relative; z-index: 2; }
+    .hero-img-wrap {
+      border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+    }
+    .hero-img { width: 100%; height: 420px; object-fit: cover; }
+    .hero-card {
+      position: absolute; background: white; border-radius: var(--radius);
+      padding: 16px 20px; box-shadow: var(--shadow-lg);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero-card-1 { bottom: -16px; left: -24px; }
+    .hero-card-2 { top: 24px; right: -24px; }
+    .hero-card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .hero-card-icon.green { background: var(--primary-pale); }
+    .hero-card-icon.orange { background: var(--accent-light); }
+    .hero-card-val { font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; color: var(--ink); line-height: 1; }
+    .hero-card-lbl { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+
+    /* ── SEARCH BAR ── */
+    .search-section { background: var(--white); padding: 0 48px; margin-top: -28px; position: relative; z-index: 10; }
+    .search-box {
+      background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+      padding: 28px 32px; display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 16px; align-items: end;
+      border: 1px solid var(--border);
+    }
+    .search-field label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+    .search-field input, .search-field select {
+      width: 100%; padding: 11px 16px; border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: var(--font-body); font-size: 0.9rem; color: var(--ink); outline: none; background: var(--off);
+      transition: border-color 0.2s;
+    }
+    .search-field input:focus, .search-field select:focus { border-color: var(--primary); background: white; }
+    .search-btn {
+      background: var(--primary); color: white; border: none; border-radius: 10px;
+      padding: 12px 28px; font-family: var(--font-body); font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+      white-space: nowrap; height: 46px;
+    }
+    .search-btn:hover { background: var(--primary-light); transform: translateY(-1px); }
+
+    /* ── DEPARTMENTS ── */
+    .section { padding: 80px 48px; }
+    .section-light { background: var(--off); }
+    .section-header { margin-bottom: 48px; }
+    .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--primary); margin-bottom: 10px; }
+    .section-title { font-family: var(--font-head); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+    .section-sub { font-size: 0.95rem; color: var(--muted); margin-top: 10px; max-width: 520px; }
+
+    .dept-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .dept-card {
+      background: white; border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 28px 24px; cursor: pointer; transition: all 0.25s; text-align: center;
+    }
+    .dept-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: var(--shadow); }
+    .dept-icon {
+      width: 60px; height: 60px; border-radius: 16px; background: var(--primary-pale);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+      font-size: 1.6rem; transition: all 0.25s;
+    }
+    .dept-card:hover .dept-icon { background: var(--primary); }
+    .dept-card:hover .dept-icon span { filter: grayscale(0) brightness(10); }
+    .dept-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; color: var(--ink); }
+    .dept-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+    .dept-count { font-size: 0.72rem; color: var(--primary); font-weight: 600; margin-top: 10px; }
+
+    /* ── DOCTORS ── */
+    .doctors-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .doctor-card {
+      background: white; border-radius: var(--radius-lg); overflow: hidden;
+      border: 1.5px solid var(--border); transition: all 0.3s; cursor: pointer;
+    }
+    .doctor-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--primary-muted); }
+    .doctor-img-wrap { position: relative; height: 240px; overflow: hidden; background: var(--primary-pale); }
+    .doctor-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .doctor-card:hover .doctor-img { transform: scale(1.05); }
+    .doctor-avail {
+      position: absolute; top: 14px; right: 14px;
+      background: white; border-radius: 20px; padding: 4px 12px;
+      font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; gap: 5px;
+    }
+    .avail-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .dot-green { background: #4CAF50; }
+    .dot-orange { background: var(--accent); }
+    .doctor-body { padding: 20px; }
+    .doctor-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; color: var(--ink); }
+    .doctor-spec { font-size: 0.78rem; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+    .doctor-meta { display: flex; gap: 14px; font-size: 0.78rem; color: var(--muted); margin-bottom: 14px; }
+    .doctor-rating { display: flex; align-items: center; gap: 4px; color: #F59E0B; font-size: 0.8rem; }
+    .doctor-btn {
+      display: block; text-align: center; background: var(--primary-pale);
+      color: var(--primary); padding: 10px; border-radius: 8px;
+      font-size: 0.82rem; font-weight: 700; transition: all 0.2s;
+    }
+    .doctor-card:hover .doctor-btn { background: var(--primary); color: white; }
+
+    /* ── APPOINTMENT ── */
+    .appt-section {
+      background: linear-gradient(135deg, var(--primary) 0%, #008F78 100%);
+      padding: 80px 48px;
+    }
+    .appt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .appt-info h2 { font-family: var(--font-head); font-size: 2.4rem; font-weight: 700; color: white; margin-bottom: 16px; }
+    .appt-info p { color: rgba(255,255,255,0.75); font-size: 0.97rem; line-height: 1.8; margin-bottom: 28px; }
+    .appt-features { display: flex; flex-direction: column; gap: 14px; }
+    .appt-feature { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: white; }
+    .appt-feature-icon {
+      width: 36px; height: 36px; background: rgba(255,255,255,0.15); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .appt-form {
+      background: white; border-radius: var(--radius-lg); padding: 36px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+    }
+    .appt-form h3 { font-family: var(--font-head); font-size: 1.5rem; margin-bottom: 24px; color: var(--ink); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-field label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 7px; }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: var(--font-body); font-size: 0.88rem; color: var(--ink); outline: none;
+      background: var(--off); transition: border-color 0.2s; resize: none;
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--primary); background: white; }
+    .form-full { margin-bottom: 14px; }
+    .appt-submit {
+      width: 100%; background: var(--primary); color: white; border: none;
+      border-radius: 10px; padding: 14px; font-family: var(--font-body);
+      font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .appt-submit:hover { background: var(--primary-light); transform: translateY(-1px); }
+
+    /* ── SERVICES ── */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .service-card {
+      border-radius: var(--radius); padding: 32px; border: 1.5px solid var(--border);
+      background: white; transition: all 0.25s; cursor: pointer; position: relative; overflow: hidden;
+    }
+    .service-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: var(--primary); transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+    }
+    .service-card:hover { border-color: var(--primary-muted); transform: translateY(-4px); box-shadow: var(--shadow); }
+    .service-card:hover::after { transform: scaleX(1); }
+    .service-icon { font-size: 2rem; margin-bottom: 18px; }
+    .service-name { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; color: var(--ink); }
+    .service-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+    .service-link { font-size: 0.82rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 5px; transition: gap 0.2s; }
+    .service-card:hover .service-link { gap: 10px; }
+
+    /* ── HEALTH BLOG ── */
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .blog-card { border-radius: var(--radius); overflow: hidden; border: 1.5px solid var(--border); background: white; transition: all 0.25s; cursor: pointer; }
+    .blog-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .blog-img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.5s; }
+    .blog-card:hover .blog-img { transform: scale(1.04); }
+    .blog-img-wrap { overflow: hidden; }
+    .blog-body { padding: 24px; }
+    .blog-cat {
+      display: inline-block; padding: 3px 10px; border-radius: 4px;
+      background: var(--primary-pale); color: var(--primary);
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px;
+    }
+    .blog-title { font-family: var(--font-head); font-size: 1.05rem; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 10px; }
+    .blog-card:hover .blog-title { color: var(--primary); }
+    .blog-excerpt { font-size: 0.83rem; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+    .blog-meta { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--muted); }
+    .blog-author-img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+
+    /* ── TESTIMONIALS ── */
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testi-card {
+      background: white; border-radius: var(--radius); padding: 28px;
+      border: 1.5px solid var(--border); transition: all 0.25s;
+    }
+    .testi-card:hover { border-color: var(--primary-muted); box-shadow: var(--shadow); }
+    .testi-quote { font-size: 3rem; color: var(--primary-muted); font-family: var(--font-head); line-height: 1; margin-bottom: 12px; }
+    .testi-text { font-size: 0.9rem; color: var(--ink2); line-height: 1.8; margin-bottom: 20px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-pale); }
+    .testi-name { font-weight: 700; font-size: 0.9rem; color: var(--ink); }
+    .testi-info { font-size: 0.75rem; color: var(--muted); }
+    .testi-stars { color: #F59E0B; font-size: 0.82rem; margin-bottom: 4px; }
+
+    /* ── STATS BANNER ── */
+    .stats-banner { background: var(--primary); padding: 60px 48px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+    .stat-num { font-family: var(--font-head); font-size: 3rem; font-weight: 700; color: white; line-height: 1; }
+    .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ── INSURANCE PARTNERS ── */
+    .partners-section { background: var(--off); padding: 48px; border-bottom: 1px solid var(--border); }
+    .partners-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); text-align: center; margin-bottom: 28px; }
+    .partners-row { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; }
+    .partner-name {
+      font-size: 0.9rem; font-weight: 700; color: var(--muted);
+      padding: 12px 20px; border: 1.5px solid var(--border); border-radius: 8px;
+      background: white; transition: all 0.2s; cursor: pointer;
+    }
+    .partner-name:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--ink); color: white; padding: 64px 48px 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .footer-logo-icon { width: 36px; height: 36px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; }
+    .footer-logo-text { font-family: var(--font-head); font-size: 1.3rem; color: white; }
+    .footer-logo-text span { color: var(--primary-muted); }
+    .footer-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.8; margin-bottom: 20px; }
+    .footer-emergency { background: rgba(211,47,47,0.15); border: 1px solid rgba(211,47,47,0.3); border-radius: 10px; padding: 14px 16px; }
+    .footer-emergency-title { font-weight: 700; font-size: 0.82rem; color: #EF9A9A; margin-bottom: 4px; }
+    .footer-emergency-num { font-family: var(--font-head); font-size: 1.5rem; color: white; }
+    .footer-col h5 { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 10px; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--primary-muted); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: rgba(255,255,255,0.35); flex-wrap: wrap; gap: 12px; }
+    .footer-accreditations { display: flex; gap: 8px; flex-wrap: wrap; }
+    .accred-badge { padding: 4px 10px; border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; font-size: 0.7rem; color: rgba(255,255,255,0.4); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: var(--primary); color: white;
+      padding: 14px 22px; border-radius: 10px; font-size: 0.88rem; font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(60px); opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .dept-grid { grid-template-columns: repeat(2,1fr); }
+      .doctors-grid { grid-template-columns: repeat(2,1fr); }
+      .appt-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .emergency-bar { padding: 8px 20px; flex-direction: column; gap: 6px; text-align: center; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 48px 20px; }
+      .search-section { padding: 0 20px; }
+      .search-box { grid-template-columns: 1fr; }
+      .section { padding: 48px 20px; }
+      .dept-grid { grid-template-columns: repeat(2,1fr); }
+      .doctors-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .stats-banner { padding: 48px 20px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      footer { padding: 48px 20px 24px; }
+      .appt-section { padding: 60px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- EMERGENCY BANNER -->
+<div class="emergency-bar">
+  <div class="emergency-pulse">
+    <div class="pulse-dot"></div>
+    <span>🏥 24/7 Emergency Services Available — Call <a href="tel:108">108</a> or <a href="tel:+912245678900">+91 22 4567 8900</a></span>
+  </div>
+  <div>📍 3 Locations: Bandra · Andheri · Thane &nbsp;|&nbsp; <a href="#">Get Directions</a></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon"><i class="fas fa-plus"></i></div>
+    <div class="nav-logo-text">Medi<span>Care</span></div>
+  </div>
+  <div class="nav-links">
+    <a href="#" class="nav-link active">Home</a>
+    <a href="#departments" class="nav-link">Departments</a>
+    <a href="#doctors" class="nav-link">Doctors</a>
+    <a href="#appointment" class="nav-link">Appointments</a>
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#blog" class="nav-link">Health Blog</a>
+  </div>
+  <div class="nav-actions">
+    <a href="tel:108" class="nav-emergency"><i class="fas fa-ambulance"></i> Emergency</a>
+    <a href="#appointment" class="nav-appt"><i class="fas fa-calendar-check"></i> Book Appointment</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      NABH Accredited · JCI Certified · ISO 9001:2015
+    </div>
+    <h1>Your Health Is Our <em>Greatest</em> Priority</h1>
+    <p class="hero-sub">MediCare brings world-class healthcare to your doorstep — with 200+ specialist doctors, cutting-edge diagnostics, and compassionate care available 24/7 across Mumbai.</p>
+    <div class="hero-btns">
+      <a href="#appointment" class="btn-white"><i class="fas fa-calendar-check"></i> Book Appointment</a>
+      <a href="#doctors" class="btn-outline-white"><i class="fas fa-user-md"></i> Find a Doctor</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <div class="trust-num">200+</div>
+        <div class="trust-label">Specialists</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">50K+</div>
+        <div class="trust-label">Patients/Year</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">25+</div>
+        <div class="trust-label">Departments</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">24/7</div>
+        <div class="trust-label">Emergency</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <img class="hero-img" src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=700&q=80" alt="MediCare Hospital">
+    </div>
+    <div class="hero-card hero-card-1">
+      <div class="hero-card-icon green">🩺</div>
+      <div>
+        <div class="hero-card-val">4.9★</div>
+        <div class="hero-card-lbl">Patient Rating</div>
+      </div>
+    </div>
+    <div class="hero-card hero-card-2">
+      <div class="hero-card-icon orange">⏱️</div>
+      <div>
+        <div class="hero-card-val">&lt;15 min</div>
+        <div class="hero-card-lbl">Avg. Wait Time</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-box">
+    <div class="search-field">
+      <label>Search Doctor / Specialty</label>
+      <input type="text" id="s-doctor" placeholder="e.g., Cardiologist, Dr. Sharma, Pediatrics...">
+    </div>
+    <div class="search-field">
+      <label>Department</label>
+      <select id="s-dept">
+        <option value="">All Departments</option>
+        <option>Cardiology</option><option>Neurology</option><option>Orthopedics</option>
+        <option>Pediatrics</option><option>Oncology</option><option>Dermatology</option>
+        <option>Gynecology</option><option>Ophthalmology</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Availability</label>
+      <select id="s-avail">
+        <option value="">Any Time</option>
+        <option>Today</option><option>Tomorrow</option><option>This Week</option>
+      </select>
+    </div>
+    <button class="search-btn" onclick="searchDoctor()"><i class="fas fa-search"></i> Search</button>
+  </div>
+</div>
+
+<!-- DEPARTMENTS -->
+<section class="section" id="departments">
+  <div class="section-header">
+    <div class="section-label">Medical Excellence</div>
+    <div class="section-title">Our Departments & Specialties</div>
+    <div class="section-sub">World-class care across 25+ medical specialties with state-of-the-art equipment and India's top specialists.</div>
+  </div>
+  <div class="dept-grid">
+    <div class="dept-card" onclick="bookDept('Cardiology')">
+      <div class="dept-icon"><span>❤️</span></div>
+      <div class="dept-name">Cardiology</div>
+      <div class="dept-desc">Advanced heart care including interventional cardiology, cardiac surgery, and preventive heart health.</div>
+      <div class="dept-count">18 Specialists</div>
+    </div>
+    <div class="dept-card" onclick="bookDept('Neurology')">
+      <div class="dept-icon"><span>🧠</span></div>
+      <div class="dept-name">Neurology</div>
+      <div class="dept-desc">Comprehensive brain and nervous system care — stroke, epilepsy, Parkinson's, and spine disorders.</div>
+      <div class="dept-count">12 Specialists</div>
+    </div>
+    <div class="dept-card" onclick="bookDept('Orthopedics')">
+      <div class="dept-icon"><span>🦴</span></div>
+      <div class="dept-name">Orthopedics</div>
+      <div class="dept-desc">Joint replacement, sports medicine, spine surgery, and comprehensive bone & muscle care.</div>
+      <div class="dept-count">15 Specialists</div>
+    </div>
+    <div class="dept-card" onclick="bookDept('Pediatrics')">
+      <div class="dept-icon"><span>👶</span></div>
+      <div class="dept-name">Pediatrics</div>
+      <div class="dept-desc">Complete child healthcare from neonatal ICU to adolescent medicine by compassionate specialists.</div>
+      <div class="dept-count">10 Specialists</div>
+    </div>
+    <div class="dept-card" onclick="bookDept('Oncology')">
+      <div class="dept-icon"><span>🎗️</span></div>
+      <div class="dept-name">Oncology</div>
+      <div class="dept-desc">Comprehensive cancer care including chemotherapy, radiation therapy, immunotherapy, and survivorship.</div>
+      <div class="dept-count">14 Specialists</div>
+    </div>
+    <div class="dept-card" onclick="bookDept('Gynecology')">
+      <div class="dept-icon"><span>🌸</span></div>
+      <div class="dept-name">Gynecology</div>
+      <div class="dept-desc">Complete women's health including obstetrics, fertility, laparoscopic surgery, and menopause care.</div>
+      <div class="dept-count">16 Specialists</div>
+    </div>
+    <div class="dept-card" onclick="bookDept('Dermatology')">
+      <div class="dept-icon"><span>✨</span></div>
+      <div class="dept-name">Dermatology</div>
+      <div class="dept-desc">Medical and cosmetic dermatology — skin cancer, eczema, psoriasis, laser treatments, and aesthetics.</div>
+      <div class="dept-count">8 Specialists</div>
+    </div>
+    <div class="dept-card" onclick="bookDept('Ophthalmology')">
+      <div class="dept-icon"><span>👁️</span></div>
+      <div class="dept-name">Ophthalmology</div>
+      <div class="dept-desc">LASIK surgery, cataract treatment, retinal care, and pediatric eye care by expert ophthalmologists.</div>
+      <div class="dept-count">9 Specialists</div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCTORS -->
+<section class="section section-light" id="doctors">
+  <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="section-label">Expert Team</div>
+      <div class="section-title">Our Specialist Doctors</div>
+    </div>
+    <a href="#" onclick="showToast('Doctor directory coming soon!');return false;" style="font-size:0.85rem;font-weight:600;color:var(--primary);border-bottom:2px solid var(--primary);padding-bottom:2px">View All Doctors →</a>
+  </div>
+  <div class="doctors-grid">
+    <div class="doctor-card">
+      <div class="doctor-img-wrap">
+        <img class="doctor-img" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Arjun">
+        <div class="doctor-avail"><div class="avail-dot dot-green"></div><span style="color:#2E7D32;font-weight:700">Available Today</span></div>
+      </div>
+      <div class="doctor-body">
+        <div class="doctor-name">Dr. Arjun Sharma</div>
+        <div class="doctor-spec">Senior Cardiologist</div>
+        <div class="doctor-meta">
+          <span><i class="fas fa-graduation-cap"></i> AIIMS Delhi</span>
+          <span><i class="fas fa-briefcase"></i> 18 yrs</span>
+        </div>
+        <div class="doctor-rating">★★★★★ <span style="color:var(--muted);margin-left:4px;font-size:0.75rem">(412 reviews)</span></div>
+        <a href="#appointment" class="doctor-btn" style="margin-top:14px;display:block" onclick="prefillDoctor('Dr. Arjun Sharma')">Book Appointment</a>
+      </div>
+    </div>
+    <div class="doctor-card">
+      <div class="doctor-img-wrap">
+        <img class="doctor-img" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dr. Priya">
+        <div class="doctor-avail"><div class="avail-dot dot-green"></div><span style="color:#2E7D32;font-weight:700">Available Today</span></div>
+      </div>
+      <div class="doctor-body">
+        <div class="doctor-name">Dr. Priya Mehta</div>
+        <div class="doctor-spec">Neurologist</div>
+        <div class="doctor-meta">
+          <span><i class="fas fa-graduation-cap"></i> KEM Hospital</span>
+          <span><i class="fas fa-briefcase"></i> 14 yrs</span>
+        </div>
+        <div class="doctor-rating">★★★★★ <span style="color:var(--muted);margin-left:4px;font-size:0.75rem">(287 reviews)</span></div>
+        <a href="#appointment" class="doctor-btn" style="margin-top:14px;display:block" onclick="prefillDoctor('Dr. Priya Mehta')">Book Appointment</a>
+      </div>
+    </div>
+    <div class="doctor-card">
+      <div class="doctor-img-wrap">
+        <img class="doctor-img" src="https://randomuser.me/api/portraits/men/56.jpg" alt="Dr. Vikram">
+        <div class="doctor-avail"><div class="avail-dot dot-orange"></div><span style="color:#E65100;font-weight:700">Next: Tomorrow</span></div>
+      </div>
+      <div class="doctor-body">
+        <div class="doctor-name">Dr. Vikram Joshi</div>
+        <div class="doctor-spec">Orthopedic Surgeon</div>
+        <div class="doctor-meta">
+          <span><i class="fas fa-graduation-cap"></i> Bombay Hospital</span>
+          <span><i class="fas fa-briefcase"></i> 20 yrs</span>
+        </div>
+        <div class="doctor-rating">★★★★★ <span style="color:var(--muted);margin-left:4px;font-size:0.75rem">(356 reviews)</span></div>
+        <a href="#appointment" class="doctor-btn" style="margin-top:14px;display:block" onclick="prefillDoctor('Dr. Vikram Joshi')">Book Appointment</a>
+      </div>
+    </div>
+    <div class="doctor-card">
+      <div class="doctor-img-wrap">
+        <img class="doctor-img" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Dr. Ananya">
+        <div class="doctor-avail"><div class="avail-dot dot-green"></div><span style="color:#2E7D32;font-weight:700">Available Today</span></div>
+      </div>
+      <div class="doctor-body">
+        <div class="doctor-name">Dr. Ananya Krishnan</div>
+        <div class="doctor-spec">Pediatrician</div>
+        <div class="doctor-meta">
+          <span><i class="fas fa-graduation-cap"></i> Hinduja Hospital</span>
+          <span><i class="fas fa-briefcase"></i> 11 yrs</span>
+        </div>
+        <div class="doctor-rating">★★★★★ <span style="color:var(--muted);margin-left:4px;font-size:0.75rem">(198 reviews)</span></div>
+        <a href="#appointment" class="doctor-btn" style="margin-top:14px;display:block" onclick="prefillDoctor('Dr. Ananya Krishnan')">Book Appointment</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-banner">
+  <div class="stats-grid">
+    <div><div class="stat-num">50,000+</div><div class="stat-label">Patients Treated/Year</div></div>
+    <div><div class="stat-num">200+</div><div class="stat-label">Specialist Doctors</div></div>
+    <div><div class="stat-num">98%</div><div class="stat-label">Patient Satisfaction</div></div>
+    <div><div class="stat-num">25+</div><div class="stat-label">Years of Excellence</div></div>
+  </div>
+</div>
+
+<!-- APPOINTMENT FORM -->
+<section class="appt-section" id="appointment">
+  <div class="appt-grid">
+    <div class="appt-info">
+      <h2>Book Your Appointment Online</h2>
+      <p>Skip the queue. Book your appointment in under 2 minutes and get instant confirmation via SMS and email. Available for all departments 24/7.</p>
+      <div class="appt-features">
+        <div class="appt-feature"><div class="appt-feature-icon">📅</div> Instant online confirmation</div>
+        <div class="appt-feature"><div class="appt-feature-icon">⏰</div> Choose your preferred time slot</div>
+        <div class="appt-feature"><div class="appt-feature-icon">📱</div> SMS & email reminders</div>
+        <div class="appt-feature"><div class="appt-feature-icon">💊</div> Teleconsultation also available</div>
+        <div class="appt-feature"><div class="appt-feature-icon">🔒</div> Completely secure & confidential</div>
+      </div>
+    </div>
+    <div class="appt-form">
+      <h3>Schedule a Consultation</h3>
+      <div class="form-row">
+        <div class="form-field"><label>Full Name *</label><input type="text" id="f-name" placeholder="Your full name"></div>
+        <div class="form-field"><label>Phone *</label><input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>Email</label><input type="email" id="f-email" placeholder="you@email.com"></div>
+        <div class="form-field"><label>Age</label><input type="number" id="f-age" placeholder="Your age" min="0" max="120"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>Department *</label>
+          <select id="f-dept">
+            <option value="">Select Department</option>
+            <option>Cardiology</option><option>Neurology</option><option>Orthopedics</option>
+            <option>Pediatrics</option><option>Oncology</option><option>Gynecology</option>
+            <option>Dermatology</option><option>Ophthalmology</option><option>General Medicine</option>
+          </select>
+        </div>
+        <div class="form-field"><label>Preferred Doctor</label><input type="text" id="f-doctor" placeholder="Any doctor"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>Preferred Date *</label><input type="date" id="f-date"></div>
+        <div class="form-field"><label>Preferred Time</label>
+          <select id="f-time">
+            <option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option>
+            <option>12:00 PM</option><option>2:00 PM</option><option>3:00 PM</option>
+            <option>4:00 PM</option><option>5:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-full">
+        <div class="form-field"><label>Symptoms / Reason for Visit</label><textarea id="f-reason" rows="3" placeholder="Briefly describe your symptoms or reason for the appointment..."></textarea></div>
+      </div>
+      <button class="appt-submit" onclick="bookAppointment()"><i class="fas fa-calendar-check"></i> Confirm Appointment</button>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-header">
+    <div class="section-label">What We Offer</div>
+    <div class="section-title">Comprehensive Healthcare Services</div>
+    <div class="section-sub">From preventive health checkups to complex surgical procedures — everything under one roof.</div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🏥</div>
+      <div class="service-name">Emergency Care</div>
+      <div class="service-desc">Round-the-clock emergency services with fully equipped trauma centre, advanced life support, and critical care ICU — staffed by emergency medicine specialists.</div>
+      <div class="service-link">Learn More <i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔬</div>
+      <div class="service-name">Advanced Diagnostics</div>
+      <div class="service-desc">State-of-the-art lab with 3T MRI, PET-CT, 4D Echocardiography, and full blood panel results in under 4 hours — with home sample collection available.</div>
+      <div class="service-link">Learn More <i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💻</div>
+      <div class="service-name">Teleconsultation</div>
+      <div class="service-desc">Consult with any of our 200+ specialists from the comfort of your home via secure video call. Prescriptions and reports delivered digitally within 30 minutes.</div>
+      <div class="service-link">Book Now <i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏠</div>
+      <div class="service-name">Home Healthcare</div>
+      <div class="service-desc">Qualified nurses, physiotherapists, and doctors visit your home for post-operative care, IV therapy, wound dressing, and physiotherapy sessions.</div>
+      <div class="service-link">Learn More <i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💊</div>
+      <div class="service-name">Pharmacy & Medicines</div>
+      <div class="service-desc">In-hospital 24/7 pharmacy with 5,000+ medicines in stock. Prescription medicines delivered to your door within 2 hours across Mumbai.</div>
+      <div class="service-link">Order Now <i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧬</div>
+      <div class="service-name">Health Packages</div>
+      <div class="service-desc">Comprehensive annual health checkup packages starting ₹1,499 — includes blood panel, ECG, chest X-ray, BMI analysis, and doctor consultation.</div>
+      <div class="service-link">View Packages <i class="fas fa-arrow-right"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- INSURANCE PARTNERS -->
+<div class="partners-section">
+  <div class="partners-label">Accepted Insurance Partners — Cashless Treatment Available</div>
+  <div class="partners-row">
+    <div class="partner-name">Star Health</div>
+    <div class="partner-name">HDFC ERGO</div>
+    <div class="partner-name">Bajaj Allianz</div>
+    <div class="partner-name">New India Assurance</div>
+    <div class="partner-name">ICICI Lombard</div>
+    <div class="partner-name">Niva Bupa</div>
+    <div class="partner-name">Aditya Birla</div>
+  </div>
+</div>
+
+<!-- HEALTH BLOG -->
+<section class="section" id="blog">
+  <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="section-label">Health Insights</div>
+      <div class="section-title">Tips & Health Articles</div>
+    </div>
+    <a href="#" onclick="showToast('Full blog coming soon!');return false;" style="font-size:0.85rem;font-weight:600;color:var(--primary);border-bottom:2px solid var(--primary);padding-bottom:2px">All Articles →</a>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-card">
+      <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&q=80" alt="Heart Health"></div>
+      <div class="blog-body">
+        <span class="blog-cat">Cardiology</span>
+        <div class="blog-title">10 Warning Signs of Heart Disease You Should Never Ignore</div>
+        <div class="blog-excerpt">Chest pain is just one symptom. Learn the 10 early warning signs of heart disease that are often mistaken for other conditions.</div>
+        <div class="blog-meta">
+          <img class="blog-author-img" src="https://randomuser.me/api/portraits/men/32.jpg">
+          Dr. Arjun Sharma · Nov 28 · 5 min read
+        </div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Mental Health"></div>
+      <div class="blog-body">
+        <span class="blog-cat">Mental Health</span>
+        <div class="blog-title">Managing Stress and Anxiety: A Doctor's Practical Guide</div>
+        <div class="blog-excerpt">Clinical psychologist Dr. Meera Joshi shares evidence-based techniques to manage stress and prevent burnout in your daily life.</div>
+        <div class="blog-meta">
+          <img class="blog-author-img" src="https://randomuser.me/api/portraits/women/47.jpg">
+          Dr. Meera Joshi · Nov 22 · 7 min read
+        </div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80" alt="Nutrition"></div>
+      <div class="blog-body">
+        <span class="blog-cat">Nutrition</span>
+        <div class="blog-title">The Indian Diet and Diabetes: What You Need to Know in 2024</div>
+        <div class="blog-excerpt">India leads the world in diabetes cases. Our endocrinologists explain which common Indian foods spike blood sugar and healthier alternatives.</div>
+        <div class="blog-meta">
+          <img class="blog-author-img" src="https://randomuser.me/api/portraits/women/44.jpg">
+          Dr. Priya Mehta · Nov 15 · 8 min read
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section section-light">
+  <div class="section-header centered" style="text-align:center">
+    <div class="section-label">Patient Experiences</div>
+    <div class="section-title">What Our Patients Say</div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Had a complex cardiac procedure done here. Dr. Arjun Sharma and his team were exceptional — calm, thorough, and incredibly skilled. Recovery was faster than expected. MediCare literally saved my life.</p>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/67.jpg" alt="">
+        <div>
+          <div class="testi-name">Suresh Pillai</div>
+          <div class="testi-info">Cardiac Patient · Bandra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Dr. Ananya Krishnan is the best paediatrician we've encountered. She's incredibly patient with children and explains everything clearly to parents. My son was so comfortable with her.</p>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/36.jpg" alt="">
+        <div>
+          <div class="testi-name">Deepa Nair</div>
+          <div class="testi-info">Parent · Andheri</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">The online appointment booking is seamless, wait times are minimal, and the diagnostics lab returned my results in under 3 hours. This is what modern healthcare should look like.</p>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/44.jpg" alt="">
+        <div>
+          <div class="testi-name">Karan Mehta</div>
+          <div class="testi-info">Regular Patient · Thane</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon"><i class="fas fa-plus"></i></div>
+        <div class="footer-logo-text">Medi<span>Care</span></div>
+      </div>
+      <p class="footer-desc">Delivering compassionate, world-class healthcare across Mumbai since 1999. NABH Accredited. JCI Certified.</p>
+      <div class="footer-emergency">
+        <div class="footer-emergency-title">🚨 24/7 Emergency Helpline</div>
+        <div class="footer-emergency-num">108 · +91 22 4567 8900</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Departments</h5>
+      <a href="#">Cardiology</a>
+      <a href="#">Neurology</a>
+      <a href="#">Orthopedics</a>
+      <a href="#">Pediatrics</a>
+      <a href="#">Oncology</a>
+      <a href="#">All Departments →</a>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <a href="#">Emergency Care</a>
+      <a href="#">Diagnostics</a>
+      <a href="#">Teleconsultation</a>
+      <a href="#">Home Healthcare</a>
+      <a href="#">Health Packages</a>
+    </div>
+    <div class="footer-col">
+      <h5>Information</h5>
+      <a href="#">About MediCare</a>
+      <a href="#">Our Doctors</a>
+      <a href="#">Patient Portal</a>
+      <a href="#">Insurance & Billing</a>
+      <a href="#">Health Blog</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2024 MediCare Hospital. All rights reserved.</div>
+    <div class="footer-accreditations">
+      <span class="accred-badge">NABH Accredited</span>
+      <span class="accred-badge">JCI Certified</span>
+      <span class="accred-badge">ISO 9001:2015</span>
+      <span class="accred-badge">NABL Lab</span>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  function searchDoctor() {
+    const doc = document.getElementById('s-doctor').value;
+    const dept = document.getElementById('s-dept').value;
+    if (!doc && !dept) { showToast('Please enter a doctor name or select a department'); return; }
+    showToast(`Searching for ${doc || dept}... Scroll down to view results.`);
+    document.getElementById('doctors').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function bookDept(dept) {
+    document.getElementById('f-dept').value = dept;
+    document.getElementById('appointment').scrollIntoView({ behavior: 'smooth' });
+    showToast(`${dept} selected. Please complete the form below.`);
+  }
+
+  function prefillDoctor(name) {
+    document.getElementById('f-doctor').value = name;
+  }
+
+  function bookAppointment() {
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const dept = document.getElementById('f-dept').value;
+    const date = document.getElementById('f-date').value;
+    if (!name) { showToast('⚠️ Please enter your full name'); return; }
+    if (!phone) { showToast('⚠️ Please enter your phone number'); return; }
+    if (!dept) { showToast('⚠️ Please select a department'); return; }
+    if (!date) { showToast('⚠️ Please select a preferred date'); return; }
+    showToast(`✅ Appointment confirmed for ${name}! Confirmation SMS sent to ${phone}.`);
+    ['f-name','f-phone','f-email','f-age','f-doctor','f-date','f-reason'].forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('f-dept').value = '';
+  }
+
+  // Set min date to today
+  document.getElementById('f-date').min = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>

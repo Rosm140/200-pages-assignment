@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EventPro | Event Planning & Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#0c0b1a;--surface:#13122a;--card:#1b1935;
+      --accent:#7c5cfc;--accent2:#c45cf7;--accent3:#5cf7c4;
+      --text:#f0eeff;--muted:#8a85aa;--border:rgba(124,92,252,0.18);--glow:rgba(124,92,252,0.25);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden;}
+
+    /* NOISE */
+    body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.4;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5rem;background:rgba(12,11,26,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+    .logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;}
+    .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+    .logo-text{font-family:'Fraunces',serif;font-weight:900;font-size:1.4rem;color:var(--text);}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .3s;}
+    .nav-links a:hover{color:var(--text);}
+    .nav-cta{padding:.55rem 1.5rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50px;color:#fff;font-family:'Outfit',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;box-shadow:0 4px 20px var(--glow);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.5);}}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;padding:7rem 5rem 4rem;position:relative;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;z-index:0;
+      background:radial-gradient(ellipse 70% 60% at 70% 40%,rgba(124,92,252,0.15) 0%,transparent 70%),
+                radial-gradient(ellipse 50% 50% at 10% 80%,rgba(196,92,247,0.1) 0%,transparent 60%),
+                radial-gradient(ellipse 40% 40% at 50% 0%,rgba(92,247,196,0.06) 0%,transparent 60%);}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.5;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 80%);}
+    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;width:100%;}
+    .hero-left{}
+    .hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.25);border-radius:50px;padding:.4rem 1rem;font-size:.78rem;color:var(--accent);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:1.8rem;animation:fadeUp .7s .1s ease both;}
+    .hero-tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+    .hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(3rem,6vw,5.2rem);line-height:1.06;letter-spacing:-1px;margin-bottom:1.2rem;animation:fadeUp .7s .2s ease both;}
+    .hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hero p{color:var(--muted);font-size:1.05rem;line-height:1.8;max-width:480px;margin-bottom:2.5rem;animation:fadeUp .7s .35s ease both;font-weight:300;}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .7s .5s ease both;}
+    .btn-primary{padding:.9rem 2.2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50px;color:#fff;font-family:'Outfit',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer;text-decoration:none;box-shadow:0 6px 28px var(--glow);transition:transform .2s,box-shadow .2s;display:inline-block;}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 38px var(--glow);}
+    .btn-ghost{padding:.9rem 2.2rem;background:transparent;border:1.5px solid var(--border);border-radius:50px;color:var(--text);font-family:'Outfit',sans-serif;font-weight:500;font-size:.95rem;cursor:pointer;text-decoration:none;transition:all .3s;display:inline-block;}
+    .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+    .hero-stats{display:flex;gap:2.5rem;margin-top:3rem;animation:fadeUp .7s .65s ease both;}
+    .hs{display:flex;flex-direction:column;gap:.2rem;}
+    .hs-num{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hs-label{font-size:.75rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+
+    /* HERO VISUAL */
+    .hero-visual{position:relative;animation:fadeUp .9s .3s ease both;}
+    .hero-main-card{background:linear-gradient(145deg,var(--card),var(--surface));border:1px solid var(--border);border-radius:24px;padding:2rem;box-shadow:0 30px 80px rgba(0,0,0,0.5);animation:float 6s ease-in-out infinite;}
+    .hmc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+    .hmc-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;}
+    .hmc-badge{background:linear-gradient(135deg,var(--accent3),#22d3a5);color:var(--bg);font-size:.7rem;font-weight:700;padding:.2rem .7rem;border-radius:50px;}
+    .event-list{display:flex;flex-direction:column;gap:.8rem;}
+    .event-item{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;display:flex;align-items:center;gap:.9rem;transition:border-color .3s;}
+    .event-item:hover{border-color:rgba(124,92,252,0.3);}
+    .ei-emoji{font-size:1.5rem;flex-shrink:0;}
+    .ei-info{flex:1;}
+    .ei-name{font-size:.88rem;font-weight:600;}
+    .ei-date{font-size:.72rem;color:var(--muted);}
+    .ei-spots{font-size:.72rem;color:var(--accent3);font-weight:600;background:rgba(92,247,196,0.1);border-radius:50px;padding:.15rem .55rem;}
+    .floating-card{position:absolute;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:.9rem 1.1rem;box-shadow:0 12px 30px rgba(0,0,0,0.4);}
+    .fc1{top:-20px;right:-20px;}
+    .fc2{bottom:-16px;left:-20px;}
+    .fc-icon{font-size:1.4rem;margin-bottom:.3rem;display:block;}
+    .fc-val{font-family:'Fraunces',serif;font-weight:700;font-size:1rem;color:var(--accent);}
+    .fc-label{font-size:.7rem;color:var(--muted);}
+
+    /* MARQUEE */
+    .marquee-wrap{background:linear-gradient(90deg,var(--accent),var(--accent2));overflow:hidden;padding:.7rem 0;}
+    .marquee-track{display:flex;gap:3rem;animation:marquee 22s linear infinite;white-space:nowrap;}
+    .marquee-item{font-size:.88rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:.7rem;}
+    .marquee-dot{width:4px;height:4px;background:rgba(255,255,255,.4);border-radius:50%;}
+    @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+    /* EVENTS SECTION */
+    .events-section{padding:6rem 5rem;}
+    .sec-header{text-align:center;margin-bottom:3rem;}
+    .sec-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--accent);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:.8rem;}
+    .sec-tag::before{content:'';width:20px;height:1.5px;background:var(--accent);display:inline-block;}
+    .sec-tag::after{content:'';width:20px;height:1.5px;background:var(--accent);display:inline-block;}
+    .sec-title{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.5px;}
+    .sec-title em{font-style:italic;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .sec-sub{color:var(--muted);font-size:.95rem;max-width:480px;margin:.8rem auto 0;line-height:1.7;}
+    .events-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+    .event-card{background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s,border-color .3s;}
+    .event-card:hover{transform:translateY(-7px);box-shadow:0 20px 50px rgba(0,0,0,0.4);border-color:rgba(124,92,252,0.3);}
+    .ec-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;}
+    .ec-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(27,25,53,0.8) 100%);}
+    .ec-date-badge{position:absolute;top:1rem;left:1rem;z-index:1;background:rgba(27,25,53,0.85);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:10px;padding:.4rem .7rem;text-align:center;}
+    .ec-day{font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;line-height:1;color:var(--accent);}
+    .ec-month{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+    .ec-category{position:absolute;top:1rem;right:1rem;z-index:1;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:50px;letter-spacing:.5px;text-transform:uppercase;}
+    .ec-category.music{background:rgba(196,92,247,0.8);color:#fff;}
+    .ec-category.tech{background:rgba(124,92,252,0.8);color:#fff;}
+    .ec-category.food{background:rgba(232,160,69,0.8);color:var(--bg);}
+    .ec-category.art{background:rgba(92,247,196,0.8);color:var(--bg);}
+    .ec-body{padding:1.3rem;}
+    .ec-name{font-family:'Fraunces',serif;font-weight:700;font-size:1.05rem;margin-bottom:.3rem;}
+    .ec-location{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:.3rem;margin-bottom:.8rem;}
+    .ec-footer{display:flex;align-items:center;justify-content:space-between;}
+    .ec-price{font-family:'Fraunces',serif;font-weight:700;font-size:1rem;color:var(--accent);}
+    .ec-spots{font-size:.72rem;color:var(--accent3);background:rgba(92,247,196,0.1);border-radius:50px;padding:.2rem .6rem;}
+    .ec-book{padding:.5rem 1.2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50px;color:#fff;font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;box-shadow:0 3px 10px var(--glow);transition:transform .2s;}
+    .ec-book:hover{transform:scale(1.05);}
+
+    /* CATEGORIES */
+    .categories-section{padding:0 5rem 6rem;}
+    .cat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;margin-top:3rem;}
+    .cat-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s;text-decoration:none;}
+    .cat-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 12px 28px var(--glow);}
+    .cat-emoji{font-size:2rem;margin-bottom:.6rem;display:block;}
+    .cat-name{font-size:.82rem;font-weight:600;color:var(--text);}
+    .cat-count{font-size:.7rem;color:var(--muted);margin-top:.2rem;}
+
+    /* VENUE SHOWCASE */
+    .venues-section{padding:6rem 5rem;background:var(--surface);}
+    .venues-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:1.5rem;margin-top:3rem;}
+    .venue-card{background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;}
+    .venue-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.4);}
+    .vc-img{display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;}
+    .venue-card:first-child .vc-img{height:280px;font-size:6rem;}
+    .vc-img{height:180px;}
+    .vc-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(27,25,53,0.85) 100%);}
+    .vc-capacity{position:absolute;top:1rem;right:1rem;z-index:1;background:rgba(27,25,53,0.85);border:1px solid var(--border);border-radius:50px;padding:.2rem .7rem;font-size:.7rem;color:var(--accent3);font-weight:600;}
+    .vc-body{padding:1.2rem;}
+    .vc-name{font-family:'Fraunces',serif;font-weight:700;font-size:1rem;margin-bottom:.3rem;}
+    .vc-loc{font-size:.78rem;color:var(--muted);margin-bottom:.6rem;}
+    .vc-tags{display:flex;gap:.4rem;flex-wrap:wrap;}
+    .vc-tag{font-size:.66rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.2);border-radius:50px;padding:.15rem .55rem;color:var(--accent);}
+
+    /* TICKET BOOKING */
+    .booking-section{padding:6rem 5rem;}
+    .booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+    .booking-form{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.5rem;}
+    .bf-title{font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;margin-bottom:.4rem;}
+    .bf-title em{font-style:italic;color:var(--accent);}
+    .bf-sub{font-size:.85rem;color:var(--muted);margin-bottom:2rem;line-height:1.6;}
+    .form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem;}
+    .form-label{font-size:.78rem;color:var(--muted);font-weight:500;}
+    .form-input,.form-select{width:100%;padding:.82rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'Outfit',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s;}
+    .form-input:focus,.form-select:focus{border-color:var(--accent);}
+    .form-input::placeholder{color:var(--muted);}
+    .form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a85aa' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;background-color:var(--surface);cursor:pointer;}
+    .form-select option{background:var(--card);}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .ticket-qty{display:flex;align-items:center;gap:1rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.5rem .8rem;}
+    .tq-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--text);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+    .tq-btn:hover{border-color:var(--accent);color:var(--accent);}
+    .tq-num{font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;min-width:30px;text-align:center;}
+    .booking-info{display:flex;flex-direction:column;gap:1.5rem;}
+    .bi-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;}
+    .bi-icon{font-size:1.8rem;flex-shrink:0;}
+    .bi-title{font-weight:600;font-size:.92rem;margin-bottom:.3rem;}
+    .bi-desc{font-size:.82rem;color:var(--muted);line-height:1.6;}
+
+    /* REVIEWS */
+    .reviews-section{padding:6rem 5rem;background:var(--surface);}
+    .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+    .review-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.8rem;transition:transform .3s;}
+    .review-card:hover{transform:translateY(-4px);}
+    .rv-stars{color:var(--accent);font-size:.85rem;letter-spacing:2px;margin-bottom:.8rem;}
+    .rv-text{font-size:.9rem;color:var(--muted);line-height:1.7;font-style:italic;margin-bottom:1.2rem;}
+    .rv-author{display:flex;align-items:center;gap:.7rem;}
+    .rv-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;}
+    .rv-name{font-weight:600;font-size:.87rem;}
+    .rv-info{font-size:.74rem;color:var(--muted);}
+
+    /* CTA */
+    .cta-section{margin:4rem 5rem;border-radius:28px;background:linear-gradient(135deg,var(--accent),var(--accent2));padding:5rem 4rem;text-align:center;position:relative;overflow:hidden;}
+    .cta-section::before{content:'🎉';position:absolute;right:5%;top:50%;transform:translateY(-50%);font-size:10rem;opacity:.1;}
+    .cta-section h2{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:.8rem;}
+    .cta-section p{color:rgba(255,255,255,.8);margin-bottom:2.5rem;max-width:440px;margin-left:auto;margin-right:auto;font-size:1rem;}
+    .btn-white{padding:.9rem 2.2rem;background:#fff;border:none;border-radius:50px;color:var(--accent);font-family:'Outfit',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:transform .2s;display:inline-block;text-decoration:none;}
+    .btn-white:hover{transform:translateY(-2px);}
+    .btn-white-outline{padding:.9rem 2.2rem;background:transparent;border:2px solid rgba(255,255,255,.6);border-radius:50px;color:#fff;font-family:'Outfit',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer;display:inline-block;text-decoration:none;margin-left:1rem;transition:all .3s;}
+    .btn-white-outline:hover{background:rgba(255,255,255,.1);}
+
+    /* FOOTER */
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:3rem 5rem 2rem;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem;}
+    .footer-brand p{font-size:.85rem;color:var(--muted);line-height:1.7;max-width:260px;margin-top:.8rem;}
+    .footer-col h4{font-weight:700;font-size:.88rem;margin-bottom:1rem;color:var(--text);}
+    .footer-col a{display:block;color:var(--muted);text-decoration:none;font-size:.83rem;margin-bottom:.55rem;transition:color .2s;}
+    .footer-col a:hover{color:var(--accent);}
+    .footer-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .footer-bottom p{font-size:.8rem;color:var(--muted);}
+
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    /* SUCCESS */
+    .booking-success{display:none;text-align:center;padding:2rem;}
+    .booking-success.show{display:block;}
+    .bs-icon{font-size:4rem;margin-bottom:.8rem;animation:bounceIn .6s ease;}
+    @keyframes bounceIn{0%{transform:scale(0);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+    .bs-title{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;margin-bottom:.5rem;}
+    .bs-title em{font-style:italic;color:var(--accent);}
+    .bs-msg{color:var(--muted);font-size:.88rem;line-height:1.7;margin-bottom:1.5rem;}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card);border:1px solid var(--border);border-radius:50px;padding:.7rem 1.6rem;font-size:.85rem;font-weight:500;z-index:9998;transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+    .toast.show{transform:translateX(-50%) translateY(0);}
+
+    @media(max-width:1024px){.hero-inner{grid-template-columns:1fr;}.hero-visual{display:none;}.cat-grid{grid-template-columns:repeat(3,1fr);}.venues-grid{grid-template-columns:1fr 1fr;}.booking-grid{grid-template-columns:1fr;}.reviews-grid,.footer-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:768px){nav{padding:1.1rem 1.5rem;}.nav-links{display:none;}.hero,.events-section,.categories-section,.venues-section,.booking-section,.reviews-section{padding-left:1.5rem;padding-right:1.5rem;}.cta-section{margin:3rem 1.5rem;padding:3rem 1.5rem;}.form-row{grid-template-columns:1fr;}footer{padding:2rem 1.5rem;}.cat-grid{grid-template-columns:repeat(2,1fr);}}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo"><div class="logo-icon">🎉</div><span class="logo-text">EventPro</span></a>
+    <ul class="nav-links">
+      <li><a href="#events">Events</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#venues">Venues</a></li>
+      <li><a href="#booking">Book Tickets</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div><div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-tag">🎟️ 500+ Events Across India</div>
+        <h1>Plan & Experience <em>Unforgettable</em> Events</h1>
+        <p>From intimate gatherings to massive concerts — discover, book, and manage events seamlessly. Your next great memory is just one click away.</p>
+        <div class="hero-btns">
+          <a href="#events" class="btn-primary">🎉 Explore Events</a>
+          <a href="#booking" class="btn-ghost">Book Tickets →</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hs"><span class="hs-num">500+</span><span class="hs-label">Events</span></div>
+          <div class="hs"><span class="hs-num">50k+</span><span class="hs-label">Attendees</span></div>
+          <div class="hs"><span class="hs-num">120+</span><span class="hs-label">Venues</span></div>
+          <div class="hs"><span class="hs-num">4.9★</span><span class="hs-label">Rating</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-card fc1"><span class="fc-icon">🎫</span><div class="fc-val">1,240</div><div class="fc-label">Tickets Sold Today</div></div>
+        <div class="hero-main-card">
+          <div class="hmc-header"><span class="hmc-title">Upcoming Events</span><span class="hmc-badge">Live</span></div>
+          <div class="event-list">
+            <div class="event-item"><span class="ei-emoji">🎵</span><div class="ei-info"><div class="ei-name">Summer Music Fest 2024</div><div class="ei-date">Jun 15 · Hitex, Hyderabad</div></div><span class="ei-spots">42 left</span></div>
+            <div class="event-item"><span class="ei-emoji">💻</span><div class="ei-info"><div class="ei-name">TechSummit India 2024</div><div class="ei-date">Jun 22 · HICC, Hyderabad</div></div><span class="ei-spots">120 left</span></div>
+            <div class="event-item"><span class="ei-emoji">🎨</span><div class="ei-info"><div class="ei-name">Art & Culture Expo</div><div class="ei-date">Jul 1 · Shilparamam</div></div><span class="ei-spots">85 left</span></div>
+            <div class="event-item"><span class="ei-emoji">🍽️</span><div class="ei-info"><div class="ei-name">Food & Wine Festival</div><div class="ei-date">Jul 8 · Novotel, Hyderabad</div></div><span class="ei-spots">30 left</span></div>
+          </div>
+        </div>
+        <div class="floating-card fc2"><span class="fc-icon">⭐</span><div class="fc-val">4.9/5</div><div class="fc-label">Avg. Event Rating</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">🎵 Music Concerts <span class="marquee-dot"></span></span>
+      <span class="marquee-item">💻 Tech Conferences <span class="marquee-dot"></span></span>
+      <span class="marquee-item">🎨 Art Exhibitions <span class="marquee-dot"></span></span>
+      <span class="marquee-item">🍽️ Food Festivals <span class="marquee-dot"></span></span>
+      <span class="marquee-item">💒 Wedding Events <span class="marquee-dot"></span></span>
+      <span class="marquee-item">🏃 Sports Events <span class="marquee-dot"></span></span>
+      <span class="marquee-item">🎭 Theatre Shows <span class="marquee-dot"></span></span>
+      <span class="marquee-item">🎵 Music Concerts <span class="marquee-dot"></span></span>
+      <span class="marquee-item">💻 Tech Conferences <span class="marquee-dot"></span></span>
+      <span class="marquee-item">🎨 Art Exhibitions <span class="marquee-dot"></span></span>
+      <span class="marquee-item">🍽️ Food Festivals <span class="marquee-dot"></span></span>
+      <span class="marquee-item">💒 Wedding Events <span class="marquee-dot"></span></span>
+      <span class="marquee-item">🏃 Sports Events <span class="marquee-dot"></span></span>
+      <span class="marquee-item">🎭 Theatre Shows <span class="marquee-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <section class="events-section" id="events">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Featured</div>
+      <h2 class="sec-title">Upcoming <em>Events</em></h2>
+      <p class="sec-sub">Hand-picked events happening near you — concerts, conferences, food festivals and more.</p>
+    </div>
+    <div class="events-grid reveal">
+      <div class="event-card"><div class="ec-img" style="background:linear-gradient(135deg,#1a0a3a,#3a1a6a);"><div class="ec-date-badge"><div class="ec-day">15</div><div class="ec-month">Jun</div></div><span class="ec-category music">Music</span>🎵</div><div class="ec-body"><div class="ec-name">Summer Music Festival 2024</div><div class="ec-location">📍 Hitex Exhibition Centre, Hyderabad</div><div class="ec-footer"><span class="ec-price">₹1,200</span><span class="ec-spots">42 spots left</span><button class="ec-book" onclick="bookEvent('Summer Music Festival',1200)">Book</button></div></div></div>
+      <div class="event-card"><div class="ec-img" style="background:linear-gradient(135deg,#0a1a3a,#1a3a7a);"><div class="ec-date-badge"><div class="ec-day">22</div><div class="ec-month">Jun</div></div><span class="ec-category tech">Tech</span>💻</div><div class="ec-body"><div class="ec-name">TechSummit India 2024</div><div class="ec-location">📍 HICC, Hyderabad</div><div class="ec-footer"><span class="ec-price">₹2,500</span><span class="ec-spots">120 spots</span><button class="ec-book" onclick="bookEvent('TechSummit India',2500)">Book</button></div></div></div>
+      <div class="event-card"><div class="ec-img" style="background:linear-gradient(135deg,#1a3a1a,#2a6a4a);"><div class="ec-date-badge"><div class="ec-day">01</div><div class="ec-month">Jul</div></div><span class="ec-category art">Art</span>🎨</div><div class="ec-body"><div class="ec-name">Art & Culture Expo 2024</div><div class="ec-location">📍 Shilparamam, Hyderabad</div><div class="ec-footer"><span class="ec-price">₹500</span><span class="ec-spots">85 spots</span><button class="ec-book" onclick="bookEvent('Art & Culture Expo',500)">Book</button></div></div></div>
+      <div class="event-card"><div class="ec-img" style="background:linear-gradient(135deg,#3a2a0a,#6a4a1a);"><div class="ec-date-badge"><div class="ec-day">08</div><div class="ec-month">Jul</div></div><span class="ec-category food">Food</span>🍽️</div><div class="ec-body"><div class="ec-name">Hyderabad Food & Wine Festival</div><div class="ec-location">📍 Novotel, Hyderabad</div><div class="ec-footer"><span class="ec-price">₹800</span><span class="ec-spots">30 spots</span><button class="ec-book" onclick="bookEvent('Food & Wine Festival',800)">Book</button></div></div></div>
+      <div class="event-card"><div class="ec-img" style="background:linear-gradient(135deg,#2a0a3a,#5a1a7a);"><div class="ec-date-badge"><div class="ec-day">14</div><div class="ec-month">Jul</div></div><span class="ec-category music">Music</span>🎸</div><div class="ec-body"><div class="ec-name">Rock The City — Live Concert</div><div class="ec-location">📍 LB Stadium, Hyderabad</div><div class="ec-footer"><span class="ec-price">₹1,800</span><span class="ec-spots">200 spots</span><button class="ec-book" onclick="bookEvent('Rock The City',1800)">Book</button></div></div></div>
+      <div class="event-card"><div class="ec-img" style="background:linear-gradient(135deg,#0a2a3a,#1a5a7a);"><div class="ec-date-badge"><div class="ec-day">20</div><div class="ec-month">Jul</div></div><span class="ec-category tech">Tech</span>🤖</div><div class="ec-body"><div class="ec-name">AI & Future Tech Expo</div><div class="ec-location">📍 T-Hub, Hyderabad</div><div class="ec-footer"><span class="ec-price">₹999</span><span class="ec-spots">65 spots</span><button class="ec-book" onclick="bookEvent('AI & Future Tech Expo',999)">Book</button></div></div></div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories-section" id="categories">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Browse By Type</div>
+      <h2 class="sec-title">Event <em>Categories</em></h2>
+      <p class="sec-sub">Find events that match your interests — from music to marathon.</p>
+    </div>
+    <div class="cat-grid reveal">
+      <a href="#events" class="cat-card"><span class="cat-emoji">🎵</span><div class="cat-name">Music</div><div class="cat-count">84 events</div></a>
+      <a href="#events" class="cat-card"><span class="cat-emoji">💻</span><div class="cat-name">Technology</div><div class="cat-count">46 events</div></a>
+      <a href="#events" class="cat-card"><span class="cat-emoji">🎨</span><div class="cat-name">Arts & Culture</div><div class="cat-count">38 events</div></a>
+      <a href="#events" class="cat-card"><span class="cat-emoji">🍽️</span><div class="cat-name">Food & Drink</div><div class="cat-count">55 events</div></a>
+      <a href="#events" class="cat-card"><span class="cat-emoji">🏃</span><div class="cat-name">Sports</div><div class="cat-count">29 events</div></a>
+      <a href="#events" class="cat-card"><span class="cat-emoji">🎭</span><div class="cat-name">Theatre</div><div class="cat-count">22 events</div></a>
+    </div>
+  </section>
+
+  <!-- VENUES -->
+  <section class="venues-section" id="venues">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Spaces & Locations</div>
+      <h2 class="sec-title">Featured <em>Venues</em></h2>
+      <p class="sec-sub">World-class venues across Hyderabad ready to host your dream event.</p>
+    </div>
+    <div class="venues-grid reveal">
+      <div class="venue-card"><div class="vc-img" style="background:linear-gradient(135deg,#1a0a3a,#3a1a6a);font-size:6rem;height:280px;"><span class="vc-capacity">👥 5,000 cap.</span>🏟️</div><div class="vc-body"><div class="vc-name">Hitex Exhibition Centre</div><div class="vc-loc">📍 Madhapur, Hyderabad</div><div class="vc-tags"><span class="vc-tag">Exhibitions</span><span class="vc-tag">Concerts</span><span class="vc-tag">Conferences</span></div></div></div>
+      <div class="venue-card"><div class="vc-img" style="background:linear-gradient(135deg,#0a1a3a,#1a3a7a);"><span class="vc-capacity">👥 1,200 cap.</span>🏛️</div><div class="vc-body"><div class="vc-name">HICC Convention Centre</div><div class="vc-loc">📍 Novotel Campus, Hyderabad</div><div class="vc-tags"><span class="vc-tag">Summits</span><span class="vc-tag">Galas</span></div></div></div>
+      <div class="venue-card"><div class="vc-img" style="background:linear-gradient(135deg,#2a0a3a,#5a1a7a);"><span class="vc-capacity">👥 500 cap.</span>🎭</div><div class="vc-body"><div class="vc-name">Ravindra Bharathi</div><div class="vc-loc">📍 Lakdikapul, Hyderabad</div><div class="vc-tags"><span class="vc-tag">Theatre</span><span class="vc-tag">Dance</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking-section" id="booking">
+    <div class="booking-grid">
+      <div class="booking-form reveal">
+        <div id="bookingFormView">
+          <div class="bf-title">Book Your <em>Tickets</em></div>
+          <p class="bf-sub">Secure your spot in seconds. Instant confirmation sent to your email.</p>
+          <div class="form-group"><label class="form-label">Select Event</label><select class="form-select" id="eventSelect"><option value="">Choose an event...</option><option value="Summer Music Festival|1200">Summer Music Festival — ₹1,200</option><option value="TechSummit India|2500">TechSummit India — ₹2,500</option><option value="Art & Culture Expo|500">Art & Culture Expo — ₹500</option><option value="Food & Wine Festival|800">Food & Wine Festival — ₹800</option><option value="Rock The City|1800">Rock The City — ₹1,800</option><option value="AI & Future Tech Expo|999">AI & Future Tech Expo — ₹999</option></select></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" id="bookName" placeholder="Your name"/></div>
+            <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="bookEmail" placeholder="your@email.com"/></div>
+          </div>
+          <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-input" id="bookPhone" placeholder="+91 99999 00000"/></div>
+          <div class="form-group"><label class="form-label">Number of Tickets</label>
+            <div class="ticket-qty">
+              <button class="tq-btn" onclick="changeQty(-1)">−</button>
+              <span class="tq-num" id="ticketQty">1</span>
+              <button class="tq-btn" onclick="changeQty(1)">+</button>
+              <span style="font-size:.78rem;color:var(--muted);margin-left:auto;" id="ticketTotal">Total: ₹0</span>
+            </div>
+          </div>
+          <button class="btn-primary" style="width:100%;margin-top:.5rem;" onclick="submitBooking()">🎫 Confirm Booking</button>
+        </div>
+        <div class="booking-success" id="bookingSuccess">
+          <div class="bs-icon">🎉</div>
+          <div class="bs-title">Booking <em>Confirmed!</em></div>
+          <p class="bs-msg" id="bookingMsg">Your tickets are confirmed! Check your email for the e-ticket.</p>
+          <a href="#events" class="btn-primary" style="display:inline-block;">Browse More Events →</a>
+        </div>
+      </div>
+      <div class="booking-info reveal">
+        <div style="margin-bottom:1.5rem;"><div class="sec-tag" style="justify-content:flex-start;">Why EventPro?</div><h2 class="sec-title" style="text-align:left;font-size:2.2rem;">The <em>Easiest</em> Way to Book</h2></div>
+        <div class="bi-card"><span class="bi-icon">⚡</span><div><div class="bi-title">Instant Confirmation</div><div class="bi-desc">Receive your e-ticket and QR code within seconds of booking. No waiting.</div></div></div>
+        <div class="bi-card"><span class="bi-icon">🔒</span><div><div class="bi-title">Secure Payments</div><div class="bi-desc">256-bit SSL encrypted payments. UPI, Cards, Net Banking all accepted.</div></div></div>
+        <div class="bi-card"><span class="bi-icon">🔄</span><div><div class="bi-title">Flexible Cancellation</div><div class="bi-desc">Cancel up to 24 hours before the event for a full refund. No questions asked.</div></div></div>
+        <div class="bi-card"><span class="bi-icon">📱</span><div><div class="bi-title">Digital Tickets</div><div class="bi-desc">All tickets are digital. Just show the QR code at entry — no printouts needed.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section" id="reviews">
+    <div class="sec-header reveal">
+      <div class="sec-tag">What Attendees Say</div>
+      <h2 class="sec-title">Real <em>Reviews</em></h2>
+      <p class="sec-sub">Over 50,000 happy event-goers. Here's what they had to say.</p>
+    </div>
+    <div class="reviews-grid reveal">
+      <div class="review-card"><div class="rv-stars">★★★★★</div><p class="rv-text">"EventPro made booking so easy! Got my tickets in 30 seconds and the QR code worked perfectly at entry. Highly recommend!"</p><div class="rv-author"><div class="rv-avatar">P</div><div><div class="rv-name">Priya Sharma</div><div class="rv-info">Summer Music Festival attendee</div></div></div></div>
+      <div class="review-card"><div class="rv-stars">★★★★★</div><p class="rv-text">"Best event management platform in India. The venue recommendations were spot on for our corporate summit. Will use again!"</p><div class="rv-author"><div class="rv-avatar" style="background:linear-gradient(135deg,#56ccf2,#7c5cfc);">R</div><div><div class="rv-name">Rahul Mehta</div><div class="rv-info">TechSummit India attendee</div></div></div></div>
+      <div class="review-card"><div class="rv-stars">★★★★★</div><p class="rv-text">"The cancellation process was seamless. Got my full refund within 2 days. Customer support was incredibly responsive."</p><div class="rv-author"><div class="rv-avatar" style="background:linear-gradient(135deg,#fc5c7d,#f59e0b);">A</div><div><div class="rv-name">Ananya Reddy</div><div class="rv-info">Food Festival attendee</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-section reveal">
+    <h2>Ready to Create Memories?</h2>
+    <p>Join 50,000+ event-goers who trust EventPro for seamless booking and unforgettable experiences.</p>
+    <a href="#events" class="btn-white">🎉 Explore All Events</a>
+    <a href="#booking" class="btn-white-outline">Book Tickets</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="margin-bottom:.5rem;display:inline-flex;"><div class="logo-icon">🎉</div><span class="logo-text" style="margin-left:.6rem;">EventPro</span></a>
+        <p>The easiest way to discover, book and manage events across India. 500+ events, 50,000+ happy attendees.</p>
+      </div>
+      <div class="footer-col"><h4>Events</h4><a href="#events">Concerts</a><a href="#events">Conferences</a><a href="#events">Food Festivals</a><a href="#events">Art Shows</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Press</a></div>
+      <div class="footer-col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Refund Policy</a><a href="#">Contact Us</a><a href="#">FAQ</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2024 EventPro. All rights reserved.</p><p>Made with ❤️ in Hyderabad, India</p></div>
+  </footer>
+
+  <div class="toast" id="toast">🎫 <span id="toastMsg">Done!</span></div>
+
+  <script>
+    let ticketQty=1;let selectedPrice=0;
+    function changeQty(d){ticketQty=Math.max(1,Math.min(10,ticketQty+d));document.getElementById('ticketQty').textContent=ticketQty;const total=ticketQty*selectedPrice;document.getElementById('ticketTotal').textContent='Total: ₹'+total.toLocaleString();}
+    document.getElementById('eventSelect').addEventListener('change',function(){const parts=this.value.split('|');selectedPrice=parts[1]?parseInt(parts[1]):0;document.getElementById('ticketTotal').textContent='Total: ₹'+(ticketQty*selectedPrice).toLocaleString();});
+    function bookEvent(name,price){document.getElementById('eventSelect').value=name+'|'+price;selectedPrice=price;document.getElementById('ticketTotal').textContent='Total: ₹'+(ticketQty*price).toLocaleString();document.getElementById('booking').scrollIntoView({behavior:'smooth'});}
+    function submitBooking(){
+      const event=document.getElementById('eventSelect').value;const name=document.getElementById('bookName').value;const email=document.getElementById('bookEmail').value;
+      if(!event||!name||!email){showToast('Please fill all required fields! ⚠️');return;}
+      const eventName=event.split('|')[0];const total=(ticketQty*selectedPrice).toLocaleString();
+      document.getElementById('bookingFormView').style.display='none';
+      document.getElementById('bookingMsg').textContent=`${ticketQty} ticket(s) for ${eventName} booked! Total: ₹${total}. Confirmation sent to ${email}.`;
+      document.getElementById('bookingSuccess').classList.add('show');
+    }
+    let toastTimer;
+    function showToast(msg){clearTimeout(toastTimer);document.getElementById('toastMsg').textContent=msg;const t=document.getElementById('toast');t.classList.add('show');toastTimer=setTimeout(()=>t.classList.remove('show'),2500);}
+    const ro=new IntersectionObserver((e)=>{e.forEach((en,i)=>{if(en.isIntersecting)setTimeout(()=>en.target.classList.add('visible'),i*80);});},{threshold:.07});
+    document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+  </script>
+</body>
+</html>

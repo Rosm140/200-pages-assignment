@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FoodiePlace | About Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0f0e0b;--surface:#1a1814;--card:#221f19;--accent:#e8a045;--accent2:#c45c2e;--accent3:#6dbf8a;--text:#f5f0e8;--muted:#9a9080;--border:rgba(232,160,69,0.18);--glow:rgba(232,160,69,0.22);}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;overflow-x:hidden;}
+    body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;background:rgba(15,14,11,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+    .nav-logo{display:flex;align-items:center;gap:.7rem;text-decoration:none;}
+    .nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+    .nav-logo-text{font-family:'Playfair Display',serif;font-weight:700;font-size:1.3rem;color:var(--text);}
+    .nav-links{display:flex;gap:2.2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .3s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent);}
+    .nav-order{padding:.55rem 1.4rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50px;color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;text-decoration:none;box-shadow:0 4px 20px var(--glow);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+    /* HERO */
+    .hero{min-height:80vh;display:flex;align-items:center;padding:8rem 4rem 5rem;position:relative;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(232,160,69,0.09) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 5% 80%,rgba(196,92,46,0.07) 0%,transparent 60%);}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:50px 50px;opacity:.3;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 80%);}
+    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;width:100%;}
+    .breadcrumb{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:1.2rem;animation:fadeUp .7s .1s ease both;}
+    .breadcrumb a{color:var(--accent);text-decoration:none;}
+    .hero h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.8rem,5vw,4.8rem);letter-spacing:-1.5px;line-height:1.06;animation:fadeUp .7s .2s ease both;}
+    .hero h1 em{font-style:italic;color:var(--accent);}
+    .hero p{color:var(--muted);font-size:1rem;line-height:1.8;margin-top:1rem;font-weight:300;animation:fadeUp .7s .35s ease both;}
+    .hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;animation:fadeUp .7s .5s ease both;}
+    .hero-stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;text-align:center;}
+    .hsc-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--accent);}
+    .hsc-label{font-size:.75rem;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+
+    /* STORY */
+    .story-section{padding:6rem 4rem;background:var(--surface);}
+    .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+    .story-visual{position:relative;}
+    .story-img{width:100%;aspect-ratio:4/3;border-radius:24px;background:linear-gradient(145deg,#2a1a0a,#4a3a1a,#2a2a14);display:flex;align-items:center;justify-content:center;font-size:8rem;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+    .story-year-badge{position:absolute;bottom:-18px;left:2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;padding:1rem 1.4rem;box-shadow:0 8px 24px var(--glow);}
+    .syb-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:#fff;}
+    .syb-label{font-size:.72rem;color:rgba(255,255,255,0.8);letter-spacing:1px;text-transform:uppercase;}
+    .sec-label{font-size:.72rem;color:var(--accent);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem;}
+    .sec-label::before{content:'';width:20px;height:1.5px;background:var(--accent);display:inline-block;}
+    .story-text h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2rem,3.5vw,2.8rem);letter-spacing:-.5px;margin-bottom:1rem;}
+    .story-text h2 em{font-style:italic;color:var(--accent);}
+    .story-text p{color:var(--muted);font-size:.92rem;line-height:1.8;font-weight:300;margin-bottom:.8rem;}
+
+    /* VALUES */
+    .values-section{padding:6rem 4rem;}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+    .value-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;transition:transform .3s,border-color .3s,box-shadow .3s;cursor:default;}
+    .value-card:hover{transform:translateY(-6px);border-color:rgba(232,160,69,0.3);box-shadow:0 16px 40px rgba(0,0,0,0.3);}
+    .vc-icon{font-size:2.5rem;margin-bottom:1rem;display:block;}
+    .vc-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;margin-bottom:.6rem;}
+    .vc-desc{font-size:.85rem;color:var(--muted);line-height:1.7;}
+
+    /* TEAM */
+    .team-section{padding:6rem 4rem;background:var(--surface);}
+    .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem;}
+    .team-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;}
+    .team-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,0.4);}
+    .tc-photo{height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;}
+    .tc-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(34,31,25,0.6) 100%);}
+    .tc-body{padding:1.2rem;}
+    .tc-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:.2rem;}
+    .tc-role{font-size:.75rem;color:var(--accent);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.5rem;}
+    .tc-bio{font-size:.78rem;color:var(--muted);line-height:1.5;}
+
+    /* AWARDS */
+    .awards-section{padding:6rem 4rem;}
+    .awards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;margin-top:3rem;}
+    .award-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .3s;}
+    .award-card:hover{border-color:rgba(232,160,69,0.3);}
+    .award-icon{font-size:2rem;flex-shrink:0;}
+    .award-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;margin-bottom:.3rem;}
+    .award-org{font-size:.78rem;color:var(--accent);font-weight:600;}
+    .award-year{font-size:.72rem;color:var(--muted);margin-top:.2rem;}
+
+    /* TIMELINE */
+    .timeline-section{padding:6rem 4rem;background:var(--surface);}
+    .timeline{position:relative;max-width:700px;margin:3rem auto 0;}
+    .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);transform:translateX(-50%);}
+    .tl-item{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2.5rem;position:relative;}
+    .tl-item:nth-child(odd) .tl-content{grid-column:1;text-align:right;}
+    .tl-item:nth-child(odd) .tl-year{grid-column:2;}
+    .tl-item:nth-child(even) .tl-content{grid-column:2;}
+    .tl-item:nth-child(even) .tl-year{grid-column:1;text-align:right;}
+    .tl-dot{position:absolute;left:50%;top:.3rem;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));transform:translateX(-50%);box-shadow:0 0 12px var(--glow);z-index:1;}
+    .tl-year-num{font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;color:var(--accent);}
+    .tl-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;margin-bottom:.3rem;}
+    .tl-desc{font-size:.82rem;color:var(--muted);line-height:1.6;}
+
+    /* CTA */
+    .cta-section{margin:0 4rem 4rem;border-radius:28px;background:linear-gradient(135deg,var(--accent2),var(--accent));padding:5rem 4rem;text-align:center;position:relative;overflow:hidden;}
+    .cta-section::before{content:'🍽️';position:absolute;right:5%;top:50%;transform:translateY(-50%);font-size:10rem;opacity:.1;}
+    .cta-section h2{font-family:'Playfair Display',serif;font-weight:900;font-size:2.5rem;color:#fff;margin-bottom:.8rem;}
+    .cta-section p{color:rgba(255,255,255,.8);margin-bottom:2rem;max-width:440px;margin-left:auto;margin-right:auto;}
+    .btn-white{padding:.9rem 2.2rem;background:#fff;border:none;border-radius:50px;color:var(--accent2);font-family:'Jost',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none;transition:transform .2s;display:inline-block;}
+    .btn-white:hover{transform:translateY(-2px);}
+    .btn-white-outline{padding:.9rem 2.2rem;background:transparent;border:2px solid rgba(255,255,255,.6);border-radius:50px;color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer;text-decoration:none;display:inline-block;margin-left:1rem;transition:all .3s;}
+    .btn-white-outline:hover{background:rgba(255,255,255,.1);}
+
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .footer-logo-text{font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;color:var(--text);}
+    .footer-text{font-size:.82rem;color:var(--muted);}
+    .footer-links{display:flex;gap:1.5rem;}
+    .footer-links a{color:var(--muted);text-decoration:none;font-size:.82rem;transition:color .2s;}
+    .footer-links a:hover{color:var(--accent);}
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:1024px){.hero-inner,.story-grid{grid-template-columns:1fr;gap:3rem;}.team-grid{grid-template-columns:repeat(2,1fr);}.values-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:768px){nav{padding:1.1rem 1.5rem;}.nav-links{display:none;}.hero,.story-section,.values-section,.team-section,.awards-section,.timeline-section{padding:4rem 1.5rem;}.cta-section{margin:0 1.5rem 3rem;padding:3rem 1.5rem;}.team-grid,.values-grid{grid-template-columns:1fr;}.timeline::before{left:1rem;}.tl-item{grid-template-columns:1fr;}.tl-item:nth-child(odd) .tl-content,.tl-item:nth-child(even) .tl-content{grid-column:1;text-align:left;padding-left:2rem;}.tl-item:nth-child(odd) .tl-year,.tl-item:nth-child(even) .tl-year{grid-column:1;text-align:left;padding-left:2rem;}.tl-dot{left:1rem;transform:none;}footer{padding:2rem 1.5rem;flex-direction:column;text-align:center;}}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo"><div class="nav-logo-icon">🍽️</div><span class="nav-logo-text">FoodiePlace</span></a>
+    <ul class="nav-links">
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="chef-specials.html">Chef's Specials</a></li>
+      <li><a href="reservation.html">Reserve</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="order.html" class="nav-order">Order Now</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div><div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>About Us</span></div>
+        <h1>More Than<br/>Just <em>Food</em> —<br/>It's a Story</h1>
+        <p>Since 2018, FoodiePlace has been crafting unforgettable dining experiences in the heart of Hyderabad — fuelled by passion, fresh ingredients and an uncompromising love for food.</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat-card"><div class="hsc-num">6+</div><div class="hsc-label">Years of Excellence</div></div>
+        <div class="hero-stat-card"><div class="hsc-num">15k+</div><div class="hsc-label">Happy Guests</div></div>
+        <div class="hero-stat-card"><div class="hsc-num">120+</div><div class="hsc-label">Menu Items</div></div>
+        <div class="hero-stat-card"><div class="hsc-num">4.9★</div><div class="hsc-label">Average Rating</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="story-section">
+    <div class="story-grid reveal">
+      <div class="story-visual">
+        <div class="story-img">🏛️</div>
+        <div class="story-year-badge"><div class="syb-num">2018</div><div class="syb-label">Est. Hyderabad</div></div>
+      </div>
+      <div class="story-text">
+        <div class="sec-label">Our Story</div>
+        <h2>Born from a <em>Grandmother's Kitchen</em></h2>
+        <p>FoodiePlace was born from a simple belief: great food has the power to bring people together, create memories and nourish the soul. Our founder, Arjun Mehta, grew up watching his grandmother transform humble ingredients into extraordinary meals in her small kitchen in Hyderabad.</p>
+        <p>After years of training under renowned chefs across Italy and France, Arjun returned home with a vision — to create a restaurant that blended classical European techniques with the warmth and generosity of Indian hospitality.</p>
+        <p>Today, FoodiePlace stands as a testament to that vision: a place where every dish tells a story, every guest is treated like family, and every meal is an experience worth remembering.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="values-section">
+    <div class="reveal" style="text-align:center;margin-bottom:1rem;">
+      <div class="sec-label" style="justify-content:center;">What We Stand For</div>
+      <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.5px;">Our Core <em style="font-style:italic;color:var(--accent);">Values</em></h2>
+    </div>
+    <div class="values-grid reveal">
+      <div class="value-card"><span class="vc-icon">🌿</span><div class="vc-title">Farm-Fresh Ingredients</div><div class="vc-desc">We source only the freshest seasonal produce directly from local farms. No frozen ingredients, no compromises — ever.</div></div>
+      <div class="value-card"><span class="vc-icon">👨‍🍳</span><div class="vc-title">Culinary Excellence</div><div class="vc-desc">Our team of award-winning chefs brings decades of experience and genuine passion to every single dish that leaves our kitchen.</div></div>
+      <div class="value-card"><span class="vc-icon">🤝</span><div class="vc-title">Warm Hospitality</div><div class="vc-desc">Every guest is treated like family. From the moment you walk in to when you leave, we ensure you feel genuinely welcomed.</div></div>
+      <div class="value-card"><span class="vc-icon">♻️</span><div class="vc-title">Sustainable Practices</div><div class="vc-desc">We're committed to reducing our environmental footprint through composting, zero-waste cooking and eco-friendly packaging.</div></div>
+      <div class="value-card"><span class="vc-icon">🎨</span><div class="vc-title">Creative Innovation</div><div class="vc-desc">We never stop experimenting. Our menu evolves with the seasons, introducing new flavour combinations and culinary techniques.</div></div>
+      <div class="value-card"><span class="vc-icon">💝</span><div class="vc-title">Community Love</div><div class="vc-desc">We give back. From supporting local farmers to hosting charity dinners, FoodiePlace is proud to be part of the community.</div></div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team-section">
+    <div class="reveal" style="text-align:center;margin-bottom:1rem;">
+      <div class="sec-label" style="justify-content:center;">The Faces Behind the Food</div>
+      <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.5px;">Meet Our <em style="font-style:italic;color:var(--accent);">Team</em></h2>
+    </div>
+    <div class="team-grid reveal">
+      <div class="team-card"><div class="tc-photo" style="background:linear-gradient(135deg,#3a2a1a,#7a5a3a);">👨‍🍳</div><div class="tc-body"><div class="tc-name">Marco Rossi</div><div class="tc-role">Executive Head Chef</div><div class="tc-bio">2 Michelin stars. 20 years experience across Europe and Asia. The heart and soul of our kitchen.</div></div></div>
+      <div class="team-card"><div class="tc-photo" style="background:linear-gradient(135deg,#1a3a5c,#3a6aac);">👩‍🍳</div><div class="tc-body"><div class="tc-name">Priya Nair</div><div class="tc-role">Pastry Chef</div><div class="tc-bio">Award-winning pastry artisan trained at Le Cordon Bleu. Creator of our legendary chocolate sphere.</div></div></div>
+      <div class="team-card"><div class="tc-photo" style="background:linear-gradient(135deg,#3a1a1a,#7a3a3a);">🍷</div><div class="tc-body"><div class="tc-name">Rahul Sharma</div><div class="tc-role">Sommelier & Bar Manager</div><div class="tc-bio">WSET Level 4 certified sommelier. Curates our extensive wine list and signature cocktail menu.</div></div></div>
+      <div class="team-card"><div class="tc-photo" style="background:linear-gradient(135deg,#1a3a2a,#3a7a5a);">🌿</div><div class="tc-body"><div class="tc-name">Anita Reddy</div><div class="tc-role">Restaurant Manager</div><div class="tc-bio">15 years in hospitality. Ensures every guest receives the warm, attentive service FoodiePlace is known for.</div></div></div>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section class="awards-section">
+    <div class="reveal">
+      <div class="sec-label">Recognition</div>
+      <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.5px;margin-bottom:1rem;">Awards & <em style="font-style:italic;color:var(--accent);">Accolades</em></h2>
+    </div>
+    <div class="awards-grid reveal">
+      <div class="award-card"><span class="award-icon">⭐</span><div><div class="award-title">Best Fine Dining Restaurant</div><div class="award-org">Times Food Awards</div><div class="award-year">2023 · Hyderabad</div></div></div>
+      <div class="award-card"><span class="award-icon">🏆</span><div><div class="award-title">Michelin Guide Recommended</div><div class="award-org">Michelin Guide India</div><div class="award-year">2022 & 2023</div></div></div>
+      <div class="award-card"><span class="award-icon">🌟</span><div><div class="award-title">Top 10 Restaurants in India</div><div class="award-org">India Today Travel Awards</div><div class="award-year">2023</div></div></div>
+      <div class="award-card"><span class="award-icon">🥇</span><div><div class="award-title">Best Italian Cuisine</div><div class="award-org">Zomato Food Awards</div><div class="award-year">2022 & 2023</div></div></div>
+      <div class="award-card"><span class="award-icon">💚</span><div><div class="award-title">Most Sustainable Restaurant</div><div class="award-org">Green Dining Initiative</div><div class="award-year">2023</div></div></div>
+      <div class="award-card"><span class="award-icon">❤️</span><div><div class="award-title">Guests' Choice Award</div><div class="award-org">TripAdvisor</div><div class="award-year">2021 · 2022 · 2023</div></div></div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section">
+    <div class="reveal" style="text-align:center;margin-bottom:1rem;">
+      <div class="sec-label" style="justify-content:center;">Our Journey</div>
+      <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.5px;">6 Years of <em style="font-style:italic;color:var(--accent);">Excellence</em></h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-content"><div class="tl-title">Grand Opening</div><div class="tl-desc">FoodiePlace opens its doors on Road No. 12, Banjara Hills with a 40-seat restaurant and a dream.</div></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year"><div class="tl-year-num">2018</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year"><div class="tl-year-num">2019</div></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content"><div class="tl-title">Chef Marco Joins</div><div class="tl-desc">Award-winning Chef Marco Rossi joins as Executive Head Chef, transforming our kitchen into a culinary powerhouse.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-content"><div class="tl-title">First Award Win</div><div class="tl-desc">FoodiePlace wins "Best New Restaurant" at the Times Food Awards and expands to a 120-seat dining room.</div></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year"><div class="tl-year-num">2020</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year"><div class="tl-year-num">2021</div></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content"><div class="tl-title">Online Ordering Launches</div><div class="tl-desc">We launch our online ordering platform, bringing FoodiePlace's signature flavours directly to your doorstep.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-content"><div class="tl-title">Michelin Recognition</div><div class="tl-desc">FoodiePlace receives its first Michelin Guide recommendation — a milestone that validated years of hard work.</div></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year"><div class="tl-year-num">2022</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year"><div class="tl-year-num">2024</div></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content"><div class="tl-title">The Journey Continues</div><div class="tl-desc">15,000+ happy guests, 120+ menu items, a fully integrated digital dining experience, and many more stories to write.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-section reveal">
+    <h2>Be Part of Our Story</h2>
+    <p>Come dine with us, order online, or book a table for a special occasion — we'd love to create a memory with you.</p>
+    <a href="reservation.html" class="btn-white">📅 Reserve a Table</a>
+    <a href="order.html" class="btn-white-outline">🛵 Order Online</a>
+  </div>
+
+  <footer>
+    <span class="footer-logo-text">FoodiePlace</span>
+    <span class="footer-text">© 2024 FoodiePlace. All rights reserved.</span>
+    <div class="footer-links"><a href="index.html">Home</a><a href="menu.html">Menu</a><a href="order.html">Order</a><a href="contact.html">Contact</a></div>
+  </footer>
+
+  <script>
+    const ro=new IntersectionObserver((e)=>{e.forEach((en,i)=>{if(en.isIntersecting)setTimeout(()=>en.target.classList.add('visible'),i*80);});},{threshold:.07});
+    document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+  </script>
+</body>
+</html>

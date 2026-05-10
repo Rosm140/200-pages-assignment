@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DevFolio | Contact</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --accent: #7c5cfc;
+      --accent2: #fc5c7d;
+      --accent3: #56ccf2;
+      --text: #f0f0f8;
+      --muted: #7a7a99;
+      --border: rgba(124,92,252,0.18);
+      --glow: rgba(124,92,252,0.25);
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; overflow-x:hidden; cursor:none; }
+
+    .cursor { position:fixed; width:12px; height:12px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .3s,height .3s; mix-blend-mode:difference; }
+    .cursor-ring { position:fixed; width:36px; height:36px; border:1.5px solid var(--accent); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,opacity .3s; opacity:.6; }
+
+    body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; opacity:.5; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.4rem 4rem; background:rgba(10,10,15,0.7); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); animation:slideDown .8s ease both; }
+    @keyframes slideDown { from{transform:translateY(-100%);opacity:0;} to{transform:translateY(0);opacity:1;} }
+    .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-size:.9rem; font-weight:500; letter-spacing:.5px; transition:color .3s; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1.5px; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .3s; }
+    .nav-links a:hover,.nav-links a.active { color:var(--text); }
+    .nav-links a:hover::after,.nav-links a.active::after { width:100%; }
+    .nav-cta { padding:.6rem 1.5rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:50px; color:#fff; font-family:'DM Sans',sans-serif; font-weight:500; font-size:.88rem; cursor:none; text-decoration:none; transition:opacity .3s,transform .2s; box-shadow:0 4px 20px var(--glow); }
+    .nav-cta:hover { opacity:.88; transform:translateY(-1px); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+
+    /* PAGE HERO */
+    .page-hero { min-height:52vh; display:flex; align-items:center; padding:10rem 4rem 5rem; position:relative; overflow:hidden; }
+    .page-hero-bg { position:absolute; inset:0; z-index:0;
+      background:
+        radial-gradient(ellipse 60% 70% at 80% 40%, rgba(124,92,252,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 10% 70%, rgba(252,92,125,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 40% at 50% 0%, rgba(86,204,242,0.06) 0%, transparent 60%);
+    }
+    .hero-grid { position:absolute; inset:0; z-index:0; background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 80%); }
+
+    /* Floating orbs */
+    .orb { position:absolute; border-radius:50%; filter:blur(60px); pointer-events:none; z-index:0; }
+    .orb1 { width:300px; height:300px; background:rgba(124,92,252,0.08); top:10%; right:15%; animation:float1 8s ease-in-out infinite; }
+    .orb2 { width:200px; height:200px; background:rgba(252,92,125,0.06); bottom:20%; left:10%; animation:float2 10s ease-in-out infinite; }
+    @keyframes float1 { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-30px) scale(1.05);} }
+    @keyframes float2 { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(20px) scale(0.95);} }
+
+    .page-hero-content { position:relative; z-index:1; }
+    .breadcrumb { display:flex; align-items:center; gap:.5rem; font-size:.8rem; color:var(--muted); margin-bottom:1.5rem; animation:fadeUp .7s .1s ease both; }
+    .breadcrumb a { color:var(--accent); text-decoration:none; }
+    .avail-pill { display:inline-flex; align-items:center; gap:.5rem; background:rgba(74,222,128,0.1); border:1px solid rgba(74,222,128,0.25); border-radius:50px; padding:.4rem 1rem; font-size:.78rem; color:#4ade80; font-weight:600; margin-bottom:1.5rem; animation:fadeUp .7s .15s ease both; }
+    .avail-pill::before { content:''; width:7px; height:7px; background:#4ade80; border-radius:50%; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.5;transform:scale(1.5);} }
+    .page-hero h1 { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(2.8rem,6vw,5rem); letter-spacing:-2px; line-height:1.05; animation:fadeUp .7s .2s ease both; }
+    .page-hero h1 span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .page-hero p { font-size:1.1rem; color:var(--muted); line-height:1.8; max-width:520px; margin-top:1.2rem; animation:fadeUp .7s .35s ease both; }
+    .hero-respond { display:flex; align-items:center; gap:.6rem; margin-top:1.5rem; font-size:.84rem; color:var(--muted); animation:fadeUp .7s .5s ease both; }
+    .hero-respond span { color:#4ade80; font-weight:600; }
+
+    section { padding:5rem 4rem; position:relative; }
+    .section-label { display:inline-flex; align-items:center; gap:.6rem; font-size:.75rem; color:var(--accent); font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:1rem; }
+    .section-label::before { content:''; width:24px; height:1.5px; background:var(--accent); }
+    .section-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(1.8rem,3.5vw,2.6rem); line-height:1.1; letter-spacing:-1px; margin-bottom:1rem; }
+    .section-title span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    /* CONTACT LAYOUT */
+    .contact-layout { display:grid; grid-template-columns:1fr 1.4fr; gap:4rem; align-items:start; }
+
+    /* LEFT PANEL */
+    .contact-left { display:flex; flex-direction:column; gap:2rem; }
+
+    /* INFO CARDS */
+    .info-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:1.6rem; display:flex; gap:1rem; align-items:flex-start; cursor:none; transition:transform .3s,border-color .3s,box-shadow .3s; }
+    .info-card:hover { transform:translateX(6px); border-color:var(--accent); box-shadow:0 8px 30px var(--glow); }
+    .ic-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .ic-icon.purple { background:rgba(124,92,252,0.15); border:1px solid rgba(124,92,252,0.25); }
+    .ic-icon.pink { background:rgba(252,92,125,0.15); border:1px solid rgba(252,92,125,0.25); }
+    .ic-icon.cyan { background:rgba(86,204,242,0.15); border:1px solid rgba(86,204,242,0.25); }
+    .ic-icon.green { background:rgba(74,222,128,0.15); border:1px solid rgba(74,222,128,0.25); }
+    .ic-label { font-size:.72rem; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:.3rem; }
+    .ic-value { font-size:.92rem; font-weight:600; color:var(--text); }
+    .ic-value a { color:var(--accent); text-decoration:none; }
+    .ic-value a:hover { color:var(--accent2); }
+
+    /* SOCIAL LINKS */
+    .social-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:1.6rem; }
+    .sc-heading { font-family:'Syne',sans-serif; font-weight:700; font-size:.85rem; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:1.2rem; }
+    .social-grid { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; }
+    .social-btn { display:flex; align-items:center; gap:.7rem; padding:.8rem 1rem; background:var(--bg); border:1px solid var(--border); border-radius:12px; text-decoration:none; color:var(--text); font-size:.85rem; font-weight:500; cursor:none; transition:all .25s; }
+    .social-btn:hover { border-color:var(--accent); background:rgba(124,92,252,0.08); transform:translateY(-2px); }
+    .social-icon { font-size:1.1rem; }
+
+    /* AVAILABILITY CARD */
+    .avail-card { background:linear-gradient(135deg,rgba(74,222,128,0.08),rgba(86,204,242,0.06)); border:1px solid rgba(74,222,128,0.2); border-radius:20px; padding:1.6rem; }
+    .avail-header { display:flex; align-items:center; gap:.7rem; margin-bottom:1rem; }
+    .avail-dot { width:10px; height:10px; background:#4ade80; border-radius:50%; box-shadow:0 0 8px #4ade80; animation:pulse 2s infinite; }
+    .avail-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; color:#4ade80; }
+    .avail-body { font-size:.84rem; color:var(--muted); line-height:1.7; }
+    .avail-details { margin-top:1rem; display:flex; flex-direction:column; gap:.5rem; }
+    .avail-item { display:flex; justify-content:space-between; font-size:.82rem; }
+    .avail-key { color:var(--muted); }
+    .avail-val { color:var(--text); font-weight:500; }
+
+    /* CONTACT FORM */
+    .contact-form-wrap { background:var(--card); border:1px solid var(--border); border-radius:28px; padding:2.8rem; position:relative; overflow:hidden; }
+    .contact-form-wrap::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(124,92,252,0.08),transparent 70%); pointer-events:none; }
+
+    .form-header { margin-bottom:2rem; }
+    .form-title { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; letter-spacing:-.5px; margin-bottom:.4rem; }
+    .form-subtitle { font-size:.86rem; color:var(--muted); line-height:1.6; }
+
+    /* Project type selector */
+    .project-types { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .pt-btn { padding:.45rem 1rem; border-radius:50px; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:.8rem; font-weight:500; cursor:none; transition:all .25s; }
+    .pt-btn:hover,.pt-btn.active { background:rgba(124,92,252,0.12); border-color:var(--accent); color:var(--accent); }
+
+    /* Form fields */
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem; }
+    .form-group { display:flex; flex-direction:column; gap:.5rem; margin-bottom:1.2rem; }
+    .form-group:last-of-type { margin-bottom:0; }
+    .form-label { font-size:.8rem; color:var(--muted); font-weight:500; letter-spacing:.3px; }
+    .form-label span { color:var(--accent2); }
+    .form-input, .form-textarea, .form-select {
+      width:100%; padding:.85rem 1.1rem;
+      background:var(--bg); border:1px solid var(--border);
+      border-radius:14px; color:var(--text);
+      font-family:'DM Sans',sans-serif; font-size:.9rem;
+      outline:none; transition:border-color .3s,box-shadow .3s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,92,252,0.1); }
+    .form-input::placeholder, .form-textarea::placeholder { color:var(--muted); }
+    .form-textarea { resize:vertical; min-height:130px; line-height:1.6; }
+    .form-select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237a7a99' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1rem center; cursor:none; }
+    .form-select option { background:var(--card); }
+    .form-input.error, .form-textarea.error { border-color:var(--accent2); }
+    .field-error { font-size:.75rem; color:var(--accent2); margin-top:.3rem; display:none; }
+    .field-error.show { display:block; }
+
+    /* Budget range */
+    .budget-row { display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; }
+    .budget-btn { padding:.5rem; border-radius:10px; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:.75rem; font-weight:500; cursor:none; transition:all .25s; text-align:center; }
+    .budget-btn:hover,.budget-btn.active { background:rgba(124,92,252,0.1); border-color:var(--accent); color:var(--accent); }
+
+    /* Submit */
+    .form-submit { width:100%; padding:1rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:50px; color:#fff; font-family:'DM Sans',sans-serif; font-weight:600; font-size:1rem; cursor:none; margin-top:1.8rem; transition:transform .2s,box-shadow .2s,opacity .2s; box-shadow:0 6px 30px var(--glow); display:flex; align-items:center; justify-content:center; gap:.6rem; }
+    .form-submit:hover { transform:translateY(-2px); box-shadow:0 12px 40px var(--glow); }
+    .form-submit:disabled { opacity:.6; transform:none; }
+    .form-note { font-size:.75rem; color:var(--muted); text-align:center; margin-top:1rem; }
+
+    /* SUCCESS STATE */
+    .form-success { display:none; text-align:center; padding:3rem 2rem; }
+    .success-icon { font-size:4rem; margin-bottom:1rem; display:block; animation:bounceIn .6s ease; }
+    @keyframes bounceIn { 0%{transform:scale(0);opacity:0;} 60%{transform:scale(1.2);} 100%{transform:scale(1);opacity:1;} }
+    .success-title { font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem; margin-bottom:.6rem; }
+    .success-msg { color:var(--muted); font-size:.92rem; line-height:1.7; margin-bottom:1.8rem; max-width:340px; margin-left:auto; margin-right:auto; }
+    .btn-secondary { padding:.85rem 2rem; background:transparent; border:1px solid var(--border); border-radius:50px; color:var(--text); font-family:'DM Sans',sans-serif; font-weight:500; font-size:.95rem; cursor:none; text-decoration:none; transition:background .3s,border-color .3s; }
+    .btn-secondary:hover { background:rgba(124,92,252,0.08); border-color:var(--accent); }
+
+    /* MAP / LOCATION SECTION */
+    .location-section { background:var(--surface); }
+    .location-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; }
+    .location-map {
+      height:300px; border-radius:24px; overflow:hidden;
+      background:var(--card); border:1px solid var(--border);
+      position:relative; display:flex; align-items:center; justify-content:center;
+    }
+    .map-placeholder { text-align:center; }
+    .map-icon { font-size:3rem; margin-bottom:.8rem; display:block; }
+    .map-city { font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem; margin-bottom:.3rem; }
+    .map-country { font-size:.85rem; color:var(--muted); }
+    .map-ping { position:absolute; width:16px; height:16px; border-radius:50%; background:var(--accent2); box-shadow:0 0 0 0 rgba(252,92,125,0.4); animation:mapPing 2s infinite; }
+    @keyframes mapPing { 0%{box-shadow:0 0 0 0 rgba(252,92,125,0.4);} 70%{box-shadow:0 0 0 16px rgba(252,92,125,0);} 100%{box-shadow:0 0 0 0 rgba(252,92,125,0);} }
+
+    .location-info h3 { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; margin-bottom:1rem; }
+    .location-info h3 span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .timezone-info { display:flex; flex-direction:column; gap:.9rem; }
+    .tz-item { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; }
+    .tz-city { font-size:.86rem; font-weight:500; display:flex; align-items:center; gap:.5rem; }
+    .tz-flag { font-size:1rem; }
+    .tz-time { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; color:var(--accent); }
+    .tz-offset { font-size:.72rem; color:var(--muted); }
+
+    footer { background:var(--surface); border-top:1px solid var(--border); padding:3rem 4rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .footer-text { font-size:.85rem; color:var(--muted); }
+    .footer-links { display:flex; gap:1.5rem; }
+    .footer-links a { color:var(--muted); text-decoration:none; font-size:.85rem; transition:color .2s; }
+    .footer-links a:hover { color:var(--accent); }
+
+    .reveal { opacity:0; transform:translateY(40px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media(max-width:1000px) { .contact-layout { grid-template-columns:1fr; } .location-grid { grid-template-columns:1fr; } }
+    @media(max-width:900px) {
+      nav { padding:1.2rem 1.5rem; }
+      .nav-links { display:none; }
+      section { padding:4rem 1.5rem; }
+      .page-hero { padding:8rem 1.5rem 4rem; }
+      .form-row { grid-template-columns:1fr; }
+      .budget-row { grid-template-columns:1fr 1fr; }
+      .contact-form-wrap { padding:1.8rem; }
+      footer { padding:2rem 1.5rem; flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">DevFolio</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Hire Me</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="page-hero-content">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Contact</span></div>
+      <div class="avail-pill">Available for new projects</div>
+      <h1>Let's Build<br/>Something <span>Amazing</span></h1>
+      <p>Have a project in mind? Want to collaborate? Or just want to say hi? My inbox is always open — I typically respond within 24 hours.</p>
+      <div class="hero-respond">⚡ Average response time: <span>under 4 hours</span></div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTACT SECTION -->
+  <section>
+    <div class="contact-layout">
+
+      <!-- LEFT: INFO -->
+      <div class="contact-left reveal">
+
+        <div>
+          <div class="section-label">Get in Touch</div>
+          <h2 class="section-title">Contact <span>Info</span></h2>
+        </div>
+
+        <div class="info-card">
+          <div class="ic-icon purple">📧</div>
+          <div>
+            <div class="ic-label">Email</div>
+            <div class="ic-value"><a href="mailto:alex@devfolio.dev">alex@devfolio.dev</a></div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="ic-icon pink">📱</div>
+          <div>
+            <div class="ic-label">Phone / WhatsApp</div>
+            <div class="ic-value"><a href="tel:+919876543210">+91 98765 43210</a></div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="ic-icon cyan">📍</div>
+          <div>
+            <div class="ic-label">Location</div>
+            <div class="ic-value">Hyderabad, Telangana, India</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="ic-icon green">🕐</div>
+          <div>
+            <div class="ic-label">Working Hours</div>
+            <div class="ic-value">Mon–Sat, 9:00 AM – 7:00 PM IST</div>
+          </div>
+        </div>
+
+        <!-- SOCIAL -->
+        <div class="social-card">
+          <div class="sc-heading">🌐 Find Me Online</div>
+          <div class="social-grid">
+            <a href="#" class="social-btn"><span class="social-icon">🐙</span>GitHub</a>
+            <a href="#" class="social-btn"><span class="social-icon">💼</span>LinkedIn</a>
+            <a href="#" class="social-btn"><span class="social-icon">🐦</span>Twitter / X</a>
+            <a href="#" class="social-btn"><span class="social-icon">📸</span>Instagram</a>
+            <a href="#" class="social-btn"><span class="social-icon">✍️</span>Dev.to</a>
+            <a href="#" class="social-btn"><span class="social-icon">▶️</span>YouTube</a>
+          </div>
+        </div>
+
+        <!-- AVAILABILITY -->
+        <div class="avail-card">
+          <div class="avail-header">
+            <div class="avail-dot"></div>
+            <div class="avail-title">Currently Available</div>
+          </div>
+          <div class="avail-body">I'm open to freelance projects and full-time roles. Let's talk about how I can help your team or business.</div>
+          <div class="avail-details">
+            <div class="avail-item"><span class="avail-key">Freelance projects</span><span class="avail-val" style="color:#4ade80;">✓ Open</span></div>
+            <div class="avail-item"><span class="avail-key">Full-time roles</span><span class="avail-val" style="color:#4ade80;">✓ Open</span></div>
+            <div class="avail-item"><span class="avail-key">Mentorship</span><span class="avail-val" style="color:#4ade80;">✓ Open</span></div>
+            <div class="avail-item"><span class="avail-key">Start date</span><span class="avail-val">Immediately</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="contact-form-wrap reveal">
+
+        <!-- Form view -->
+        <div id="formView">
+          <div class="form-header">
+            <div class="form-title">Send Me a Message 📬</div>
+            <div class="form-subtitle">Fill out the form below and I'll get back to you within 24 hours.</div>
+          </div>
+
+          <!-- Project type -->
+          <div style="margin-bottom:1.2rem;">
+            <div class="form-label" style="margin-bottom:.7rem;">I'm interested in</div>
+            <div class="project-types" id="projectTypes">
+              <button class="pt-btn active" data-type="freelance">💼 Freelance</button>
+              <button class="pt-btn" data-type="fulltime">🏢 Full-time Role</button>
+              <button class="pt-btn" data-type="mentorship">📚 Mentorship</button>
+              <button class="pt-btn" data-type="collab">🤝 Collaboration</button>
+              <button class="pt-btn" data-type="other">💬 Just Saying Hi</button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name <span>*</span></label>
+              <input type="text" class="form-input" id="firstName" placeholder="Alex"/>
+              <span class="field-error" id="firstNameErr">Please enter your first name.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name <span>*</span></label>
+              <input type="text" class="form-input" id="lastName" placeholder="Johnson"/>
+              <span class="field-error" id="lastNameErr">Please enter your last name.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email <span>*</span></label>
+              <input type="email" class="form-input" id="email" placeholder="you@example.com"/>
+              <span class="field-error" id="emailErr">Please enter a valid email.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+              <input type="tel" class="form-input" id="phone" placeholder="+91 99999 00000"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Service Needed <span>*</span></label>
+            <select class="form-select form-input" id="service">
+              <option value="">Select a service...</option>
+              <option value="frontend">Frontend Development</option>
+              <option value="fullstack">Full-Stack Web App</option>
+              <option value="ecommerce">E-Commerce Solution</option>
+              <option value="uiux">UI/UX Design</option>
+              <option value="audit">Website Audit</option>
+              <option value="mentorship">Technical Mentorship</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="field-error" id="serviceErr">Please select a service.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" style="margin-bottom:.6rem;">Budget Range</label>
+            <div class="budget-row" id="budgetRow">
+              <button class="budget-btn" data-budget="< ₹10k">&lt; ₹10k</button>
+              <button class="budget-btn" data-budget="₹10k–30k">₹10k–30k</button>
+              <button class="budget-btn" data-budget="₹30k–80k">₹30k–80k</button>
+              <button class="budget-btn" data-budget="₹80k+">₹80k+</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Message <span>*</span></label>
+            <textarea class="form-textarea" id="message" placeholder="Tell me about your project, timeline, or anything you'd like to discuss..."></textarea>
+            <span class="field-error" id="messageErr">Please write a message.</span>
+          </div>
+
+          <div class="form-group" style="flex-direction:row;align-items:center;gap:.7rem;margin-top:.5rem;">
+            <input type="checkbox" id="nda" style="width:16px;height:16px;accent-color:var(--accent);cursor:none;"/>
+            <label for="nda" style="font-size:.82rem;color:var(--muted);cursor:none;">I'd like to discuss under NDA</label>
+          </div>
+
+          <button class="form-submit" id="submitBtn">
+            <span id="submitText">🚀 Send Message</span>
+            <span id="submitLoader" style="display:none;">⏳ Sending...</span>
+          </button>
+          <div class="form-note">🔒 Your information is private and will never be shared with anyone.</div>
+        </div>
+
+        <!-- Success State -->
+        <div class="form-success" id="successView">
+          <span class="success-icon">🎉</span>
+          <div class="success-title">Message Sent!</div>
+          <p class="success-msg">Thanks for reaching out! I've received your message and will get back to you within 24 hours. Let's build something amazing together.</p>
+          <a href="projects.html" class="btn-secondary">View My Work →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION & TIMEZONE -->
+  <section class="location-section">
+    <div class="location-grid reveal">
+      <div class="location-map">
+        <div class="map-ping"></div>
+        <div class="map-placeholder">
+          <span class="map-icon">📍</span>
+          <div class="map-city">Hyderabad</div>
+          <div class="map-country">Telangana, India 🇮🇳</div>
+        </div>
+      </div>
+      <div class="location-info">
+        <h3>Working Across <span>Time Zones</span></h3>
+        <p style="color:var(--muted);font-size:.88rem;line-height:1.7;margin-bottom:1.5rem;">I work with clients globally. Here's what the time looks like in a few key cities so you can reach out at the right time.</p>
+        <div class="timezone-info" id="tzGrid">
+          <div class="tz-item"><span class="tz-city"><span class="tz-flag">🇮🇳</span> Hyderabad (IST)</span><div><div class="tz-time" id="tzIST">--:--</div><div class="tz-offset">UTC +5:30</div></div></div>
+          <div class="tz-item"><span class="tz-city"><span class="tz-flag">🇬🇧</span> London (GMT)</span><div><div class="tz-time" id="tzGMT">--:--</div><div class="tz-offset">UTC +0:00</div></div></div>
+          <div class="tz-item"><span class="tz-city"><span class="tz-flag">🇺🇸</span> New York (EST)</span><div><div class="tz-time" id="tzEST">--:--</div><div class="tz-offset">UTC -5:00</div></div></div>
+          <div class="tz-item"><span class="tz-city"><span class="tz-flag">🇸🇬</span> Singapore (SGT)</span><div><div class="tz-time" id="tzSGT">--:--</div><div class="tz-offset">UTC +8:00</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">DevFolio</div>
+    <div class="footer-text">© 2024 DevFolio. Built with ❤️ and lots of ☕</div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+    (function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+    document.querySelectorAll('a,button,.info-card,.social-btn').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='50px';ring.style.height='50px';ring.style.opacity='1';});
+      el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='.6';});
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const ro = new IntersectionObserver((entries)=>{
+      entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*120); }});
+    },{threshold:.08});
+    reveals.forEach(r=>ro.observe(r));
+
+    // Project type selector
+    document.querySelectorAll('.pt-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('.pt-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Budget selector
+    document.querySelectorAll('.budget-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('.budget-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Form validation & submit
+    function validate() {
+      let valid = true;
+      const fields = [
+        { id:'firstName', err:'firstNameErr', check: v => v.trim().length > 0 },
+        { id:'lastName',  err:'lastNameErr',  check: v => v.trim().length > 0 },
+        { id:'email',     err:'emailErr',     check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+        { id:'service',   err:'serviceErr',   check: v => v !== '' },
+        { id:'message',   err:'messageErr',   check: v => v.trim().length >= 10 },
+      ];
+      fields.forEach(f=>{
+        const el = document.getElementById(f.id);
+        const err = document.getElementById(f.err);
+        if(!f.check(el.value)){
+          el.classList.add('error');
+          err.classList.add('show');
+          valid = false;
+        } else {
+          el.classList.remove('error');
+          err.classList.remove('show');
+        }
+      });
+      return valid;
+    }
+
+    // Clear error on input
+    ['firstName','lastName','email','service','message'].forEach(id=>{
+      const el = document.getElementById(id);
+      el.addEventListener('input',()=>{
+        el.classList.remove('error');
+        document.getElementById(id+'Err').classList.remove('show');
+      });
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', ()=>{
+      if(!validate()) return;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      document.getElementById('submitText').style.display = 'none';
+      document.getElementById('submitLoader').style.display = 'inline';
+
+      setTimeout(()=>{
+        document.getElementById('formView').style.display = 'none';
+        document.getElementById('successView').style.display = 'block';
+      }, 1800);
+    });
+
+    // Live clocks
+    function updateClocks(){
+      const now = new Date();
+      const fmt = (d) => d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
+      document.getElementById('tzIST').textContent = fmt(new Date(now.toLocaleString('en-US',{timeZone:'Asia/Kolkata'})));
+      document.getElementById('tzGMT').textContent = fmt(new Date(now.toLocaleString('en-US',{timeZone:'Europe/London'})));
+      document.getElementById('tzEST').textContent = fmt(new Date(now.toLocaleString('en-US',{timeZone:'America/New_York'})));
+      document.getElementById('tzSGT').textContent = fmt(new Date(now.toLocaleString('en-US',{timeZone:'Asia/Singapore'})));
+    }
+    updateClocks();
+    setInterval(updateClocks, 30000);
+  </script>
+</body>
+</html>

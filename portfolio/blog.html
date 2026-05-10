@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DevFolio | Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --accent: #7c5cfc;
+      --accent2: #fc5c7d;
+      --accent3: #56ccf2;
+      --text: #f0f0f8;
+      --muted: #7a7a99;
+      --border: rgba(124,92,252,0.18);
+      --glow: rgba(124,92,252,0.25);
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; overflow-x:hidden; cursor:none; }
+
+    .cursor { position:fixed; width:12px; height:12px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .3s,height .3s; mix-blend-mode:difference; }
+    .cursor-ring { position:fixed; width:36px; height:36px; border:1.5px solid var(--accent); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,opacity .3s; opacity:.6; }
+
+    body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; opacity:.5; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.4rem 4rem; background:rgba(10,10,15,0.7); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); animation:slideDown .8s ease both; }
+    @keyframes slideDown { from{transform:translateY(-100%);opacity:0;} to{transform:translateY(0);opacity:1;} }
+    .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-size:.9rem; font-weight:500; letter-spacing:.5px; transition:color .3s; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1.5px; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .3s; }
+    .nav-links a:hover,.nav-links a.active { color:var(--text); }
+    .nav-links a:hover::after,.nav-links a.active::after { width:100%; }
+    .nav-cta { padding:.6rem 1.5rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:50px; color:#fff; font-family:'DM Sans',sans-serif; font-weight:500; font-size:.88rem; cursor:none; text-decoration:none; transition:opacity .3s,transform .2s; box-shadow:0 4px 20px var(--glow); }
+    .nav-cta:hover { opacity:.88; transform:translateY(-1px); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+
+    /* PAGE HERO */
+    .page-hero { min-height:50vh; display:flex; align-items:center; padding:10rem 4rem 5rem; position:relative; overflow:hidden; }
+    .page-hero-bg { position:absolute; inset:0; z-index:0; background:radial-gradient(ellipse 55% 70% at 75% 40%,rgba(86,204,242,0.1) 0%,transparent 70%),radial-gradient(ellipse 40% 50% at 15% 70%,rgba(124,92,252,0.08) 0%,transparent 60%); }
+    .hero-grid { position:absolute; inset:0; z-index:0; background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 80%); }
+    .page-hero-content { position:relative; z-index:1; }
+    .breadcrumb { display:flex; align-items:center; gap:.5rem; font-size:.8rem; color:var(--muted); margin-bottom:1.5rem; animation:fadeUp .7s .1s ease both; }
+    .breadcrumb a { color:var(--accent); text-decoration:none; }
+    .page-hero h1 { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(2.8rem,6vw,5rem); letter-spacing:-2px; line-height:1.05; animation:fadeUp .7s .2s ease both; }
+    .page-hero h1 span { background:linear-gradient(135deg,var(--accent3),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .page-hero p { font-size:1.1rem; color:var(--muted); line-height:1.8; max-width:520px; margin-top:1.2rem; animation:fadeUp .7s .35s ease both; }
+    .hero-meta { display:flex; gap:2.5rem; margin-top:2rem; animation:fadeUp .7s .5s ease both; }
+    .hm-item { display:flex; flex-direction:column; gap:.2rem; }
+    .hm-num { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; background:linear-gradient(135deg,var(--accent3),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hm-label { font-size:.72rem; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+
+    section { padding:5rem 4rem; position:relative; }
+    .section-label { display:inline-flex; align-items:center; gap:.6rem; font-size:.75rem; color:var(--accent); font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:1rem; }
+    .section-label::before { content:''; width:24px; height:1.5px; background:var(--accent); }
+    .section-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(1.8rem,3.5vw,2.6rem); line-height:1.1; letter-spacing:-1px; margin-bottom:1rem; }
+    .section-title span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .section-sub { color:var(--muted); font-size:1rem; line-height:1.7; max-width:520px; margin-bottom:2.5rem; }
+
+    /* SEARCH BAR */
+    .search-wrap { position:relative; max-width:480px; margin-bottom:2rem; }
+    .search-input { width:100%; padding:.9rem 1.2rem .9rem 3rem; background:var(--card); border:1px solid var(--border); border-radius:50px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:.9rem; outline:none; transition:border-color .3s,box-shadow .3s; }
+    .search-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,92,252,0.12); }
+    .search-input::placeholder { color:var(--muted); }
+    .search-icon { position:absolute; left:1rem; top:50%; transform:translateY(-50%); font-size:1rem; pointer-events:none; }
+
+    /* FILTER TABS */
+    .filter-tabs { display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:3rem; }
+    .filter-btn { padding:.45rem 1.1rem; border-radius:50px; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:.82rem; font-weight:500; cursor:none; transition:all .25s; }
+    .filter-btn:hover,.filter-btn.active { background:linear-gradient(135deg,var(--accent),var(--accent2)); border-color:transparent; color:#fff; box-shadow:0 4px 16px var(--glow); }
+
+    /* FEATURED POST */
+    .featured-post {
+      display:grid; grid-template-columns:1.1fr 1fr; gap:0;
+      background:var(--card); border:1px solid var(--border);
+      border-radius:28px; overflow:hidden; margin-bottom:3rem;
+      cursor:none; transition:box-shadow .3s,transform .3s;
+    }
+    .featured-post:hover { box-shadow:0 24px 60px rgba(0,0,0,0.45); transform:translateY(-4px); }
+    .fp-cover {
+      min-height:360px; display:flex; align-items:center; justify-content:center;
+      font-size:6rem; position:relative; overflow:hidden;
+      background:linear-gradient(135deg,#7c5cfc 0%,#56ccf2 60%,#fc5c7d 100%);
+    }
+    .fp-cover::after { content:''; position:absolute; inset:0; background:linear-gradient(to right,transparent 60%,rgba(26,26,38,0.6) 100%); }
+    .fp-featured-badge { position:absolute; top:1.2rem; left:1.2rem; background:linear-gradient(135deg,var(--accent2),var(--accent)); border-radius:50px; padding:.3rem .9rem; font-size:.7rem; color:#fff; font-weight:700; letter-spacing:1px; text-transform:uppercase; box-shadow:0 4px 12px rgba(252,92,125,0.4); }
+    .fp-content { padding:3rem; display:flex; flex-direction:column; justify-content:center; }
+    .post-category { display:inline-block; font-size:.72rem; color:var(--accent3); font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:.8rem; }
+    .fp-title { font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem; letter-spacing:-.5px; line-height:1.2; margin-bottom:.8rem; }
+    .fp-excerpt { color:var(--muted); font-size:.9rem; line-height:1.7; margin-bottom:1.5rem; }
+    .post-meta { display:flex; align-items:center; gap:1.2rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+    .pm-avatar { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; flex-shrink:0; }
+    .pm-name { font-size:.83rem; font-weight:600; }
+    .pm-dot { width:3px; height:3px; border-radius:50%; background:var(--muted); }
+    .pm-date,.pm-read { font-size:.78rem; color:var(--muted); }
+    .read-more { display:inline-flex; align-items:center; gap:.4rem; font-size:.86rem; color:var(--accent); font-weight:600; text-decoration:none; transition:gap .2s,color .2s; }
+    .read-more:hover { gap:.7rem; color:var(--accent2); }
+
+    /* BLOG LAYOUT */
+    .blog-layout { display:grid; grid-template-columns:1fr 320px; gap:3rem; align-items:start; }
+
+    /* BLOG GRID */
+    .blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; }
+    .blog-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:20px; overflow:hidden; cursor:none;
+      transition:transform .3s,box-shadow .3s;
+      display:flex; flex-direction:column;
+    }
+    .blog-card:hover { transform:translateY(-7px); box-shadow:0 18px 44px rgba(0,0,0,0.4); }
+    .bc-cover { height:170px; display:flex; align-items:center; justify-content:center; font-size:3rem; position:relative; overflow:hidden; }
+    .bc-cover::after { content:''; position:absolute; inset:0; background:linear-gradient(to bottom,transparent 50%,rgba(26,26,38,0.65) 100%); }
+    .bc-body { padding:1.4rem; flex:1; display:flex; flex-direction:column; }
+    .bc-category { font-size:.7rem; color:var(--accent); font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:.5rem; }
+    .bc-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; line-height:1.35; margin-bottom:.5rem; }
+    .bc-excerpt { font-size:.82rem; color:var(--muted); line-height:1.6; flex:1; margin-bottom:1rem; }
+    .bc-footer { display:flex; justify-content:space-between; align-items:center; }
+    .bc-meta { font-size:.74rem; color:var(--muted); }
+    .bc-tags { display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.7rem; }
+    .btag { background:rgba(124,92,252,0.08); border:1px solid rgba(124,92,252,0.15); border-radius:50px; padding:.15rem .55rem; font-size:.68rem; color:var(--muted); }
+    .blog-card.hidden { display:none; }
+
+    /* SIDEBAR */
+    .blog-sidebar { display:flex; flex-direction:column; gap:1.5rem; position:sticky; top:6rem; }
+    .sidebar-widget { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:1.6rem; }
+    .sw-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.9rem; letter-spacing:.5px; text-transform:uppercase; color:var(--accent); margin-bottom:1.2rem; }
+
+    /* POPULAR POSTS */
+    .popular-item { display:flex; gap:.9rem; align-items:flex-start; margin-bottom:1.1rem; cursor:none; transition:opacity .2s; }
+    .popular-item:hover { opacity:.8; }
+    .popular-item:last-child { margin-bottom:0; }
+    .pi-num { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; color:var(--border); line-height:1; flex-shrink:0; width:24px; }
+    .pi-title { font-size:.84rem; font-weight:600; line-height:1.4; margin-bottom:.25rem; }
+    .pi-meta { font-size:.72rem; color:var(--muted); }
+
+    /* TOPICS */
+    .topic-tags { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .topic-tag { background:rgba(124,92,252,0.08); border:1px solid rgba(124,92,252,0.15); border-radius:50px; padding:.3rem .8rem; font-size:.78rem; color:var(--muted); cursor:none; transition:all .2s; }
+    .topic-tag:hover { background:rgba(124,92,252,0.15); color:var(--accent); border-color:var(--accent); }
+
+    /* NEWSLETTER */
+    .newsletter-widget { background:linear-gradient(135deg,rgba(124,92,252,0.12),rgba(86,204,242,0.08)); border:1px solid var(--border); border-radius:20px; padding:1.8rem; text-align:center; }
+    .nw-icon { font-size:2rem; margin-bottom:.8rem; display:block; }
+    .nw-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:.4rem; }
+    .nw-desc { font-size:.82rem; color:var(--muted); line-height:1.6; margin-bottom:1.2rem; }
+    .nw-input { width:100%; padding:.7rem 1rem; background:var(--bg); border:1px solid var(--border); border-radius:12px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:.85rem; outline:none; margin-bottom:.7rem; transition:border-color .3s; }
+    .nw-input:focus { border-color:var(--accent); }
+    .nw-input::placeholder { color:var(--muted); }
+    .nw-btn { width:100%; padding:.7rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:12px; color:#fff; font-family:'DM Sans',sans-serif; font-weight:600; font-size:.86rem; cursor:none; transition:opacity .2s; }
+    .nw-btn:hover { opacity:.88; }
+
+    /* PAGINATION */
+    .pagination { display:flex; justify-content:center; gap:.5rem; margin-top:3rem; }
+    .pg-btn { width:38px; height:38px; border-radius:10px; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:.86rem; cursor:none; transition:all .2s; display:flex; align-items:center; justify-content:center; }
+    .pg-btn.active,.pg-btn:hover { background:linear-gradient(135deg,var(--accent),var(--accent2)); border-color:transparent; color:#fff; }
+
+    /* CTA */
+    .cta-section { text-align:center; border-top:1px solid var(--border); background:linear-gradient(135deg,rgba(124,92,252,0.06),rgba(86,204,242,0.04)); }
+    .cta-section p { color:var(--muted); margin:1rem auto 2rem; max-width:420px; }
+    .btn-primary { padding:.85rem 2rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:50px; color:#fff; font-family:'DM Sans',sans-serif; font-weight:500; font-size:.95rem; cursor:none; text-decoration:none; box-shadow:0 6px 30px var(--glow); transition:transform .2s,box-shadow .2s; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 40px var(--glow); }
+    .btn-secondary { padding:.85rem 2rem; background:transparent; border:1px solid var(--border); border-radius:50px; color:var(--text); font-family:'DM Sans',sans-serif; font-weight:500; font-size:.95rem; cursor:none; text-decoration:none; transition:background .3s,border-color .3s; }
+    .btn-secondary:hover { background:rgba(124,92,252,0.08); border-color:var(--accent); }
+
+    footer { background:var(--surface); border-top:1px solid var(--border); padding:3rem 4rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .footer-text { font-size:.85rem; color:var(--muted); }
+    .footer-links { display:flex; gap:1.5rem; }
+    .footer-links a { color:var(--muted); text-decoration:none; font-size:.85rem; transition:color .2s; }
+    .footer-links a:hover { color:var(--accent); }
+
+    .reveal { opacity:0; transform:translateY(40px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media(max-width:1100px) { .blog-layout { grid-template-columns:1fr; } .blog-sidebar { position:static; } }
+    @media(max-width:900px) {
+      nav { padding:1.2rem 1.5rem; }
+      .nav-links { display:none; }
+      section { padding:4rem 1.5rem; }
+      .page-hero { padding:8rem 1.5rem 4rem; }
+      .featured-post { grid-template-columns:1fr; }
+      .fp-cover { min-height:200px; }
+      footer { padding:2rem 1.5rem; flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">DevFolio</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Hire Me</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="page-hero-content">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Blog</span></div>
+      <h1>Thoughts, <span>Tutorials</span><br/>&amp; Insights</h1>
+      <p>I write about web development, design systems, career growth, and the tools that make developers more productive.</p>
+      <div class="hero-meta">
+        <div class="hm-item"><span class="hm-num">15+</span><span class="hm-label">Articles</span></div>
+        <div class="hm-item"><span class="hm-num">4.2k</span><span class="hm-label">Readers</span></div>
+        <div class="hm-item"><span class="hm-num">120+</span><span class="hm-label">Subscribers</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN BLOG SECTION -->
+  <section>
+
+    <!-- FEATURED POST -->
+    <div class="reveal">
+      <div class="section-label">Editor's Pick</div>
+      <h2 class="section-title">Featured <span>Article</span></h2>
+    </div>
+    <div class="featured-post reveal">
+      <div class="fp-cover">
+        <div class="fp-featured-badge">⭐ Featured</div>
+        ⚡
+      </div>
+      <div class="fp-content">
+        <span class="post-category">Performance</span>
+        <div class="fp-title">10 React Performance Tricks That Actually Work in 2024</div>
+        <p class="fp-excerpt">Stop guessing and start measuring. In this deep-dive, I cover the React optimization techniques I've personally used to cut render times by 60% in production apps — from memoization patterns to bundle splitting strategies.</p>
+        <div class="post-meta">
+          <div class="pm-avatar">A</div>
+          <span class="pm-name">Alex Dev</span>
+          <div class="pm-dot"></div>
+          <span class="pm-date">Mar 12, 2024</span>
+          <div class="pm-dot"></div>
+          <span class="pm-read">8 min read</span>
+        </div>
+        <a href="#" class="read-more">Read Article →</a>
+      </div>
+    </div>
+
+    <!-- SEARCH + FILTER -->
+    <div class="reveal">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search articles..."/>
+      </div>
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="react">React</button>
+        <button class="filter-btn" data-filter="css">CSS</button>
+        <button class="filter-btn" data-filter="javascript">JavaScript</button>
+        <button class="filter-btn" data-filter="career">Career</button>
+        <button class="filter-btn" data-filter="tools">Tools</button>
+      </div>
+    </div>
+
+    <!-- BLOG LAYOUT: GRID + SIDEBAR -->
+    <div class="blog-layout">
+
+      <!-- BLOG GRID -->
+      <div>
+        <div class="blog-grid reveal" id="blogGrid">
+
+          <div class="blog-card" data-category="react" data-title="building scalable react component libraries from scratch">
+            <div class="bc-cover" style="background:linear-gradient(135deg,#7c5cfc,#56ccf2);">⚛️</div>
+            <div class="bc-body">
+              <div class="bc-category">React</div>
+              <div class="bc-title">Building Scalable React Component Libraries from Scratch</div>
+              <p class="bc-excerpt">A practical guide to designing, building and publishing your own React component library with Storybook and Rollup.</p>
+              <div class="bc-tags"><span class="btag">React</span><span class="btag">Storybook</span><span class="btag">NPM</span></div>
+              <div class="bc-footer" style="margin-top:.8rem;">
+                <span class="bc-meta">Feb 28, 2024 · 12 min</span>
+                <a href="#" class="read-more" style="font-size:.8rem;">Read →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" data-category="css" data-title="the complete guide to css container queries in 2024">
+            <div class="bc-cover" style="background:linear-gradient(135deg,#fc5c7d,#f59e0b);">🎨</div>
+            <div class="bc-body">
+              <div class="bc-category">CSS</div>
+              <div class="bc-title">The Complete Guide to CSS Container Queries in 2024</div>
+              <p class="bc-excerpt">Container queries are finally here. Learn how they work, why they're better than media queries in many cases, and how to use them today.</p>
+              <div class="bc-tags"><span class="btag">CSS3</span><span class="btag">Responsive</span></div>
+              <div class="bc-footer" style="margin-top:.8rem;">
+                <span class="bc-meta">Feb 14, 2024 · 7 min</span>
+                <a href="#" class="read-more" style="font-size:.8rem;">Read →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" data-category="javascript" data-title="mastering javascript closures once and for all">
+            <div class="bc-cover" style="background:linear-gradient(135deg,#f59e0b,#4ade80);">🟨</div>
+            <div class="bc-body">
+              <div class="bc-category">JavaScript</div>
+              <div class="bc-title">Mastering JavaScript Closures Once and For All</div>
+              <p class="bc-excerpt">Closures confuse nearly every developer at some point. This visual guide finally makes them click with practical examples.</p>
+              <div class="bc-tags"><span class="btag">JavaScript</span><span class="btag">ES6</span></div>
+              <div class="bc-footer" style="margin-top:.8rem;">
+                <span class="bc-meta">Jan 30, 2024 · 9 min</span>
+                <a href="#" class="read-more" style="font-size:.8rem;">Read →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" data-category="career" data-title="how i landed my first senior developer role at 24">
+            <div class="bc-cover" style="background:linear-gradient(135deg,#56ccf2,#7c5cfc);">🚀</div>
+            <div class="bc-body">
+              <div class="bc-category">Career</div>
+              <div class="bc-title">How I Landed My First Senior Developer Role at 24</div>
+              <p class="bc-excerpt">The honest story of how I went from junior dev to senior in 18 months — the projects I built, interviews I failed, and lessons I learned.</p>
+              <div class="bc-tags"><span class="btag">Career</span><span class="btag">Growth</span></div>
+              <div class="bc-footer" style="margin-top:.8rem;">
+                <span class="bc-meta">Jan 15, 2024 · 11 min</span>
+                <a href="#" class="read-more" style="font-size:.8rem;">Read →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" data-category="tools" data-title="my ultimate vs code setup for frontend developers 2024">
+            <div class="bc-cover" style="background:linear-gradient(135deg,#4ade80,#56ccf2);">💻</div>
+            <div class="bc-body">
+              <div class="bc-category">Tools</div>
+              <div class="bc-title">My Ultimate VS Code Setup for Frontend Developers 2024</div>
+              <p class="bc-excerpt">Extensions, keybindings, themes and settings that make me 30% faster every single day. Full dotfiles included.</p>
+              <div class="bc-tags"><span class="btag">VS Code</span><span class="btag">Productivity</span></div>
+              <div class="bc-footer" style="margin-top:.8rem;">
+                <span class="bc-meta">Jan 5, 2024 · 6 min</span>
+                <a href="#" class="read-more" style="font-size:.8rem;">Read →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" data-category="react" data-title="understanding react server components a practical guide">
+            <div class="bc-cover" style="background:linear-gradient(135deg,#a78bfa,#fc5c7d);">🔺</div>
+            <div class="bc-body">
+              <div class="bc-category">React</div>
+              <div class="bc-title">Understanding React Server Components: A Practical Guide</div>
+              <p class="bc-excerpt">RSC changed how we think about React. This guide breaks down when to use server vs client components with real-world examples.</p>
+              <div class="bc-tags"><span class="btag">React</span><span class="btag">Next.js</span><span class="btag">RSC</span></div>
+              <div class="bc-footer" style="margin-top:.8rem;">
+                <span class="bc-meta">Dec 20, 2023 · 10 min</span>
+                <a href="#" class="read-more" style="font-size:.8rem;">Read →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" data-category="css" data-title="css animations that dont kill your performance">
+            <div class="bc-cover" style="background:linear-gradient(135deg,#fc5c7d,#56ccf2);">✨</div>
+            <div class="bc-body">
+              <div class="bc-category">CSS</div>
+              <div class="bc-title">CSS Animations That Don't Kill Your Performance</div>
+              <p class="bc-excerpt">Learn which CSS properties are GPU-accelerated and how to create silky-smooth animations without causing layout thrashing.</p>
+              <div class="bc-tags"><span class="btag">CSS</span><span class="btag">Animation</span><span class="btag">GPU</span></div>
+              <div class="bc-footer" style="margin-top:.8rem;">
+                <span class="bc-meta">Dec 8, 2023 · 8 min</span>
+                <a href="#" class="read-more" style="font-size:.8rem;">Read →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" data-category="career" data-title="the developers guide to freelancing in india 2024">
+            <div class="bc-cover" style="background:linear-gradient(135deg,#f59e0b,#7c5cfc);">💼</div>
+            <div class="bc-body">
+              <div class="bc-category">Career</div>
+              <div class="bc-title">The Developer's Guide to Freelancing in India 2024</div>
+              <p class="bc-excerpt">Everything I wish I knew before going freelance — finding clients, pricing work, handling contracts, and managing taxes.</p>
+              <div class="bc-tags"><span class="btag">Freelance</span><span class="btag">Career</span></div>
+              <div class="bc-footer" style="margin-top:.8rem;">
+                <span class="bc-meta">Nov 22, 2023 · 14 min</span>
+                <a href="#" class="read-more" style="font-size:.8rem;">Read →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" data-category="javascript" data-title="building a real time app with socket io and react">
+            <div class="bc-cover" style="background:linear-gradient(135deg,#56ccf2,#4ade80);">📡</div>
+            <div class="bc-body">
+              <div class="bc-category">JavaScript</div>
+              <div class="bc-title">Building a Real-Time App with Socket.io and React</div>
+              <p class="bc-excerpt">A step-by-step tutorial on building a live chat application with rooms, typing indicators and message history using Socket.io.</p>
+              <div class="bc-tags"><span class="btag">Socket.io</span><span class="btag">React</span></div>
+              <div class="bc-footer" style="margin-top:.8rem;">
+                <span class="bc-meta">Nov 10, 2023 · 15 min</span>
+                <a href="#" class="read-more" style="font-size:.8rem;">Read →</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- No results -->
+        <div id="noResults" style="display:none;text-align:center;padding:3rem;color:var(--muted);">
+          <div style="font-size:3rem;margin-bottom:1rem;">🔍</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.5rem;">No articles found</div>
+          <div style="font-size:.88rem;">Try a different search term or category.</div>
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="pagination reveal">
+          <button class="pg-btn active">1</button>
+          <button class="pg-btn">2</button>
+          <button class="pg-btn">3</button>
+          <button class="pg-btn">→</button>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="blog-sidebar reveal">
+
+        <!-- Popular Posts -->
+        <div class="sidebar-widget">
+          <div class="sw-title">🔥 Popular Posts</div>
+          <div class="popular-item">
+            <div class="pi-num">01</div>
+            <div><div class="pi-title">10 React Performance Tricks That Actually Work</div><div class="pi-meta">Mar 12 · 3.2k views</div></div>
+          </div>
+          <div class="popular-item">
+            <div class="pi-num">02</div>
+            <div><div class="pi-title">How I Landed My First Senior Role at 24</div><div class="pi-meta">Jan 15 · 2.8k views</div></div>
+          </div>
+          <div class="popular-item">
+            <div class="pi-num">03</div>
+            <div><div class="pi-title">My Ultimate VS Code Setup 2024</div><div class="pi-meta">Jan 5 · 2.1k views</div></div>
+          </div>
+          <div class="popular-item">
+            <div class="pi-num">04</div>
+            <div><div class="pi-title">Mastering JavaScript Closures</div><div class="pi-meta">Jan 30 · 1.9k views</div></div>
+          </div>
+        </div>
+
+        <!-- Topics -->
+        <div class="sidebar-widget">
+          <div class="sw-title">🏷 Topics</div>
+          <div class="topic-tags">
+            <span class="topic-tag">React</span>
+            <span class="topic-tag">JavaScript</span>
+            <span class="topic-tag">CSS</span>
+            <span class="topic-tag">Next.js</span>
+            <span class="topic-tag">Career</span>
+            <span class="topic-tag">TypeScript</span>
+            <span class="topic-tag">Node.js</span>
+            <span class="topic-tag">Tools</span>
+            <span class="topic-tag">Performance</span>
+            <span class="topic-tag">Open Source</span>
+            <span class="topic-tag">Design</span>
+            <span class="topic-tag">Freelance</span>
+          </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="newsletter-widget">
+          <span class="nw-icon">📬</span>
+          <div class="nw-title">Stay in the Loop</div>
+          <p class="nw-desc">Get new articles, tutorials and tips delivered straight to your inbox. No spam, ever.</p>
+          <input type="email" class="nw-input" placeholder="your@email.com"/>
+          <button class="nw-btn" id="subscribeBtn">Subscribe Free →</button>
+          <div id="subSuccess" style="display:none;font-size:.8rem;color:#4ade80;margin-top:.7rem;">🎉 You're subscribed!</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="reveal">
+      <div class="section-label" style="justify-content:center;">Write Together</div>
+      <h2 class="section-title" style="text-align:center;">Have a <span>Topic</span> in Mind?</h2>
+      <p>I'm always open to writing about topics my readers suggest. Drop me a message!</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html" class="btn-primary">Suggest a Topic →</a>
+        <a href="projects.html" class="btn-secondary">View My Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">DevFolio</div>
+    <div class="footer-text">© 2024 DevFolio. Built with ❤️ and lots of ☕</div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+    (function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+    document.querySelectorAll('a,button,.blog-card,.popular-item,.topic-tag').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='50px';ring.style.height='50px';ring.style.opacity='1';});
+      el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='.6';});
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const ro = new IntersectionObserver((entries)=>{
+      entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*100); }});
+    },{threshold:.08});
+    reveals.forEach(r=>ro.observe(r));
+
+    // Filter
+    function applyFilters() {
+      const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      let visible = 0;
+      document.querySelectorAll('.blog-card').forEach(card=>{
+        const matchCat = activeFilter==='all' || card.dataset.category===activeFilter;
+        const matchSearch = card.dataset.title.includes(searchTerm);
+        const show = matchCat && matchSearch;
+        card.classList.toggle('hidden', !show);
+        if(show) visible++;
+      });
+      document.getElementById('noResults').style.display = visible===0 ? 'block' : 'none';
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilters();
+      });
+    });
+
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+    // Newsletter
+    document.getElementById('subscribeBtn').addEventListener('click',()=>{
+      const inp = document.querySelector('.nw-input');
+      if(inp.value.includes('@')){
+        document.getElementById('subscribeBtn').style.display='none';
+        document.getElementById('subSuccess').style.display='block';
+        inp.style.display='none';
+      } else {
+        inp.style.borderColor='var(--accent2)';
+      }
+    });
+
+    // Pagination
+    document.querySelectorAll('.pg-btn').forEach(btn=>{
+      btn.addEventListener('click',function(){
+        document.querySelectorAll('.pg-btn').forEach(b=>b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
