@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog – HomeQuest Real Estate Insights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div id="page-loader"><div class="loader-logo">HomeQuest</div><div class="loader-bar"></div></div>
+
+<nav class="navbar scrolled">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo"><div class="nav-logo-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>HomeQuest</a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">Home</a></li>
+      <li><a href="properties.html" class="nav-link">Properties</a></li>
+      <li><a href="blog.html" class="nav-link active">Blog</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-nav-login">Login</a>
+      <a href="login.html" class="btn-nav-post">Post Property</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div style="background:linear-gradient(135deg,#1a0533 0%,#4C1D95 50%,#6C3AE8 100%);padding:100px 0 50px">
+  <div class="container" style="text-align:center">
+    <span class="section-label" style="background:rgba(255,255,255,0.15);color:#67E8F9">Insights & Guides</span>
+    <h1 style="color:white;margin:12px 0 16px">HomeQuest <span style="color:#67E8F9">Blog</span></h1>
+    <p style="color:rgba(255,255,255,0.75);max-width:520px;margin:0 auto 28px">Expert real estate guides, market insights, investment tips, and legal advice to help you make smarter property decisions.</p>
+    <div style="max-width:480px;margin:0 auto;display:flex;gap:10px">
+      <input type="text" id="blog-search" placeholder="🔍 Search articles..." style="flex:1;padding:12px 20px;border-radius:var(--radius-full);border:none;outline:none;font-size:0.9rem">
+      <button class="btn btn-primary" style="border-radius:var(--radius-full)" onclick="filterBlogs()">Search</button>
+    </div>
+  </div>
+</div>
+
+<!-- Category Tabs -->
+<div style="background:white;box-shadow:var(--shadow-sm);position:sticky;top:68px;z-index:100">
+  <div class="container">
+    <div style="display:flex;gap:4px;padding:12px 0;overflow-x:auto">
+      <button class="blog-cat-btn active" onclick="filterByCategory('all',this)">All Posts</button>
+      <button class="blog-cat-btn" onclick="filterByCategory('Buying Guide',this)">Buying Guide</button>
+      <button class="blog-cat-btn" onclick="filterByCategory('Investment',this)">Investment</button>
+      <button class="blog-cat-btn" onclick="filterByCategory('Legal',this)">Legal & RERA</button>
+      <button class="blog-cat-btn" onclick="filterByCategory('Interior',this)">Interior Design</button>
+      <button class="blog-cat-btn" onclick="filterByCategory('Market',this)">Market Trends</button>
+      <button class="blog-cat-btn" onclick="filterByCategory('NRI',this)">NRI Corner</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.blog-cat-btn { padding: 8px 18px; border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 600; color: var(--gray-500); background: none; border: none; cursor: pointer; transition: var(--transition); white-space:nowrap; }
+.blog-cat-btn:hover, .blog-cat-btn.active { background: var(--primary); color: white; }
+.featured-blog-img { height: 380px; border-radius: var(--radius-xl); overflow: hidden; }
+.featured-blog-img img { width: 100%; height: 100%; object-fit: cover; }
+</style>
+
+<div class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 340px;gap:40px">
+
+      <!-- Main Blog Grid -->
+      <div>
+        <!-- Featured Post -->
+        <div data-aos="fade-up" style="background:white;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-lg);margin-bottom:36px">
+          <div class="featured-blog-img">
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80" alt="Featured Post">
+          </div>
+          <div style="padding:32px">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+              <span style="background:var(--primary);color:white;font-size:0.72rem;font-weight:700;padding:3px 12px;border-radius:var(--radius-full);text-transform:uppercase;letter-spacing:0.05em">Featured</span>
+              <span style="font-size:0.75rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.05em">Market Trends</span>
+            </div>
+            <h2 style="font-size:1.8rem;margin-bottom:12px">India's Real Estate Market in 2024: Complete Annual Review & Outlook for 2025</h2>
+            <p style="color:var(--gray-500);margin-bottom:20px;line-height:1.8">A comprehensive analysis of India's property market performance in 2024 — covering price trends in 15 major cities, demand patterns, regulatory changes, and expert predictions for 2025.</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" style="width:36px;height:36px;border-radius:50%;object-fit:cover">
+                <div>
+                  <div style="font-weight:600;font-size:0.88rem">Arjun Mehta</div>
+                  <div style="font-size:0.78rem;color:var(--gray-400)">20 Nov 2024 · 12 min read</div>
+                </div>
+              </div>
+              <a href="blog-details.html?id=featured" class="btn btn-primary btn-sm">Read Full Article <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid" id="blog-grid">
+          <!-- Loaded dynamically -->
+        </div>
+
+        <!-- Load More -->
+        <div style="text-align:center;margin-top:36px">
+          <button class="btn btn-outline" id="load-more-btn" onclick="loadMoreBlogs()"><i class="fas fa-sync-alt"></i> Load More Articles</button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside style="position:sticky;top:120px;align-self:start;display:flex;flex-direction:column;gap:24px">
+
+        <!-- Popular Posts -->
+        <div style="background:white;border-radius:var(--radius-xl);padding:24px;box-shadow:var(--shadow-sm)">
+          <h5 style="font-family:var(--font-body);font-weight:700;margin-bottom:16px">🔥 Popular Posts</h5>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <a href="blog-details.html" style="display:flex;gap:12px;text-decoration:none;color:inherit">
+              <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=100&q=80" style="width:60px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0">
+              <div><div style="font-size:0.85rem;font-weight:600;line-height:1.4;margin-bottom:4px">10 Things to Check Before Buying a Flat</div><div style="font-size:0.75rem;color:var(--gray-400)">12 Nov · 5 min read</div></div>
+            </a>
+            <a href="blog-details.html" style="display:flex;gap:12px;text-decoration:none;color:inherit">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100&q=80" style="width:60px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0">
+              <div><div style="font-size:0.85rem;font-weight:600;line-height:1.4;margin-bottom:4px">Best Cities for Real Estate Investment 2024</div><div style="font-size:0.75rem;color:var(--gray-400)">8 Nov · 7 min read</div></div>
+            </a>
+            <a href="blog-details.html" style="display:flex;gap:12px;text-decoration:none;color:inherit">
+              <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=100&q=80" style="width:60px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0">
+              <div><div style="font-size:0.85rem;font-weight:600;line-height:1.4;margin-bottom:4px">RERA Compliance Guide for Buyers</div><div style="font-size:0.75rem;color:var(--gray-400)">3 Nov · 6 min read</div></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div style="background:white;border-radius:var(--radius-xl);padding:24px;box-shadow:var(--shadow-sm)">
+          <h5 style="font-family:var(--font-body);font-weight:700;margin-bottom:16px">Categories</h5>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--gray-100);cursor:pointer" onclick="filterByCategory('Buying Guide',null)">
+              <span style="font-size:0.88rem;font-weight:500">Buying Guide</span>
+              <span style="background:var(--primary);color:white;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:var(--radius-full)">24</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--gray-100);cursor:pointer">
+              <span style="font-size:0.88rem;font-weight:500">Investment Tips</span>
+              <span style="background:var(--primary);color:white;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:var(--radius-full)">18</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--gray-100);cursor:pointer">
+              <span style="font-size:0.88rem;font-weight:500">Legal & RERA</span>
+              <span style="background:var(--primary);color:white;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:var(--radius-full)">12</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;cursor:pointer">
+              <span style="font-size:0.88rem;font-weight:500">Market Trends</span>
+              <span style="background:var(--primary);color:white;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:var(--radius-full)">15</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Newsletter Widget -->
+        <div style="background:var(--primary-gradient);border-radius:var(--radius-xl);padding:24px;color:white">
+          <h5 style="color:white;font-family:var(--font-body);font-weight:700;margin-bottom:8px">📬 Weekly Newsletter</h5>
+          <p style="color:rgba(255,255,255,0.8);font-size:0.85rem;margin-bottom:16px">Get the latest property insights delivered every Monday.</p>
+          <input type="email" id="sidebar-email" placeholder="Your email address" style="width:100%;padding:10px 14px;border-radius:var(--radius-md);border:none;font-size:0.88rem;margin-bottom:10px;outline:none">
+          <button class="btn btn-white" style="width:100%;font-size:0.85rem" onclick="subscribeNewsletter()">Subscribe Free</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<footer style="background:var(--gray-900);padding:20px 0">
+  <div class="container"><p style="color:var(--gray-500);text-align:center;font-size:0.85rem">© 2024 HomeQuest. All rights reserved.</p></div>
+</footer>
+
+<button id="scroll-top"><i class="fas fa-chevron-up"></i></button>
+<div id="toast-container"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="../assets/js/main.js"></script>
+<script>
+const BLOGS = [
+  { id:'b1', title:'10 Things to Check Before Buying a Flat in 2024', category:'Buying Guide', excerpt:'Learn the essential checklist every home buyer must follow to avoid common pitfalls and make a smart purchase decision.', img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80', author:'Priya Sharma', date:'12 Nov 2024', readTime:'5 min' },
+  { id:'b2', title:'Best Cities to Invest in Real Estate in India 2024', category:'Investment', excerpt:'A data-driven look at which Indian cities offer the best returns on property investment right now.', img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80', author:'Arjun Mehta', date:'8 Nov 2024', readTime:'7 min' },
+  { id:'b3', title:'RERA Compliance: Everything Property Buyers Must Know', category:'Legal', excerpt:'Understanding RERA and how it protects your rights as a property buyer in India.', img:'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80', author:'Vikram Joshi', date:'3 Nov 2024', readTime:'6 min' },
+  { id:'b4', title:'NRI Property Investment Guide 2024: Tax, Laws & Returns', category:'NRI', excerpt:'Everything NRIs need to know about buying property in India — from taxation to repatriation rules.', img:'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80', author:'Ravi Kumar', date:'28 Oct 2024', readTime:'9 min' },
+  { id:'b5', title:'Interior Design Trends for Indian Homes in 2025', category:'Interior', excerpt:'Modern, minimalist, and maximalist — here are the top interior design styles taking over Indian homes.', img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80', author:'Neha Patel', date:'22 Oct 2024', readTime:'4 min' },
+  { id:'b6', title:'Home Loan Guide: How to Get the Best Interest Rate', category:'Buying Guide', excerpt:'Practical tips to negotiate a lower home loan rate and save lakhs over the loan tenure.', img:'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&q=80', author:'Arjun Mehta', date:'15 Oct 2024', readTime:'6 min' },
+];
+
+let activeCategory = 'all';
+let displayCount = 6;
+
+function renderBlogs(blogs) {
+  const grid = document.getElementById('blog-grid');
+  grid.innerHTML = blogs.slice(0, displayCount).map(b => `
+    <div class="blog-card" data-category="${b.category}" data-aos="fade-up">
+      <div class="blog-card-img"><img src="${b.img}" alt="${b.title}" loading="lazy"></div>
+      <div class="blog-card-body">
+        <div class="blog-category">${b.category}</div>
+        <h4>${b.title}</h4>
+        <p style="font-size:0.85rem;color:var(--gray-500);margin:8px 0 14px;line-height:1.6">${b.excerpt}</p>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="blog-meta"><i class="fas fa-user"></i> ${b.author} · <i class="fas fa-clock" style="margin-left:4px"></i> ${b.readTime} read</div>
+          <a href="blog-details.html?id=${b.id}" style="font-size:0.82rem;font-weight:600;color:var(--primary)">Read More →</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  if (typeof AOS !== 'undefined') AOS.refresh();
+}
+
+function filterByCategory(cat, btn) {
+  activeCategory = cat;
+  document.querySelectorAll('.blog-cat-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const filtered = cat === 'all' ? BLOGS : BLOGS.filter(b => b.category.toLowerCase().includes(cat.toLowerCase()));
+  renderBlogs(filtered);
+}
+
+function filterBlogs() {
+  const query = document.getElementById('blog-search').value.toLowerCase();
+  const filtered = BLOGS.filter(b => b.title.toLowerCase().includes(query) || b.category.toLowerCase().includes(query) || b.excerpt.toLowerCase().includes(query));
+  renderBlogs(filtered);
+}
+
+function loadMoreBlogs() {
+  displayCount += 3;
+  filterByCategory(activeCategory, null);
+  if (displayCount >= BLOGS.length) document.getElementById('load-more-btn').style.display = 'none';
+}
+
+function subscribeNewsletter() {
+  const email = document.getElementById('sidebar-email').value;
+  if (!email.includes('@')) { showToast('Valid email required', 'error'); return; }
+  showToast('Subscribed to HomeQuest weekly newsletter! 📬', 'success');
+  document.getElementById('sidebar-email').value = '';
+}
+
+document.addEventListener('DOMContentLoaded', () => renderBlogs(BLOGS));
+</script>
+</body>
+</html>

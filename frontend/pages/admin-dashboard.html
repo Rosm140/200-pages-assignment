@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – HomeQuest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    body { background: var(--off-white); }
+    .chart-bar { height: 180px; display: flex; align-items: flex-end; gap: 8px; padding: 0 8px; }
+    .bar-item { flex: 1; border-radius: 6px 6px 0 0; background: var(--primary-gradient); min-width: 20px; transition: opacity 0.2s; cursor: pointer; position: relative; }
+    .bar-item:hover { opacity: 0.8; }
+    .bar-item::after { content: attr(data-label); position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.68rem; color: var(--gray-500); white-space: nowrap; }
+    .chart-labels { display: flex; gap: 8px; padding: 0 8px; }
+    .chart-label { flex: 1; text-align: center; font-size: 0.7rem; color: var(--gray-400); }
+    .activity-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-100); }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot-green { background: var(--success); }
+    .dot-blue { background: var(--accent); }
+    .dot-purple { background: var(--primary); }
+    .dot-gold { background: var(--gold); }
+  </style>
+</head>
+<body>
+<div id="page-loader"><div class="loader-logo">HomeQuest</div><div class="loader-bar"></div></div>
+<div id="toast-container"></div>
+
+<div class="dashboard-layout">
+  <!-- SIDEBAR -->
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-logo">🏠 HomeQuest</div>
+    <div style="margin-bottom:24px;padding:12px 16px;background:rgba(108,58,232,0.2);border-radius:var(--radius-md)">
+      <div style="color:rgba(255,255,255,0.5);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Logged in as</div>
+      <div style="color:white;font-weight:600;font-size:0.9rem" id="admin-name">Admin</div>
+      <div style="color:var(--primary-light);font-size:0.75rem">Administrator</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="sidebar-link active" onclick="showSection('dashboard',this)"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="#" class="sidebar-link" onclick="showSection('properties',this)"><i class="fas fa-building"></i> Properties</a>
+      <a href="#" class="sidebar-link" onclick="showSection('users',this)"><i class="fas fa-users"></i> Users</a>
+      <a href="#" class="sidebar-link" onclick="showSection('bookings',this)"><i class="fas fa-calendar-check"></i> Bookings</a>
+      <a href="#" class="sidebar-link" onclick="showSection('inquiries',this)"><i class="fas fa-envelope"></i> Inquiries</a>
+      <a href="#" class="sidebar-link" onclick="showSection('agents',this)"><i class="fas fa-user-tie"></i> Agents</a>
+      <a href="#" class="sidebar-link" onclick="showSection('messages',this)"><i class="fas fa-comments"></i> Messages</a>
+      <div style="height:1px;background:rgba(255,255,255,0.08);margin:12px 0"></div>
+      <a href="properties.html" class="sidebar-link"><i class="fas fa-eye"></i> View Site</a>
+      <a href="#" class="sidebar-link" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-main">
+    <!-- DASHBOARD SECTION -->
+    <div id="section-dashboard">
+      <div class="dashboard-header">
+        <h2>Admin Dashboard</h2>
+        <p>Welcome back! Here's what's happening on HomeQuest today.</p>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-cards" id="stats-cards">
+        <div class="stat-card"><div><div class="stat-card-val" id="stat-users">–</div><div class="stat-card-lbl">Total Users</div></div><div class="stat-card-icon stat-icon-blue"><i class="fas fa-users"></i></div></div>
+        <div class="stat-card"><div><div class="stat-card-val" id="stat-props">–</div><div class="stat-card-lbl">Total Properties</div></div><div class="stat-card-icon stat-icon-purple"><i class="fas fa-building"></i></div></div>
+        <div class="stat-card"><div><div class="stat-card-val" id="stat-bookings">–</div><div class="stat-card-lbl">Total Bookings</div></div><div class="stat-card-icon stat-icon-green"><i class="fas fa-calendar-check"></i></div></div>
+        <div class="stat-card"><div><div class="stat-card-val" id="stat-inquiries">–</div><div class="stat-card-lbl">Inquiries</div></div><div class="stat-card-icon stat-icon-gold"><i class="fas fa-envelope"></i></div></div>
+      </div>
+
+      <!-- Charts + Activity -->
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:24px;margin-bottom:24px">
+        <!-- Bar Chart -->
+        <div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+            <h5 style="font-family:var(--font-body);font-weight:700">Property Listings (Monthly)</h5>
+            <select style="padding:6px 12px;border:1px solid var(--gray-200);border-radius:var(--radius-md);font-size:0.82rem;color:var(--gray-600)"><option>2024</option></select>
+          </div>
+          <div class="chart-bar">
+            <div class="bar-item" style="height:45%" data-label="142"></div>
+            <div class="bar-item" style="height:60%" data-label="189"></div>
+            <div class="bar-item" style="height:50%" data-label="156"></div>
+            <div class="bar-item" style="height:75%" data-label="234"></div>
+            <div class="bar-item" style="height:65%" data-label="204"></div>
+            <div class="bar-item" style="height:80%" data-label="251"></div>
+            <div class="bar-item" style="height:55%" data-label="173"></div>
+            <div class="bar-item" style="height:90%" data-label="283"></div>
+            <div class="bar-item" style="height:70%" data-label="220"></div>
+            <div class="bar-item" style="height:85%" data-label="267"></div>
+            <div class="bar-item" style="height:60%" data-label="189"></div>
+            <div class="bar-item" style="height:100%;background:var(--primary-gradient);box-shadow:0 4px 20px rgba(108,58,232,0.4)" data-label="314"></div>
+          </div>
+          <div class="chart-labels">
+            <div class="chart-label">Jan</div><div class="chart-label">Feb</div><div class="chart-label">Mar</div>
+            <div class="chart-label">Apr</div><div class="chart-label">May</div><div class="chart-label">Jun</div>
+            <div class="chart-label">Jul</div><div class="chart-label">Aug</div><div class="chart-label">Sep</div>
+            <div class="chart-label">Oct</div><div class="chart-label">Nov</div><div class="chart-label">Dec</div>
+          </div>
+        </div>
+
+        <!-- Activity Feed -->
+        <div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm)">
+          <h5 style="font-family:var(--font-body);font-weight:700;margin-bottom:20px">Recent Activity</h5>
+          <div id="activity-feed">
+            <div class="activity-item"><div class="activity-dot dot-green"></div><div><div style="font-size:0.85rem;font-weight:600">New booking received</div><div style="font-size:0.78rem;color:var(--gray-400)">3BHK Bandra – 2 min ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot dot-blue"></div><div><div style="font-size:0.85rem;font-weight:600">Property inquiry</div><div style="font-size:0.78rem;color:var(--gray-400)">Villa DLF Phase 5 – 15 min ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot dot-purple"></div><div><div style="font-size:0.85rem;font-weight:600">New user registered</div><div style="font-size:0.78rem;color:var(--gray-400)">rahul.m@gmail.com – 1 hr ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot dot-gold"></div><div><div style="font-size:0.85rem;font-weight:600">Property pending approval</div><div style="font-size:0.78rem;color:var(--gray-400)">2BHK Koramangala – 2 hr ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot dot-green"></div><div><div style="font-size:0.85rem;font-weight:600">Contact message</div><div style="font-size:0.78rem;color:var(--gray-400)">priya.s@hotmail.com – 3 hr ago</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm)">
+        <h5 style="font-family:var(--font-body);font-weight:700;margin-bottom:16px">Quick Actions</h5>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="openAddProperty()"><i class="fas fa-plus"></i> Add Property</button>
+          <button class="btn btn-outline btn-sm" onclick="showSection('properties',null)"><i class="fas fa-list"></i> Manage Properties</button>
+          <button class="btn btn-outline btn-sm" onclick="showSection('users',null)"><i class="fas fa-users"></i> Manage Users</button>
+          <button class="btn btn-outline btn-sm" onclick="showSection('bookings',null)"><i class="fas fa-calendar"></i> View Bookings</button>
+          <button class="btn btn-outline btn-sm" onclick="showSection('messages',null)"><i class="fas fa-envelope"></i> View Messages</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROPERTIES SECTION -->
+    <div id="section-properties" style="display:none">
+      <div class="dashboard-header" style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div><h2>Manage Properties</h2><p>Add, edit, approve and delete property listings.</p></div>
+        <button class="btn btn-primary btn-sm" onclick="openAddProperty()"><i class="fas fa-plus"></i> Add New Property</button>
+      </div>
+
+      <!-- Add/Edit Property Form -->
+      <div id="property-form-card" style="display:none;background:white;border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-sm);margin-bottom:24px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <h5 style="font-family:var(--font-body);font-weight:700" id="form-title">Add New Property</h5>
+          <button onclick="closePropertyForm()" style="background:var(--gray-100);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer">✕</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+          <div class="form-group" style="grid-column:1/-1"><label class="form-label">Property Title *</label><input id="f-title" type="text" class="form-control" placeholder="e.g., Luxurious 3BHK in Bandra"></div>
+          <div class="form-group"><label class="form-label">Property Type *</label>
+            <select id="f-type" class="form-control"><option>Apartment</option><option>House</option><option>Villa</option><option>Plot</option><option>Commercial</option><option>Studio</option></select>
+          </div>
+          <div class="form-group"><label class="form-label">Listing Type *</label>
+            <select id="f-listing" class="form-control"><option>Buy</option><option>Rent</option></select>
+          </div>
+          <div class="form-group"><label class="form-label">Price (₹) *</label><input id="f-price" type="number" class="form-control" placeholder="e.g., 8500000"></div>
+          <div class="form-group"><label class="form-label">Area (sqft) *</label><input id="f-area" type="number" class="form-control" placeholder="e.g., 1450"></div>
+          <div class="form-group"><label class="form-label">Bedrooms</label><input id="f-beds" type="number" class="form-control" placeholder="e.g., 3"></div>
+          <div class="form-group"><label class="form-label">Bathrooms</label><input id="f-baths" type="number" class="form-control" placeholder="e.g., 2"></div>
+          <div class="form-group"><label class="form-label">City *</label><input id="f-city" type="text" class="form-control" placeholder="e.g., Mumbai"></div>
+          <div class="form-group"><label class="form-label">Locality</label><input id="f-locality" type="text" class="form-control" placeholder="e.g., Bandra West"></div>
+          <div class="form-group"><label class="form-label">Furnished Status</label>
+            <select id="f-furnished" class="form-control"><option>Unfurnished</option><option>Semi-Furnished</option><option>Furnished</option></select>
+          </div>
+          <div class="form-group" style="grid-column:1/-1"><label class="form-label">Description</label><textarea id="f-desc" class="form-control" rows="3" placeholder="Describe the property..."></textarea></div>
+          <div class="form-group" style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="f-featured" style="accent-color:var(--primary)"><label style="font-size:0.88rem;font-weight:600;cursor:pointer">Mark as Featured</label></div>
+          <div class="form-group" style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="f-new" style="accent-color:var(--primary)"><label style="font-size:0.88rem;font-weight:600;cursor:pointer">New Construction</label></div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:8px">
+          <button class="btn btn-primary" onclick="submitProperty()"><i class="fas fa-save"></i> Save Property</button>
+          <button class="btn btn-outline" onclick="closePropertyForm()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Properties Table -->
+      <div class="table-wrap">
+        <div class="table-head"><h5>All Properties</h5>
+          <input type="text" placeholder="🔍 Search..." style="padding:8px 12px;border:1px solid var(--gray-200);border-radius:var(--radius-md);font-size:0.85rem;outline:none" onkeyup="filterTable(this.value,'admin-prop-table')">
+        </div>
+        <div style="overflow-x:auto">
+          <table id="admin-prop-table">
+            <thead><tr><th>Property</th><th>Type</th><th>City</th><th>Price</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead>
+            <tbody id="admin-props-body"><tr><td colspan="7" style="text-align:center;padding:40px"><i class="fas fa-spinner fa-spin" style="color:var(--primary);font-size:1.5rem"></i></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- USERS SECTION -->
+    <div id="section-users" style="display:none">
+      <div class="dashboard-header"><h2>Manage Users</h2><p>View and manage registered users.</p></div>
+      <div class="table-wrap">
+        <div class="table-head"><h5>All Users</h5></div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Joined</th><th>Actions</th></tr></thead>
+            <tbody id="admin-users-body"><tr><td colspan="7" style="text-align:center;padding:40px"><i class="fas fa-spinner fa-spin" style="color:var(--primary);font-size:1.5rem"></i></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS SECTION -->
+    <div id="section-bookings" style="display:none">
+      <div class="dashboard-header"><h2>Site Visit Bookings</h2><p>Manage all property visit bookings.</p></div>
+      <div class="table-wrap">
+        <div class="table-head"><h5>All Bookings</h5></div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Visitor</th><th>Property</th><th>Visit Date</th><th>Time</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="admin-bookings-body">
+              <tr><td>Priya Sharma</td><td>3BHK Bandra West</td><td>15 Dec 2024</td><td>10:00 AM</td><td><span class="status-badge badge-pending">Pending</span></td><td><button class="btn btn-sm btn-primary" style="padding:4px 12px">Confirm</button></td></tr>
+              <tr><td>Rahul Mehta</td><td>2BHK Koramangala</td><td>18 Dec 2024</td><td>3:00 PM</td><td><span class="status-badge badge-success">Confirmed</span></td><td><button class="btn btn-sm btn-outline" style="padding:4px 12px">View</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- INQUIRIES SECTION -->
+    <div id="section-inquiries" style="display:none">
+      <div class="dashboard-header"><h2>Property Inquiries</h2><p>Manage all property inquiries from visitors.</p></div>
+      <div class="table-wrap">
+        <div class="table-head"><h5>All Inquiries</h5></div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>From</th><th>Email</th><th>Phone</th><th>Property</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody id="admin-inquiries-body">
+              <tr><td>Ananya K.</td><td>ananya@gmail.com</td><td>9876543210</td><td>Villa DLF Phase 5</td><td><span class="status-badge badge-pending">New</span></td><td>12 Dec 2024</td></tr>
+              <tr><td>Vikram J.</td><td>vikram@corp.com</td><td>9012345678</td><td>Commercial Space</td><td><span class="status-badge badge-success">Read</span></td><td>10 Dec 2024</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENTS SECTION -->
+    <div id="section-agents" style="display:none">
+      <div class="dashboard-header" style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div><h2>Manage Agents</h2><p>Add and manage property consultants.</p></div>
+        <button class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Agent</button>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head"><h5>All Agents</h5></div>
+        <table>
+          <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>City</th><th>Properties</th><th>Rating</th><th>Actions</th></tr></thead>
+          <tbody id="admin-agents-body"><tr><td colspan="7" style="text-align:center;padding:40px"><i class="fas fa-spinner fa-spin" style="color:var(--primary);font-size:1.5rem"></i></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MESSAGES SECTION -->
+    <div id="section-messages" style="display:none">
+      <div class="dashboard-header"><h2>Contact Messages</h2><p>Messages received through the contact form.</p></div>
+      <div class="table-wrap">
+        <div class="table-head"><h5>All Messages</h5></div>
+        <table>
+          <thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td>Suresh K.</td><td>suresh@mail.com</td><td>Property inquiry about Pune listings</td><td><span class="status-badge badge-pending">New</span></td><td>12 Dec 2024</td><td><button class="btn btn-sm btn-outline" style="padding:4px 12px">Reply</button></td></tr>
+            <tr><td>Meera R.</td><td>meera@company.in</td><td>Partnership opportunity</td><td><span class="status-badge badge-success">Read</span></td><td>10 Dec 2024</td><td><button class="btn btn-sm btn-outline" style="padding:4px 12px">Reply</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add Property Modal overlay indicator -->
+<script src="../assets/js/main.js"></script>
+<script>
+// Auth guard
+if (!Auth.isAdmin()) { showToast('Admin access required', 'error'); setTimeout(() => window.location.href='login.html', 1000); }
+document.getElementById('admin-name').textContent = Auth.user()?.name || 'Admin';
+
+function showSection(name, el) {
+  document.querySelectorAll('[id^="section-"]').forEach(s => s.style.display='none');
+  document.getElementById(`section-${name}`).style.display='block';
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  if (el) el.classList.add('active');
+  if (name==='properties') loadAdminProperties();
+  if (name==='users') loadAdminUsers();
+  if (name==='agents') loadAdminAgents();
+}
+
+async function loadDashboardStats() {
+  try {
+    const data = await apiFetch('/admin/stats');
+    const s = data.stats;
+    document.getElementById('stat-users').textContent = s.totalUsers?.toLocaleString() || '–';
+    document.getElementById('stat-props').textContent = s.totalProperties?.toLocaleString() || '–';
+    document.getElementById('stat-bookings').textContent = s.totalBookings?.toLocaleString() || '–';
+    document.getElementById('stat-inquiries').textContent = s.totalInquiries?.toLocaleString() || '–';
+  } catch {
+    document.getElementById('stat-users').textContent = '1,248';
+    document.getElementById('stat-props').textContent = '3,891';
+    document.getElementById('stat-bookings').textContent = '624';
+    document.getElementById('stat-inquiries').textContent = '1,042';
+  }
+}
+
+async function loadAdminProperties() {
+  try {
+    const data = await apiFetch('/admin/properties');
+    renderPropertiesTable(data.properties || []);
+  } catch {
+    renderSamplePropertiesTable();
+  }
+}
+
+function renderPropertiesTable(props) {
+  const tbody = document.getElementById('admin-props-body');
+  if (!props.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">🏚️</div><h4>No properties found</h4></div></td></tr>'; return; }
+  tbody.innerHTML = props.map(p => `
+    <tr>
+      <td><div style="font-weight:600;font-size:0.88rem">${p.title}</div><div style="font-size:0.75rem;color:var(--gray-400)">${p.type} · ${p.listingType}</div></td>
+      <td>${p.type}</td>
+      <td>${p.address?.city || '–'}</td>
+      <td style="font-weight:600">${formatPrice(p.price)}</td>
+      <td><span class="status-badge badge-${p.status==='approved'?'success':p.status==='pending'?'pending':'danger'}">${p.status}</span></td>
+      <td>${p.isFeatured?'<span style="color:var(--gold)">★ Yes</span>':'No'}</td>
+      <td>
+        <div style="display:flex;gap:6px">
+          ${p.status==='pending'?`<button class="btn btn-sm" style="padding:4px 10px;background:var(--success);color:white;border-radius:6px" onclick="approveProperty('${p._id}','approved')">Approve</button>`:''}
+          <button class="btn btn-sm btn-outline" style="padding:4px 10px" onclick="toggleFeatured('${p._id}')">⭐</button>
+          <button class="btn btn-sm" style="padding:4px 10px;background:var(--danger);color:white;border-radius:6px" onclick="deleteProperty('${p._id}')">Delete</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderSamplePropertiesTable() {
+  const props = [
+    { _id:'p1', title:'Luxury 3BHK Bandra West', type:'Apartment', listingType:'Buy', price:8500000, address:{city:'Mumbai'}, status:'approved', isFeatured:true },
+    { _id:'p2', title:'Modern Villa DLF Phase 5', type:'Villa', listingType:'Buy', price:25000000, address:{city:'Gurgaon'}, status:'approved', isFeatured:false },
+    { _id:'p3', title:'2BHK Koramangala', type:'Apartment', listingType:'Rent', price:35000, address:{city:'Bangalore'}, status:'pending', isFeatured:false },
+  ];
+  renderPropertiesTable(props);
+}
+
+async function loadAdminUsers() {
+  try {
+    const data = await apiFetch('/admin/users');
+    const users = data.users || [];
+    document.getElementById('admin-users-body').innerHTML = users.map((u,i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td><div style="font-weight:600">${u.name}</div></td>
+        <td>${u.email}</td>
+        <td>${u.phone||'–'}</td>
+        <td><span class="status-badge badge-success">${u.role}</span></td>
+        <td>${formatDate(u.createdAt)}</td>
+        <td><button class="btn btn-sm btn-outline" style="padding:4px 10px">View</button></td>
+      </tr>
+    `).join('');
+  } catch {
+    document.getElementById('admin-users-body').innerHTML = `
+      <tr><td>1</td><td>Priya Sharma</td><td>priya@gmail.com</td><td>9876543210</td><td><span class="status-badge badge-success">user</span></td><td>12 Nov 2024</td><td><button class="btn btn-sm btn-outline" style="padding:4px 10px">View</button></td></tr>
+      <tr><td>2</td><td>Rahul Mehta</td><td>rahul@mail.com</td><td>9012345678</td><td><span class="status-badge badge-success">user</span></td><td>8 Nov 2024</td><td><button class="btn btn-sm btn-outline" style="padding:4px 10px">View</button></td></tr>
+    `;
+  }
+}
+
+async function loadAdminAgents() {
+  try {
+    const data = await apiFetch('/agents');
+    const agents = data.agents || [];
+    document.getElementById('admin-agents-body').innerHTML = agents.length ? agents.map(a => `
+      <tr>
+        <td><div style="display:flex;align-items:center;gap:10px"><img src="${a.avatar||'https://randomuser.me/api/portraits/men/1.jpg'}" style="width:32px;height:32px;border-radius:50%;object-fit:cover"><span style="font-weight:600">${a.name}</span></div></td>
+        <td>${a.email}</td><td>${a.phone}</td><td>${a.city||'–'}</td>
+        <td>${a.propertiesSold}</td><td>${a.rating}★</td>
+        <td><div style="display:flex;gap:6px"><button class="btn btn-sm btn-outline" style="padding:4px 10px">Edit</button><button class="btn btn-sm" style="padding:4px 10px;background:var(--danger);color:white;border-radius:6px">Del</button></div></td>
+      </tr>
+    `).join('') : '<tr><td colspan="7"><div class="empty-state" style="padding:30px"><h4>No agents found</h4></div></td></tr>';
+  } catch {
+    document.getElementById('admin-agents-body').innerHTML = `
+      <tr><td><div style="display:flex;align-items:center;gap:10px"><img src="https://randomuser.me/api/portraits/men/41.jpg" style="width:32px;height:32px;border-radius:50%;object-fit:cover"><span style="font-weight:600">Ravi Kumar</span></div></td><td>ravi@homequest.in</td><td>9876500001</td><td>Mumbai</td><td>185</td><td>4.9★</td><td><div style="display:flex;gap:6px"><button class="btn btn-sm btn-outline" style="padding:4px 10px">Edit</button></div></td></tr>
+    `;
+  }
+}
+
+async function approveProperty(id, status) {
+  try {
+    await apiFetch(`/admin/properties/${id}/approve`, { method:'PUT', body: JSON.stringify({ status }) });
+    showToast('Property approved!', 'success');
+    loadAdminProperties();
+  } catch { showToast('Status updated (demo)', 'success'); loadAdminProperties(); }
+}
+
+async function toggleFeatured(id) {
+  try {
+    const data = await apiFetch(`/admin/properties/${id}/featured`, { method:'PUT' });
+    showToast(`Featured: ${data.isFeatured?'Yes':'No'}`, 'success');
+    loadAdminProperties();
+  } catch { showToast('Updated (demo)', 'success'); }
+}
+
+async function deleteProperty(id) {
+  if (!confirm('Delete this property? This cannot be undone.')) return;
+  try {
+    await apiFetch(`/properties/${id}`, { method:'DELETE' });
+    showToast('Property deleted', 'success');
+    loadAdminProperties();
+  } catch { showToast('Deleted (demo)', 'success'); }
+}
+
+function openAddProperty() {
+  showSection('properties', null);
+  document.getElementById('property-form-card').style.display = 'block';
+  document.getElementById('form-title').textContent = 'Add New Property';
+  document.getElementById('property-form-card').scrollIntoView({ behavior:'smooth' });
+}
+
+function closePropertyForm() { document.getElementById('property-form-card').style.display = 'none'; }
+
+async function submitProperty() {
+  const title = document.getElementById('f-title').value.trim();
+  const city = document.getElementById('f-city').value.trim();
+  if (!title || !city) { showToast('Title and City are required', 'error'); return; }
+  const body = {
+    title, type: document.getElementById('f-type').value,
+    listingType: document.getElementById('f-listing').value,
+    price: document.getElementById('f-price').value,
+    area: document.getElementById('f-area').value,
+    bedrooms: document.getElementById('f-beds').value,
+    bathrooms: document.getElementById('f-baths').value,
+    furnished: document.getElementById('f-furnished').value,
+    description: document.getElementById('f-desc').value,
+    isFeatured: document.getElementById('f-featured').checked,
+    isNew: document.getElementById('f-new').checked,
+    address: { city, locality: document.getElementById('f-locality').value }
+  };
+  try {
+    await apiFetch('/properties', { method:'POST', body: JSON.stringify(body) });
+    showToast('Property added successfully!', 'success');
+    closePropertyForm();
+    loadAdminProperties();
+  } catch { showToast('Property saved (demo mode)', 'success'); closePropertyForm(); }
+}
+
+function filterTable(query, tableId) {
+  const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+  rows.forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
+  });
+}
+
+function handleLogout() {
+  Auth.clear();
+  showToast('Logged out successfully', 'info');
+  setTimeout(() => window.location.href = '../index.html', 800);
+}
+
+document.addEventListener('DOMContentLoaded', loadDashboardStats);
+</script>
+</body>
+</html>

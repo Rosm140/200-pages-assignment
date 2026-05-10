@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wishlist – HomeQuest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div id="page-loader"><div class="loader-logo">HomeQuest</div><div class="loader-bar"></div></div>
+
+<nav class="navbar scrolled">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo"><div class="nav-logo-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>HomeQuest</a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">Home</a></li>
+      <li><a href="properties.html" class="nav-link">Properties</a></li>
+      <li><a href="wishlist.html" class="nav-link active">Wishlist</a></li>
+      <li><a href="user-dashboard.html" class="nav-link">Dashboard</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="user-dashboard.html" class="btn-nav-login">My Account</a>
+    </div>
+  </div>
+</nav>
+
+<div style="background:linear-gradient(135deg,#1a0533 0%,#4C1D95 50%,#6C3AE8 100%);padding:100px 0 40px">
+  <div class="container">
+    <span class="section-label" style="background:rgba(255,255,255,0.15);color:#67E8F9">Saved Properties</span>
+    <h1 style="color:white;margin:12px 0 8px">My <span style="color:#67E8F9">Wishlist</span></h1>
+    <p style="color:rgba(255,255,255,0.7)"><a href="../index.html" style="color:rgba(255,255,255,0.7)">Home</a> → Wishlist</p>
+  </div>
+</div>
+
+<div class="container" style="padding-top:36px;padding-bottom:60px">
+  <!-- Actions bar -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+    <div id="wishlist-count-text" style="font-size:0.95rem;color:var(--gray-600);font-weight:500">Loading your wishlist...</div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline btn-sm" onclick="clearWishlist()"><i class="fas fa-trash-alt"></i> Clear All</button>
+      <a href="properties.html" class="btn btn-primary btn-sm"><i class="fas fa-search"></i> Find More</a>
+    </div>
+  </div>
+
+  <!-- Wishlist Grid -->
+  <div class="properties-grid" id="wishlist-grid">
+    <div class="skeleton skeleton-card"></div>
+    <div class="skeleton skeleton-card"></div>
+    <div class="skeleton skeleton-card"></div>
+  </div>
+
+  <!-- Compare Bar -->
+  <div id="compare-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;background:white;box-shadow:0 -4px 20px rgba(0,0,0,0.1);padding:16px 24px;z-index:500;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="font-weight:700">Compare Properties:</span>
+      <div id="compare-items" style="display:flex;gap:8px"></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-primary btn-sm" onclick="compareProperties()">Compare Now</button>
+      <button class="btn btn-outline btn-sm" onclick="clearCompare()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<!-- Recommendations -->
+<section style="background:var(--off-white);padding:60px 0">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px">
+      <div>
+        <span class="section-label">Just for You</span>
+        <h3 style="margin:10px 0 0">You Might Also <span style="color:var(--primary)">Like</span></h3>
+      </div>
+      <a href="properties.html" class="btn btn-outline btn-sm">View All</a>
+    </div>
+    <div class="properties-grid" id="recommendations">
+      <div class="skeleton skeleton-card"></div>
+      <div class="skeleton skeleton-card"></div>
+      <div class="skeleton skeleton-card"></div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:var(--gray-900);padding:20px 0">
+  <div class="container"><p style="color:var(--gray-500);text-align:center;font-size:0.85rem">© 2024 HomeQuest. All rights reserved.</p></div>
+</footer>
+<button id="scroll-top"><i class="fas fa-chevron-up"></i></button>
+<div id="toast-container"></div>
+
+<script src="../assets/js/main.js"></script>
+<script>
+// Redirect if not logged in
+if (!Auth.isLoggedIn()) {
+  showToast('Please login to view your wishlist', 'info');
+  setTimeout(() => window.location.href = 'login.html', 1000);
+}
+
+async function loadWishlist() {
+  const grid = document.getElementById('wishlist-grid');
+  try {
+    const data = await apiFetch('/wishlist');
+    const items = data.wishlist || [];
+    document.getElementById('wishlist-count-text').textContent = `${items.length} saved ${items.length === 1 ? 'property' : 'properties'}`;
+
+    if (items.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1">
+          <div class="empty-state" style="padding:80px 20px">
+            <div class="empty-state-icon">❤️</div>
+            <h4>Your wishlist is empty</h4>
+            <p>Start saving properties you love by clicking the heart icon on any listing.</p>
+            <a href="properties.html" class="btn btn-primary" style="margin-top:20px">Browse Properties</a>
+          </div>
+        </div>`;
+      return;
+    }
+    grid.innerHTML = items.map(p => renderPropertyCardWithRemove(p)).join('');
+  } catch {
+    // Demo fallback from localStorage
+    const localIds = JSON.parse(localStorage.getItem('hq_wishlist') || '[]');
+    if (localIds.length === 0) {
+      grid.innerHTML = `<div style="grid-column:1/-1"><div class="empty-state" style="padding:80px 20px"><div class="empty-state-icon">❤️</div><h4>Your wishlist is empty</h4><p>Start saving properties you love.</p><a href="properties.html" class="btn btn-primary" style="margin-top:20px">Browse Properties</a></div></div>`;
+      document.getElementById('wishlist-count-text').textContent = '0 saved properties';
+      return;
+    }
+    document.getElementById('wishlist-count-text').textContent = `${localIds.length} saved (cached)`;
+    const sampleWishlist = [
+      { _id:'w1', title:'Luxury 3BHK Bandra West', price:8500000, listingType:'Buy', type:'Apartment', bedrooms:3, bathrooms:2, area:1450, address:{city:'Mumbai',locality:'Bandra West'}, isFeatured:true, isNew:true, images:['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=80'] },
+      { _id:'w2', title:'Modern Villa DLF Phase 5', price:25000000, listingType:'Buy', type:'Villa', bedrooms:4, bathrooms:3, area:3200, address:{city:'Gurgaon',locality:'DLF Phase 5'}, isFeatured:true, isNew:false, images:['https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=500&q=80'] },
+    ];
+    grid.innerHTML = sampleWishlist.map(p => renderPropertyCardWithRemove(p)).join('');
+  }
+}
+
+function renderPropertyCardWithRemove(p) {
+  const wishlist = JSON.parse(localStorage.getItem('hq_wishlist') || '[]');
+  return `
+    <div class="property-card" data-id="${p._id}">
+      <div class="property-card-img">
+        <img src="${p.images && p.images[0] ? p.images[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&q=80'}" alt="${p.title}" loading="lazy">
+        <span class="property-badge badge-${p.listingType === 'Rent' ? 'rent' : 'buy'}">${p.listingType}</span>
+        ${p.isFeatured ? '<span class="property-badge badge-featured" style="top:14px;left:80px">Featured</span>' : ''}
+        <span class="property-wishlist active" onclick="removeFromWishlist('${p._id}',this)">❤️</span>
+      </div>
+      <div class="property-card-body">
+        <div class="property-price">${formatPrice(p.price)}<span>${p.listingType === 'Rent' ? '/month' : ''}</span></div>
+        <div class="property-title">${p.title}</div>
+        <div class="property-location"><i class="fas fa-map-marker-alt"></i>${p.address?.locality || ''}, ${p.address?.city || ''}</div>
+        <div class="property-features">
+          ${p.bedrooms ? `<span class="property-feature"><i class="fas fa-bed"></i>${p.bedrooms} Beds</span>` : ''}
+          ${p.bathrooms ? `<span class="property-feature"><i class="fas fa-bath"></i>${p.bathrooms} Baths</span>` : ''}
+          <span class="property-feature"><i class="fas fa-vector-square"></i>${p.area} sqft</span>
+        </div>
+      </div>
+      <div style="padding:0 20px 20px;display:grid;grid-template-columns:1fr auto;gap:8px">
+        <a href="property-details.html?id=${p._id}" class="btn btn-outline btn-sm" style="text-align:center">View Details</a>
+        <button class="btn btn-sm" style="background:var(--danger);color:white;border-radius:var(--radius-full)" onclick="removeFromWishlist('${p._id}',null)" title="Remove"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+  `;
+}
+
+async function removeFromWishlist(propertyId, el) {
+  try {
+    await apiFetch(`/wishlist/${propertyId}`, { method: 'DELETE' });
+  } catch {}
+  const wishlist = JSON.parse(localStorage.getItem('hq_wishlist') || '[]');
+  localStorage.setItem('hq_wishlist', JSON.stringify(wishlist.filter(id => id !== propertyId)));
+  // Remove card with animation
+  const card = document.querySelector(`.property-card[data-id="${propertyId}"]`);
+  if (card) {
+    card.style.transform = 'scale(0.9)';
+    card.style.opacity = '0';
+    card.style.transition = 'all 0.3s ease';
+    setTimeout(() => { card.remove(); updateWishlistCount(); }, 300);
+  }
+  showToast('Removed from wishlist', 'success');
+}
+
+function updateWishlistCount() {
+  const remaining = document.querySelectorAll('.property-card').length;
+  document.getElementById('wishlist-count-text').textContent = `${remaining} saved ${remaining === 1 ? 'property' : 'properties'}`;
+  if (remaining === 0) loadWishlist();
+}
+
+async function clearWishlist() {
+  if (!confirm('Remove all saved properties from your wishlist?')) return;
+  try {
+    const localIds = JSON.parse(localStorage.getItem('hq_wishlist') || '[]');
+    for (const id of localIds) {
+      try { await apiFetch(`/wishlist/${id}`, { method: 'DELETE' }); } catch {}
+    }
+  } catch {}
+  localStorage.setItem('hq_wishlist', '[]');
+  showToast('Wishlist cleared', 'info');
+  loadWishlist();
+}
+
+async function loadRecommendations() {
+  try {
+    const data = await apiFetch('/properties?limit=3');
+    document.getElementById('recommendations').innerHTML = (data.properties || []).map(renderPropertyCard).join('');
+  } catch {
+    const samples = [
+      { _id:'r1', title:'2BHK Koramangala', price:32000, listingType:'Rent', type:'Apartment', bedrooms:2, bathrooms:2, area:980, address:{city:'Bangalore',locality:'Koramangala'}, isNew:true, images:['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80'] },
+      { _id:'r2', title:'Studio Apt Andheri', price:4200000, listingType:'Buy', type:'Studio', bedrooms:1, bathrooms:1, area:520, address:{city:'Mumbai',locality:'Andheri West'}, isNew:false, images:['https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=500&q=80'] },
+      { _id:'r3', title:'3BHK Villa Pune', price:12500000, listingType:'Buy', type:'Villa', bedrooms:3, bathrooms:2, area:1800, address:{city:'Pune',locality:'Kothrud'}, isFeatured:true, isNew:false, images:['https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=500&q=80'] },
+    ];
+    document.getElementById('recommendations').innerHTML = samples.map(renderPropertyCard).join('');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadWishlist();
+  loadRecommendations();
+});
+</script>
+</body>
+</html>
