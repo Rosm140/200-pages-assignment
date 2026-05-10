@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Search – HomeQuest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body style="background:var(--off-white)">
+<div id="page-loader"><div class="loader-logo">HomeQuest</div><div class="loader-bar"></div></div>
+<div id="toast-container"></div>
+
+<nav class="navbar scrolled">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo"><div class="nav-logo-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>HomeQuest</a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">Home</a></li>
+      <li><a href="properties.html" class="nav-link">Properties</a></li>
+      <li><a href="advanced-search.html" class="nav-link active">Search</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-nav-login">Login</a>
+      <a href="login.html" class="btn-nav-post">Post Property</a>
+    </div>
+  </div>
+</nav>
+
+<div style="background:linear-gradient(135deg,#1a0533 0%,#4C1D95 50%,#6C3AE8 100%);padding:100px 0 40px">
+  <div class="container" style="text-align:center">
+    <span class="section-label" style="background:rgba(255,255,255,0.15);color:#67E8F9">Find Exactly What You Need</span>
+    <h1 style="color:white;margin:12px 0 12px">Advanced Property <span style="color:#67E8F9">Search</span></h1>
+    <p style="color:rgba(255,255,255,0.75);max-width:480px;margin:0 auto">Use our powerful filters to narrow down the perfect property from 15,000+ listings.</p>
+  </div>
+</div>
+
+<div class="container" style="padding-top:40px;padding-bottom:60px">
+  <!-- Search Form Card -->
+  <div style="background:white;border-radius:var(--radius-xl);padding:36px;box-shadow:var(--shadow-lg);margin-bottom:36px">
+    <h4 style="font-family:var(--font-body);font-weight:700;margin-bottom:24px;display:flex;align-items:center;gap:10px"><i class="fas fa-sliders-h" style="color:var(--primary)"></i> Search Filters</h4>
+
+    <!-- Row 1 -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Listing Type</label>
+        <select id="as-listing" class="form-control">
+          <option value="">Buy &amp; Rent</option>
+          <option value="Buy">Buy</option>
+          <option value="Rent">Rent</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Property Type</label>
+        <select id="as-type" class="form-control">
+          <option value="">All Types</option>
+          <option>Apartment</option><option>House</option><option>Villa</option>
+          <option>Plot</option><option>Commercial</option><option>Studio</option><option>Office</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">City</label>
+        <select id="as-city" class="form-control">
+          <option value="">All Cities</option>
+          <option>Mumbai</option><option>Delhi</option><option>Bangalore</option><option>Pune</option>
+          <option>Hyderabad</option><option>Chennai</option><option>Gurgaon</option><option>Noida</option>
+          <option>Kolkata</option><option>Ahmedabad</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Locality / Area</label>
+        <input type="text" id="as-locality" class="form-control" placeholder="e.g., Bandra, Koramangala">
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Min Price (₹)</label>
+        <select id="as-min-price" class="form-control">
+          <option value="">No Minimum</option>
+          <option value="500000">₹5 Lakh</option><option value="1000000">₹10 Lakh</option>
+          <option value="2500000">₹25 Lakh</option><option value="5000000">₹50 Lakh</option>
+          <option value="10000000">₹1 Crore</option><option value="20000000">₹2 Crore</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Max Price (₹)</label>
+        <select id="as-max-price" class="form-control">
+          <option value="">No Maximum</option>
+          <option value="2500000">₹25 Lakh</option><option value="5000000">₹50 Lakh</option>
+          <option value="10000000">₹1 Crore</option><option value="20000000">₹2 Crore</option>
+          <option value="50000000">₹5 Crore</option><option value="100000000">₹10 Crore</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Min Area (sqft)</label>
+        <select id="as-min-area" class="form-control">
+          <option value="">Any</option>
+          <option value="300">300+</option><option value="500">500+</option><option value="750">750+</option>
+          <option value="1000">1,000+</option><option value="1500">1,500+</option><option value="2000">2,000+</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Max Area (sqft)</label>
+        <select id="as-max-area" class="form-control">
+          <option value="">Any</option>
+          <option value="750">Up to 750</option><option value="1000">Up to 1,000</option>
+          <option value="1500">Up to 1,500</option><option value="2000">Up to 2,000</option>
+          <option value="5000">Up to 5,000</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px">
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Bedrooms</label>
+        <select id="as-beds" class="form-control">
+          <option value="">Any</option>
+          <option value="1">1+ BHK</option><option value="2">2+ BHK</option>
+          <option value="3">3+ BHK</option><option value="4">4+ BHK</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Bathrooms</label>
+        <select id="as-baths" class="form-control">
+          <option value="">Any</option>
+          <option value="1">1+</option><option value="2">2+</option><option value="3">3+</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Furnished Status</label>
+        <select id="as-furnished" class="form-control">
+          <option value="">Any</option>
+          <option>Furnished</option><option>Semi-Furnished</option><option>Unfurnished</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Property Age</label>
+        <select id="as-age" class="form-control">
+          <option value="">Any</option>
+          <option value="true">New Construction</option>
+          <option value="false">Resale</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Checkboxes -->
+    <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:28px">
+      <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;cursor:pointer;font-weight:500">
+        <input type="checkbox" id="as-parking" style="accent-color:var(--primary);width:16px;height:16px"> Parking Available
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;cursor:pointer;font-weight:500">
+        <input type="checkbox" id="as-featured" style="accent-color:var(--primary);width:16px;height:16px"> Featured Only
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;cursor:pointer;font-weight:500">
+        <input type="checkbox" id="as-gym" style="accent-color:var(--primary);width:16px;height:16px"> Gym
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;cursor:pointer;font-weight:500">
+        <input type="checkbox" id="as-pool" style="accent-color:var(--primary);width:16px;height:16px"> Swimming Pool
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;cursor:pointer;font-weight:500">
+        <input type="checkbox" id="as-lift" style="accent-color:var(--primary);width:16px;height:16px"> Elevator/Lift
+      </label>
+    </div>
+
+    <!-- Buttons -->
+    <div style="display:flex;gap:14px">
+      <button class="btn btn-primary btn-lg" onclick="runAdvancedSearch()" style="flex:1">
+        <i class="fas fa-search"></i> Search Properties
+      </button>
+      <button class="btn btn-outline btn-lg" onclick="clearAdvancedSearch()">
+        <i class="fas fa-undo"></i> Clear All
+      </button>
+      <button class="btn btn-outline btn-lg" onclick="saveSearch()" style="gap:6px">
+        <i class="fas fa-bookmark"></i> Save Search
+      </button>
+    </div>
+  </div>
+
+  <!-- Saved Searches -->
+  <div id="saved-searches-card" style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:32px;display:none">
+    <h5 style="font-family:var(--font-body);font-weight:700;margin-bottom:12px"><i class="fas fa-bookmark" style="color:var(--primary)"></i> Saved Searches</h5>
+    <div id="saved-searches-list" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+  </div>
+
+  <!-- Results -->
+  <div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div id="as-result-count" style="font-weight:600;color:var(--gray-600)">Enter criteria above to search</div>
+      <select id="as-sort" style="padding:8px 14px;border:2px solid var(--gray-200);border-radius:var(--radius-md);font-size:0.85rem;outline:none">
+        <option value="-createdAt">Newest First</option>
+        <option value="price">Price: Low to High</option>
+        <option value="-price">Price: High to Low</option>
+      </select>
+    </div>
+    <div class="properties-grid" id="as-results"></div>
+    <div class="pagination" id="as-pagination"></div>
+  </div>
+</div>
+
+<footer style="background:var(--gray-900);padding:20px 0">
+  <div class="container"><p style="color:var(--gray-500);text-align:center;font-size:0.85rem">© 2024 HomeQuest. All rights reserved.</p></div>
+</footer>
+
+<button id="scroll-top"><i class="fas fa-chevron-up"></i></button>
+<script src="../assets/js/main.js"></script>
+<script>
+let asPage = 1;
+let savedSearches = JSON.parse(localStorage.getItem('hq_saved_searches') || '[]');
+
+function buildAdvancedParams() {
+  const params = new URLSearchParams();
+  const listing = document.getElementById('as-listing').value;
+  const type = document.getElementById('as-type').value;
+  const city = document.getElementById('as-city').value;
+  const locality = document.getElementById('as-locality').value;
+  const minPrice = document.getElementById('as-min-price').value;
+  const maxPrice = document.getElementById('as-max-price').value;
+  const minArea = document.getElementById('as-min-area').value;
+  const maxArea = document.getElementById('as-max-area').value;
+  const beds = document.getElementById('as-beds').value;
+  const baths = document.getElementById('as-baths').value;
+  const furnished = document.getElementById('as-furnished').value;
+  const isNew = document.getElementById('as-age').value;
+  const parking = document.getElementById('as-parking').checked;
+
+  if (listing) params.set('listingType', listing);
+  if (type) params.set('type', type);
+  if (city) params.set('city', city);
+  if (locality) params.set('search', locality);
+  if (minPrice) params.set('minPrice', minPrice);
+  if (maxPrice) params.set('maxPrice', maxPrice);
+  if (minArea) params.set('minArea', minArea);
+  if (maxArea) params.set('maxArea', maxArea);
+  if (beds) params.set('bedrooms', beds);
+  if (baths) params.set('bathrooms', baths);
+  if (furnished) params.set('furnished', furnished);
+  if (isNew) params.set('isNew', isNew);
+  if (parking) params.set('parking', 'true');
+  params.set('page', asPage);
+  params.set('limit', 9);
+  return params;
+}
+
+async function runAdvancedSearch() {
+  const container = document.getElementById('as-results');
+  container.innerHTML = Array(6).fill('<div class="skeleton skeleton-card"></div>').join('');
+  document.getElementById('as-result-count').textContent = 'Searching...';
+
+  try {
+    const data = await apiFetch(`/properties?${buildAdvancedParams().toString()}`);
+    document.getElementById('as-result-count').textContent = `${data.total} properties found`;
+    if (!data.properties.length) {
+      container.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">🔍</div><h4>No properties found</h4><p>Try adjusting your search criteria.</p></div>`;
+    } else {
+      container.innerHTML = data.properties.map(renderPropertyCard).join('');
+      renderPagination(data.page, data.pages);
+    }
+  } catch {
+    // Demo fallback
+    const samples = [
+      { _id:'1', title:'Luxury 3BHK Apartment', price:8500000, listingType:'Buy', type:'Apartment', bedrooms:3, bathrooms:2, area:1450, address:{city:'Mumbai',locality:'Bandra West'}, isFeatured:true, isNew:true, images:['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=80'] },
+      { _id:'2', title:'Modern Villa with Pool', price:25000000, listingType:'Buy', type:'Villa', bedrooms:4, bathrooms:3, area:3200, address:{city:'Gurgaon',locality:'DLF Phase 5'}, isFeatured:true, isNew:false, images:['https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=500&q=80'] },
+      { _id:'3', title:'Premium 2BHK Flat', price:35000, listingType:'Rent', type:'Apartment', bedrooms:2, bathrooms:2, area:980, address:{city:'Bangalore',locality:'Koramangala'}, isFeatured:false, isNew:true, images:['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80'] }
+    ];
+    container.innerHTML = samples.map(renderPropertyCard).join('');
+    document.getElementById('as-result-count').textContent = '3 demo properties';
+  }
+}
+
+function renderPagination(current, total) {
+  const el = document.getElementById('as-pagination');
+  if (total <= 1) { el.innerHTML = ''; return; }
+  let html = '';
+  if (current > 1) html += `<button class="page-btn" onclick="asGoPage(${current-1})">‹</button>`;
+  for (let i = 1; i <= Math.min(total, 7); i++) html += `<button class="page-btn ${i===current?'active':''}" onclick="asGoPage(${i})">${i}</button>`;
+  if (current < total) html += `<button class="page-btn" onclick="asGoPage(${current+1})">›</button>`;
+  el.innerHTML = html;
+}
+
+function asGoPage(page) { asPage = page; runAdvancedSearch(); window.scrollTo({ top: 400, behavior:'smooth' }); }
+
+function clearAdvancedSearch() {
+  ['as-listing','as-type','as-city','as-min-price','as-max-price','as-min-area','as-max-area','as-beds','as-baths','as-furnished','as-age'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('as-locality').value = '';
+  ['as-parking','as-featured','as-gym','as-pool','as-lift'].forEach(id => document.getElementById(id).checked = false);
+  document.getElementById('as-results').innerHTML = '';
+  document.getElementById('as-result-count').textContent = 'Enter criteria above to search';
+}
+
+function saveSearch() {
+  if (!Auth.isLoggedIn()) { showToast('Please login to save searches', 'info'); return; }
+  const params = buildAdvancedParams();
+  const label = [
+    document.getElementById('as-city').value || 'Any City',
+    document.getElementById('as-type').value || 'Any Type',
+    document.getElementById('as-listing').value || 'Buy/Rent'
+  ].filter(Boolean).join(' · ');
+  savedSearches.push({ label, params: params.toString(), date: new Date().toLocaleDateString() });
+  localStorage.setItem('hq_saved_searches', JSON.stringify(savedSearches));
+  showToast('Search saved! ✅', 'success');
+  renderSavedSearches();
+}
+
+function renderSavedSearches() {
+  if (!savedSearches.length) return;
+  document.getElementById('saved-searches-card').style.display = 'block';
+  document.getElementById('saved-searches-list').innerHTML = savedSearches.map((s, i) => `
+    <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);padding:8px 14px;border-radius:var(--radius-full);border:1px solid var(--gray-200)">
+      <span style="font-size:0.82rem;font-weight:600">${s.label}</span>
+      <span style="font-size:0.75rem;color:var(--gray-400)">${s.date}</span>
+      <button onclick="loadSavedSearch(${i})" style="background:var(--primary);color:white;border:none;border-radius:4px;padding:2px 8px;font-size:0.75rem;cursor:pointer">Load</button>
+      <button onclick="removeSavedSearch(${i})" style="background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:0.85rem">✕</button>
+    </div>
+  `).join('');
+}
+
+function removeSavedSearch(i) {
+  savedSearches.splice(i, 1);
+  localStorage.setItem('hq_saved_searches', JSON.stringify(savedSearches));
+  renderSavedSearches();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSavedSearches();
+  // Pre-fill from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('city')) document.getElementById('as-city').value = urlParams.get('city');
+  if (urlParams.get('type')) document.getElementById('as-type').value = urlParams.get('type');
+  if (urlParams.size > 0) runAdvancedSearch();
+});
+</script>
+</body>
+</html>
