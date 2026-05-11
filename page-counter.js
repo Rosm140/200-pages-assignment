@@ -10,7 +10,7 @@ const manualPageCounts = {
     'FoodiePlace': 12,      // ✅ FoodiePlace - COMPLETED
     'portfolio': 8,        // ✅ DevFolio - COMPLETED   
     'HomeQuest': 18,        // ✅ HomeQuest - COMPLETED
-    'education': 0,
+    'EduLearn': 22,      // ✅ EduLearn - COMPLETED
     'FitZone': 14,     // ✅ FitZone - COMPLETED      
     'TechBlog': 25,    // ✅ TechBlog - COMPLETED
     'MediCare': 16,   // ✅ MediCare - COMPLETED
@@ -29,7 +29,7 @@ const websiteConfig = [
     { id: 3, name: "FoodiePlace", folder: "FoodiePlace", icon: "🍽️", description: "Restaurant with online ordering", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Digital menu & categories", "Online ordering system", "Table reservations", "Chef specials & gallery"], expectedPages: 12 },
     { id: 4, name: "DevFolio", folder: "portfolio", icon: "💼", description: "Professional developer portfolio", techStack: ["HTML5", "CSS3", "JavaScript", "Animations"], features: ["Project showcase", "Skills & experience", "Contact form", "Blog & testimonials"], expectedPages: 8 },
     { id: 5, name: "HomeQuest", folder: "HomeQuest", icon: "🏠", description: "Real estate property listings", techStack: ["HTML5", "CSS3", "JavaScript", "Search"], features: ["Property listings & filters", "Advanced search", "Agent profiles", "Virtual tours"], expectedPages: 18 },
-    { id: 6, name: "EduLearn", folder: "education", icon: "🎓", description: "Online learning platform", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Course catalog", "Student dashboard", "Video lessons", "Quizzes & certificates"], expectedPages: 22 },
+    { id: 6, name: "EduLearn", folder: "EduLearn", icon: "🎓", description: "Online learning platform", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Course catalog", "Student dashboard", "Video lessons", "Quizzes & certificates"], expectedPages: 22 },
     { id: 7, name: "FitZone", folder: "FitZone", icon: "💪", description: "Gym & fitness center", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Class schedules", "Trainer profiles", "Membership plans", "BMI calculator"], expectedPages: 14 },
     { id: 8, name: "TechBlog", folder: "TechBlog", icon: "📰", description: "Technology news & articles", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Article listings", "Categories & tags", "Author profiles", "Comments system UI"], expectedPages: 25 },
     { id: 9, name: "MediCare", folder: "MediCare", icon: "🏥", description: "Hospital & healthcare services", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Doctor profiles", "Appointment booking", "Services & departments", "Health tips blog"], expectedPages: 16 },

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>EduLearn - Learn Without Limits | #1 Online Learning Platform</title>
+<meta name="description" content="Join 500,000+ learners. Access 10,000+ expert-led courses in tech, design, business and more.">
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.why-card{background:#fff;border-radius:var(--radius-lg);padding:2rem 1.5rem;border:1px solid var(--gray-100);box-shadow:var(--shadow-xs);transition:var(--transition)}
+.why-card:hover{box-shadow:var(--shadow-md);transform:translateY(-4px);border-color:var(--indigo-100)}
+.why-icon{width:52px;height:52px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.375rem;margin-bottom:1rem}
+.path-card{background:#fff;border-radius:var(--radius-xl);padding:2.25rem 2rem;border:1px solid var(--gray-100);box-shadow:var(--shadow-xs);display:flex;align-items:flex-start;gap:1.5rem;transition:var(--transition)}
+.path-card:hover{box-shadow:var(--shadow-lg);transform:translateX(4px);border-color:var(--indigo-200)}
+.path-num{font-family:var(--font-display);font-size:2.5rem;font-weight:900;color:var(--indigo-100);line-height:1;flex-shrink:0}
+.blog-card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--gray-100);box-shadow:var(--shadow-xs);transition:var(--transition)}
+.blog-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.blog-thumb{height:196px;overflow:hidden;background:var(--gray-100)}
+.blog-thumb img{width:100%;height:100%;object-fit:cover;transition:var(--transition-slow)}
+.blog-card:hover .blog-thumb img{transform:scale(1.06)}
+.blog-body{padding:1.25rem}
+.newsletter-section{background:linear-gradient(135deg,var(--indigo-900) 0%,#312e81 100%);padding:72px 0;text-align:center}
+.newsletter-form{display:flex;max-width:460px;margin:1.75rem auto 0;gap:.75rem}
+.newsletter-form input{flex:1;padding:.85rem 1.25rem;border-radius:var(--radius-md);border:2px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:#fff;font-size:.95rem}
+.newsletter-form input::placeholder{color:rgba(255,255,255,.4)}
+.newsletter-form input:focus{border-color:rgba(255,255,255,.35);outline:none}
+@media(max-width:900px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.why-grid{grid-template-columns:1fr}.newsletter-form{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="page-loader"><div class="loader-logo">Edu<span style="color:var(--violet-500)">Learn</span></div><div class="loader-bar"></div></div>
+
+<nav class="navbar"><div class="nav-inner">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-icon"><i class="fas fa-graduation-cap"></i></div>Edu<em>Learn</em></a>
+  <nav class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <div class="nav-dropdown"><a href="courses.html">Courses <i class="fas fa-chevron-down" style="font-size:.6rem"></i></a><div class="nav-dropdown-menu"><a href="courses.html"><i class="fas fa-th-large"></i> All Courses</a><a href="categories.html"><i class="fas fa-tags"></i> Categories</a><a href="courses.html?filter=free"><i class="fas fa-gift"></i> Free Courses</a></div></div>
+    <a href="instructors.html">Instructors</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="about.html">About</a>
+  </nav>
+  <div class="nav-actions">
+    <a href="login.html" class="btn btn-ghost btn-sm" data-show-guest>Login</a>
+    <a href="register.html" class="btn btn-primary btn-sm" data-show-guest>Sign Up Free</a>
+    <div class="nav-dropdown" data-show-auth style="display:none"><button class="btn btn-secondary btn-sm" style="display:flex;align-items:center;gap:.5rem"><img data-user-avatar src="" style="width:22px;height:22px;border-radius:50%;object-fit:cover"><span data-user-name></span><i class="fas fa-chevron-down" style="font-size:.6rem"></i></button><div class="nav-dropdown-menu" style="right:0;left:auto;transform:none"><a href="student-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a><a href="my-courses.html"><i class="fas fa-book-open"></i> My Courses</a><a href="wishlist.html"><i class="fas fa-heart"></i> Wishlist</a><a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a><a href="#" onclick="event.preventDefault();Auth.logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></div></div>
+  </div>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</div></nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"><i class="fas fa-home"></i> Home</a><a href="courses.html"><i class="fas fa-th-large"></i> Courses</a><a href="categories.html"><i class="fas fa-tags"></i> Categories</a><a href="instructors.html"><i class="fas fa-chalkboard-teacher"></i> Instructors</a><a href="pricing.html"><i class="fas fa-tag"></i> Pricing</a><a href="blog.html"><i class="fas fa-blog"></i> Blog</a><a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+  <hr style="border-color:var(--gray-100);margin:.5rem 0">
+  <a href="login.html" data-show-guest><i class="fas fa-sign-in-alt"></i> Login</a><a href="register.html" data-show-guest><i class="fas fa-user-plus"></i> Sign Up Free</a>
+  <a href="student-dashboard.html" data-show-auth style="display:none"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+  <a href="#" onclick="event.preventDefault();Auth.logout()" data-show-auth style="display:none"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-content">
+    <div style="max-width:800px">
+      <div class="hero-eyebrow">🎓 Trusted by 500,000+ Learners Worldwide</div>
+      <h1 class="hero-title">Unlock Your Potential<br>with <span class="grad-text">Expert-Led</span> Courses</h1>
+      <p class="hero-sub">Master in-demand skills with courses taught by industry experts. Learn at your pace and earn certificates that employers recognize.</p>
+      <div class="hero-stats">
+        <div><span class="hero-stat-val" data-count="10000" data-suffix="+">10,000+</span><span class="hero-stat-lbl">Courses</span></div>
+        <div><span class="hero-stat-val" data-count="500" data-suffix="K+">500K+</span><span class="hero-stat-lbl">Students</span></div>
+        <div><span class="hero-stat-val" data-count="1200" data-suffix="+">1,200+</span><span class="hero-stat-lbl">Instructors</span></div>
+        <div><span class="hero-stat-val" data-count="95" data-suffix="%">95%</span><span class="hero-stat-lbl">Satisfaction</span></div>
+      </div>
+      <div class="search-box">
+        <div class="search-main">
+          <div class="search-input-wrap"><i class="fas fa-search"></i><input type="text" id="heroSearch" placeholder="What do you want to learn today?"></div>
+          <button class="btn btn-primary" onclick="doSearch()"><i class="fas fa-search"></i> Search</button>
+        </div>
+        <div class="search-filters">
+          <select class="search-select" id="filterCat"><option value="">All Categories</option><option>Web Development</option><option>Data Science</option><option>Design</option><option>Business</option><option>Mobile Development</option><option>IT & Software</option><option>Marketing</option><option>Personal Development</option></select>
+          <select class="search-select" id="filterLvl"><option value="">All Levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+          <label class="search-toggle" id="freeToggle"><input type="checkbox" id="freeChk" style="display:none"><i class="fas fa-gift"></i> Free Only</label>
+        </div>
+      </div>
+      <p style="color:rgba(255,255,255,.38);font-size:.8rem;margin-top:.875rem">Trending: <a href="courses.html?category=Web+Development" style="color:rgba(255,255,255,.6)">Web Dev</a>, <a href="courses.html?category=Data+Science" style="color:rgba(255,255,255,.6)">Data Science</a>, <a href="courses.html?category=Design" style="color:rgba(255,255,255,.6)">UI/UX Design</a>, <a href="courses.html?category=Business" style="color:rgba(255,255,255,.6)">Business</a></p>
+    </div>
+  </div>
+  <div class="hero-wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C360,72 1080,0 1440,36 L1440,72 L0,72 Z" fill="#ffffff"/></svg></div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar"><div class="container"><div class="stats-bar-inner">
+  <div class="stat-item"><span class="stat-val">10,000+</span><span class="stat-lbl">Online Courses</span></div>
+  <div class="stat-item"><span class="stat-val">500K+</span><span class="stat-lbl">Students Enrolled</span></div>
+  <div class="stat-item"><span class="stat-val">1,200+</span><span class="stat-lbl">Expert Instructors</span></div>
+  <div class="stat-item"><span class="stat-val">150+</span><span class="stat-lbl">Countries</span></div>
+  <div class="stat-item"><span class="stat-val">4.8 <i class="fas fa-star" style="font-size:.9rem;color:var(--amber-500)"></i></span><span class="stat-lbl">Avg Rating</span></div>
+</div></div></div>
+
+<!-- CATEGORIES -->
+<section class="section--sm" style="background:var(--gray-50)"><div class="container">
+  <div class="section-header" data-aos><div class="section-label"><i class="fas fa-th-large"></i> Browse Topics</div><h2 class="section-title">Explore Top Categories</h2><p class="section-sub">Find your perfect course from our expertly curated categories.</p></div>
+  <div class="grid-4" id="catsGrid"></div>
+  <div class="text-center" style="margin-top:2.5rem"><a href="categories.html" class="btn btn-secondary btn-lg">View All Categories <i class="fas fa-arrow-right"></i></a></div>
+</div></section>
+
+<!-- FEATURED COURSES -->
+<section class="section"><div class="container">
+  <div class="flex-between" style="margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem">
+    <div data-aos><div class="section-label"><i class="fas fa-star"></i> Hand-Picked</div><h2 class="section-title" style="margin-bottom:0">Featured Courses</h2></div>
+    <a href="courses.html" class="btn btn-secondary">Browse All <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="grid-4" id="featuredGrid"></div>
+</div></section>
+
+<!-- WHY CHOOSE US -->
+<section class="section" style="background:var(--indigo-50)"><div class="container">
+  <div class="section-header" data-aos><div class="section-label"><i class="fas fa-award"></i> Why EduLearn</div><h2 class="section-title">Everything You Need to Succeed</h2><p class="section-sub">We're your all-in-one partner for skill-building and career growth.</p></div>
+  <div class="why-grid">
+    <div class="why-card" data-aos><div class="why-icon" style="background:#eef2ff;color:var(--indigo-600)"><i class="fas fa-video"></i></div><h3 style="font-size:1rem;margin-bottom:.4rem;font-weight:700">HD Video Lessons</h3><p style="font-size:.875rem;color:var(--gray-500);line-height:1.65">Crystal-clear video lectures downloadable for offline learning anywhere, anytime.</p></div>
+    <div class="why-card" data-aos><div class="why-icon" style="background:#ecfdf5;color:var(--emerald-500)"><i class="fas fa-certificate"></i></div><h3 style="font-size:1rem;margin-bottom:.4rem;font-weight:700">Verified Certificates</h3><p style="font-size:.875rem;color:var(--gray-500);line-height:1.65">Industry-recognized certificates to showcase your expertise to employers worldwide.</p></div>
+    <div class="why-card" data-aos><div class="why-icon" style="background:#fffbeb;color:var(--amber-500)"><i class="fas fa-users"></i></div><h3 style="font-size:1rem;margin-bottom:.4rem;font-weight:700">Expert Instructors</h3><p style="font-size:.875rem;color:var(--gray-500);line-height:1.65">Learn from industry professionals with decades of real-world experience.</p></div>
+    <div class="why-card" data-aos><div class="why-icon" style="background:#f5f3ff;color:var(--violet-500)"><i class="fas fa-clock"></i></div><h3 style="font-size:1rem;margin-bottom:.4rem;font-weight:700">Learn at Your Pace</h3><p style="font-size:.875rem;color:var(--gray-500);line-height:1.65">Lifetime access — pause, rewind, and revisit any lesson whenever you need it.</p></div>
+    <div class="why-card" data-aos><div class="why-icon" style="background:#fff1f2;color:var(--rose-500)"><i class="fas fa-mobile-alt"></i></div><h3 style="font-size:1rem;margin-bottom:.4rem;font-weight:700">Mobile Learning</h3><p style="font-size:.875rem;color:var(--gray-500);line-height:1.65">Learn on any device. Progress syncs seamlessly across phone, tablet and desktop.</p></div>
+    <div class="why-card" data-aos><div class="why-icon" style="background:#e0f2fe;color:#0284c7"><i class="fas fa-comments"></i></div><h3 style="font-size:1rem;margin-bottom:.4rem;font-weight:700">Community Support</h3><p style="font-size:.875rem;color:var(--gray-500);line-height:1.65">Join active peer communities, ask questions, and collaborate with global learners.</p></div>
+    <div class="why-card" data-aos><div class="why-icon" style="background:#fdf4ff;color:#a21caf"><i class="fas fa-question-circle"></i></div><h3 style="font-size:1rem;margin-bottom:.4rem;font-weight:700">Interactive Quizzes</h3><p style="font-size:.875rem;color:var(--gray-500);line-height:1.65">Chapter-wise quizzes to test knowledge and track your progress in real time.</p></div>
+    <div class="why-card" data-aos><div class="why-icon" style="background:#f0fdf4;color:#16a34a"><i class="fas fa-dollar-sign"></i></div><h3 style="font-size:1rem;margin-bottom:.4rem;font-weight:700">Affordable Pricing</h3><p style="font-size:.875rem;color:var(--gray-500);line-height:1.65">Premium education at accessible prices. Hundreds of free courses to start today.</p></div>
+  </div>
+</div></section>
+
+<!-- TOP INSTRUCTORS -->
+<section class="section"><div class="container">
+  <div class="flex-between" style="margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem">
+    <div data-aos><div class="section-label"><i class="fas fa-chalkboard-teacher"></i> Learn from the Best</div><h2 class="section-title" style="margin-bottom:0">Top Instructors</h2></div>
+    <a href="instructors.html" class="btn btn-secondary">All Instructors <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="grid-4" id="instrGrid"></div>
+</div></section>
+
+<!-- POPULAR COURSES -->
+<section class="section" style="background:var(--gray-50)"><div class="container">
+  <div class="flex-between" style="margin-bottom:2rem;flex-wrap:wrap;gap:1rem">
+    <div data-aos><div class="section-label"><i class="fas fa-fire"></i> Trending Now</div><h2 class="section-title" style="margin-bottom:0">Most Popular Courses</h2></div>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap" id="catFilters">
+      <button class="btn btn-primary btn-sm" data-cat="">All</button>
+      <button class="btn btn-secondary btn-sm" data-cat="Web Development">Web Dev</button>
+      <button class="btn btn-secondary btn-sm" data-cat="Data Science">Data Science</button>
+      <button class="btn btn-secondary btn-sm" data-cat="Design">Design</button>
+    </div>
+  </div>
+  <div class="grid-4" id="popularGrid"></div>
+</div></section>
+
+<!-- LEARNING PATH -->
+<section class="section"><div class="container">
+  <div class="section-header" data-aos><div class="section-label"><i class="fas fa-route"></i> Your Roadmap</div><h2 class="section-title">How EduLearn Works</h2><p class="section-sub">A simple, proven path from beginner to expert — in any field you choose.</p></div>
+  <div style="display:flex;flex-direction:column;gap:1.25rem;max-width:740px;margin:0 auto">
+    <div class="path-card" data-aos><div class="path-num">01</div><div><h3 style="font-size:1.1rem;margin-bottom:.4rem;font-weight:700">Choose Your Learning Path</h3><p style="color:var(--gray-500);font-size:.9rem;line-height:1.7">Browse thousands of courses and pick the right path based on your goals and current skill level.</p></div></div>
+    <div class="path-card" data-aos><div class="path-num">02</div><div><h3 style="font-size:1.1rem;margin-bottom:.4rem;font-weight:700">Learn from Industry Experts</h3><p style="color:var(--gray-500);font-size:.9rem;line-height:1.7">Watch HD video lessons, complete assignments, take notes, and interact with instructors and peers.</p></div></div>
+    <div class="path-card" data-aos><div class="path-num">03</div><div><h3 style="font-size:1.1rem;margin-bottom:.4rem;font-weight:700">Test Your Knowledge</h3><p style="color:var(--gray-500);font-size:.9rem;line-height:1.7">Take chapter quizzes and project assessments to reinforce concepts and identify gaps.</p></div></div>
+    <div class="path-card" data-aos><div class="path-num">04</div><div><h3 style="font-size:1.1rem;margin-bottom:.4rem;font-weight:700">Earn Your Certificate</h3><p style="color:var(--gray-500);font-size:.9rem;line-height:1.7">Complete the course, download your verified certificate, and share it on LinkedIn or with employers.</p></div></div>
+  </div>
+</div></section>
+
+<!-- TESTIMONIALS -->
+<section class="section" style="background:var(--gray-50)"><div class="container">
+  <div class="section-header" data-aos><div class="section-label"><i class="fas fa-star"></i> Success Stories</div><h2 class="section-title">What Our Students Say</h2><p class="section-sub">Real stories from real learners who transformed their careers with EduLearn.</p></div>
+  <div class="grid-3">
+    <div class="testimonial-card" data-aos><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="testimonial-text">"EduLearn changed my career completely. I went from zero coding knowledge to landing a frontend developer job in just 6 months. The curriculum is absolutely top-notch!"</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya S."><div><div class="testimonial-author-name">Priya Sharma</div><div class="testimonial-author-role">Frontend Dev at TechCorp</div></div></div><span class="testimonial-quote">"</span></div>
+    <div class="testimonial-card" data-aos><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="testimonial-text">"The Data Science bootcamp here is incredible. The instructor makes complex concepts so easy to understand. I earned my certificate and got a 40% salary increase!"</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rahul K."><div><div class="testimonial-author-name">Rahul Kumar</div><div class="testimonial-author-role">Data Analyst at FinTech Pro</div></div></div><span class="testimonial-quote">"</span></div>
+    <div class="testimonial-card" data-aos><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><p class="testimonial-text">"As a busy mom, flexibility was everything. EduLearn let me study at midnight when my kids slept. I now freelance as a UI/UX designer with clients across 5 countries!"</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Sarah M."><div><div class="testimonial-author-name">Sarah Mitchell</div><div class="testimonial-author-role">Freelance UI/UX Designer</div></div></div><span class="testimonial-quote">"</span></div>
+  </div>
+  <div class="text-center" style="margin-top:2.5rem"><a href="testimonials.html" class="btn btn-secondary btn-lg">Read More Stories <i class="fas fa-arrow-right"></i></a></div>
+</div></section>
+
+<!-- BLOG PREVIEW -->
+<section class="section"><div class="container">
+  <div class="flex-between" style="margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem">
+    <div data-aos><div class="section-label"><i class="fas fa-blog"></i> Resources</div><h2 class="section-title" style="margin-bottom:0">From Our Blog</h2></div>
+    <a href="blog.html" class="btn btn-secondary">All Articles <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="grid-3" id="blogGrid"></div>
+</div></section>
+
+<!-- CTA -->
+<section class="cta-section"><div class="container" style="position:relative;z-index:2;text-align:center" data-aos>
+  <div class="section-label" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.2)"><i class="fas fa-rocket"></i> Start Today, It's Free</div>
+  <h2 style="font-family:var(--font-display);font-size:clamp(1.75rem,4vw,2.75rem);font-weight:800;color:#fff;margin-bottom:1rem">Ready to Transform Your Future?</h2>
+  <p style="color:rgba(255,255,255,.72);font-size:1.05rem;max-width:480px;margin:0 auto 2.25rem;line-height:1.7">Join 500,000+ learners already building their dream careers. Your first course is free — no credit card needed.</p>
+  <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap">
+    <a href="register.html" class="btn btn-white btn-xl">Start Learning Free <i class="fas fa-arrow-right"></i></a>
+    <a href="courses.html" class="btn btn-outline-white btn-xl"><i class="fas fa-play-circle"></i> Browse Courses</a>
+  </div>
+</div></section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-section"><div class="container">
+  <div class="section-label" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.12)"><i class="fas fa-envelope"></i> Newsletter</div>
+  <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;color:#fff;margin-bottom:.5rem">Stay Ahead with EduLearn</h2>
+  <p style="color:rgba(255,255,255,.55);font-size:.95rem">Weekly learning tips, new course alerts, and career insights — straight to your inbox.</p>
+  <div class="newsletter-form">
+    <input type="email" id="nlEmail" placeholder="Enter your email address">
+    <button class="btn btn-primary" onclick="subscribe()">Subscribe <i class="fas fa-paper-plane"></i></button>
+  </div>
+  <p style="color:rgba(255,255,255,.28);font-size:.75rem;margin-top:.75rem">No spam. Unsubscribe anytime.</p>
+</div></div>
+
+<!-- FOOTER -->
+<footer class="footer"><div class="container">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-icon"><i class="fas fa-graduation-cap"></i></div>EduLearn</div>
+      <p class="footer-desc">The world's leading online learning platform. Transform your career with expert-led courses, industry certificates, and a vibrant global community.</p>
+      <div class="footer-social"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div>
+    </div>
+    <div><div class="footer-heading">Company</div><div class="footer-links"><a href="about.html">About Us</a><a href="instructors.html">Instructors</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></div></div>
+    <div><div class="footer-heading">Courses</div><div class="footer-links"><a href="courses.html?category=Web+Development">Web Development</a><a href="courses.html?category=Data+Science">Data Science</a><a href="courses.html?category=Design">UI/UX Design</a><a href="courses.html?category=Business">Business</a><a href="courses.html?filter=free">Free Courses</a></div></div>
+    <div><div class="footer-heading">Stay Updated</div><p style="font-size:.85rem;margin-bottom:.875rem;line-height:1.65">Get new courses and tips weekly.</p><div class="footer-newsletter"><input type="email" placeholder="Your email"><button class="btn btn-primary btn-full btn-sm">Subscribe</button></div></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 EduLearn. All rights reserved.</p>
+    <div class="footer-bottom-links"><a href="faq.html">FAQ</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </div>
+</div></footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+const CATS=[{n:'Web Development',i:'fas fa-code',c:'2,450',bg:'#eef2ff',co:'#4338ca'},{n:'Data Science',i:'fas fa-chart-bar',c:'1,830',bg:'#ecfdf5',co:'#059669'},{n:'Design',i:'fas fa-paint-brush',c:'1,240',bg:'#fff7ed',co:'#ea580c'},{n:'Mobile Dev',i:'fas fa-mobile-alt',c:'980',bg:'#fdf4ff',co:'#a21caf'},{n:'Business',i:'fas fa-briefcase',c:'1,120',bg:'#fffbeb',co:'#b45309'},{n:'IT & Software',i:'fas fa-server',c:'760',bg:'#eff6ff',co:'#1d4ed8'},{n:'Marketing',i:'fas fa-bullhorn',c:'640',bg:'#fff1f2',co:'#be123c'},{n:'Personal Dev',i:'fas fa-brain',c:'550',bg:'#f0fdf4',co:'#16a34a'}];
+const COURSES=[{_id:'c1',title:'Complete React Developer Bootcamp 2024',category:'Web Development',level:'Intermediate',instructor:{name:'Alex Johnson'},averageRating:4.8,totalRatings:2340,enrolledStudents:18600,language:'English',certificateAvailable:true,isFree:false,price:89,thumbnail:'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=220&fit=crop'},{_id:'c2',title:'Python for Data Science & Machine Learning',category:'Data Science',level:'Beginner',instructor:{name:'Sarah Chen'},averageRating:4.9,totalRatings:3120,enrolledStudents:24500,language:'English',certificateAvailable:true,isFree:false,price:79,thumbnail:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=220&fit=crop'},{_id:'c3',title:'UI/UX Design Masterclass: Zero to Pro',category:'Design',level:'Beginner',instructor:{name:'Maria Santos'},averageRating:4.7,totalRatings:1890,enrolledStudents:12300,language:'English',certificateAvailable:true,isFree:false,price:69,thumbnail:'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=220&fit=crop'},{_id:'c4',title:'Full Stack Web Dev with Node.js & MongoDB',category:'Web Development',level:'Advanced',instructor:{name:'James Wilson'},averageRating:4.8,totalRatings:2780,enrolledStudents:21000,language:'English',certificateAvailable:true,isFree:false,price:99,thumbnail:'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=220&fit=crop'},{_id:'c5',title:'JavaScript Fundamentals – Free Starter Course',category:'Web Development',level:'Beginner',instructor:{name:'Tom Davis'},averageRating:4.6,totalRatings:5400,enrolledStudents:48000,language:'English',certificateAvailable:false,isFree:true,price:0,thumbnail:'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=220&fit=crop'},{_id:'c6',title:'Digital Marketing & Social Media Mastery',category:'Marketing',level:'All Levels',instructor:{name:'Lisa Park'},averageRating:4.5,totalRatings:1240,enrolledStudents:9800,language:'English',certificateAvailable:true,isFree:false,price:59,thumbnail:'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&h=220&fit=crop'},{_id:'c7',title:'Flutter & Dart – Build Mobile Apps from Scratch',category:'Mobile Development',level:'Intermediate',instructor:{name:'Ahmed Hassan'},averageRating:4.7,totalRatings:1560,enrolledStudents:11200,language:'English',certificateAvailable:true,isFree:false,price:74,thumbnail:'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=220&fit=crop'},{_id:'c8',title:'AWS Cloud Practitioner Certification Prep',category:'IT & Software',level:'Beginner',instructor:{name:'Raj Patel'},averageRating:4.8,totalRatings:2100,enrolledStudents:16700,language:'English',certificateAvailable:true,isFree:false,price:94,thumbnail:'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=220&fit=crop'}];
+const INSTRS=[{_id:'i1',name:'Alex Johnson',avatar:'https://randomuser.me/api/portraits/men/1.jpg',bio:'Senior React Developer & OSS Contributor',totalCourses:12,totalStudents:45000,avgRating:4.8},{_id:'i2',name:'Sarah Chen',avatar:'https://randomuser.me/api/portraits/women/2.jpg',bio:'Data Scientist & Machine Learning Expert',totalCourses:8,totalStudents:38000,avgRating:4.9},{_id:'i3',name:'Maria Santos',avatar:'https://randomuser.me/api/portraits/women/3.jpg',bio:'Lead UI/UX Designer at Adobe',totalCourses:6,totalStudents:22000,avgRating:4.7},{_id:'i4',name:'James Wilson',avatar:'https://randomuser.me/api/portraits/men/4.jpg',bio:'Full Stack Engineer & Tech Lead',totalCourses:10,totalStudents:31000,avgRating:4.8}];
+const BLOGS=[{_id:'b1',title:'10 Must-Know JavaScript Concepts for 2024',excerpt:'Master these JS fundamentals to become a confident, modern developer.',thumbnail:'https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=200&fit=crop',category:'Web Dev',author:{name:'Alex Johnson'},createdAt:'2024-01-15',readTime:8},{_id:'b2',title:'How to Land Your First Data Science Job',excerpt:'Practical advice from hiring managers and senior data scientists at top companies.',thumbnail:'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&h=200&fit=crop',category:'Career',author:{name:'Sarah Chen'},createdAt:'2024-01-10',readTime:12},{_id:'b3',title:'The Future of UI/UX Design: Trends to Watch',excerpt:'From AI-assisted design to voice interfaces — tools shaping tomorrow\'s digital world.',thumbnail:'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=200&fit=crop',category:'Design',author:{name:'Maria Santos'},createdAt:'2024-01-05',readTime:6}];
+
+document.getElementById('catsGrid').innerHTML=CATS.map(c=>`<a href="courses.html?category=${encodeURIComponent(c.n)}" class="cat-card" data-aos><div class="cat-icon" style="background:${c.bg};color:${c.co}"><i class="${c.i}"></i></div><div class="cat-name">${c.n}</div><div class="cat-count">${c.c} courses</div></a>`).join('');
+document.getElementById('featuredGrid').innerHTML=COURSES.slice(0,4).map(CourseCard.render).join('');
+function renderPopular(cat=''){document.getElementById('popularGrid').innerHTML=COURSES.filter(c=>!cat||c.category===cat).slice(0,8).map(CourseCard.render).join('');}
+renderPopular();
+document.getElementById('catFilters').querySelectorAll('button').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('#catFilters button').forEach(x=>{x.className='btn btn-secondary btn-sm'});b.className='btn btn-primary btn-sm';renderPopular(b.dataset.cat);});});
+document.getElementById('instrGrid').innerHTML=INSTRS.map(i=>`<a href="instructor-profile.html?id=${i._id}" class="instructor-card" data-aos><img class="instructor-avatar" src="${i.avatar}" alt="${i.name}"><div class="instructor-name">${i.name}</div><div class="instructor-title">${i.bio}</div><div class="instructor-stats"><div><div class="instr-stat-val">${i.totalCourses}</div><div class="instr-stat-lbl">Courses</div></div><div><div class="instr-stat-val">${(i.totalStudents/1000).toFixed(0)}K</div><div class="instr-stat-lbl">Students</div></div><div><div class="instr-stat-val">⭐${i.avgRating}</div><div class="instr-stat-lbl">Rating</div></div></div></a>`).join('');
+document.getElementById('blogGrid').innerHTML=BLOGS.map(b=>`<a href="blog-details.html?id=${b._id}" class="blog-card"><div class="blog-thumb"><img src="${b.thumbnail}" alt="${b.title}" loading="lazy"></div><div class="blog-body"><div style="display:flex;align-items:center;gap:.625rem;margin-bottom:.625rem"><span class="badge badge-indigo">${b.category}</span><span style="font-size:.75rem;color:var(--gray-400)">${b.readTime} min read</span></div><h3 style="font-size:.975rem;font-weight:700;color:var(--gray-900);line-height:1.45;margin-bottom:.5rem">${b.title}</h3><p style="font-size:.84rem;color:var(--gray-500);line-height:1.6;margin-bottom:.875rem">${b.excerpt}</p><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:.78rem;color:var(--gray-400)">By ${b.author.name}</span><span style="font-size:.78rem;color:var(--gray-400)">${Fmt.date(b.createdAt)}</span></div></div></a>`).join('');
+document.getElementById('heroSearch').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
+document.getElementById('freeToggle').addEventListener('click',function(){this.classList.toggle('active');document.getElementById('freeChk').checked=this.classList.contains('active');});
+function doSearch(){const q=document.getElementById('heroSearch').value,cat=document.getElementById('filterCat').value,lvl=document.getElementById('filterLvl').value,free=document.getElementById('freeChk').checked;const p=new URLSearchParams();if(q)p.set('search',q);if(cat)p.set('category',cat);if(lvl)p.set('level',lvl);if(free)p.set('isFree','true');location.href=`courses.html?${p}`;}
+function subscribe(){const v=document.getElementById('nlEmail').value;if(!v||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){Toast.show('Please enter a valid email','error');return;}Toast.show('Subscribed! Welcome to EduLearn 🎉','success');document.getElementById('nlEmail').value='';}
+</script>
+</body></html>
