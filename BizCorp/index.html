@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BizCorp | Corporate Business Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#f8f9fc;--surface:#f0f2f8;--card:#ffffff;
+      --dark:#0a0e1a;--dark2:#111827;
+      --accent:#2563eb;--accent2:#7c3aed;--accent3:#0ea5e9;
+      --green:#10b981;--text:#0f172a;--muted:#64748b;
+      --border:#e2e8f0;--glow:rgba(37,99,235,0.18);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5rem;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+    .nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;}
+    .nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+    .nav-logo-text{font-weight:800;font-size:1.25rem;color:var(--dark);letter-spacing:-.4px;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s;}
+    .nav-links a:hover{color:var(--text);}
+    .nav-actions{display:flex;align-items:center;gap:.8rem;}
+    .nav-btn-ghost{padding:.5rem 1.2rem;background:transparent;border:1.5px solid var(--border);border-radius:6px;color:var(--text);font-family:'Inter',sans-serif;font-size:.84rem;font-weight:500;cursor:pointer;transition:all .2s;}
+    .nav-btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+    .nav-btn-solid{padding:.5rem 1.3rem;background:var(--accent);border:none;border-radius:6px;color:#fff;font-family:'Inter',sans-serif;font-size:.84rem;font-weight:600;cursor:pointer;box-shadow:0 2px 8px var(--glow);transition:all .2s;}
+    .nav-btn-solid:hover{background:#1d4ed8;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;padding:8rem 5rem 5rem;position:relative;overflow:hidden;background:var(--dark);}
+    .hero-bg-grad{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 60% 40%,rgba(124,58,237,0.25) 0%,transparent 65%),radial-gradient(ellipse 50% 50% at 10% 80%,rgba(37,99,235,0.18) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 90% 10%,rgba(14,165,233,0.12) 0%,transparent 60%);}
+    .hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.06) 1px,transparent 1px);background-size:32px 32px;}
+    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;width:100%;}
+
+    /* LEFT */
+    .hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.3);border-radius:50px;padding:.35rem .9rem;font-size:.75rem;color:#93c5fd;font-weight:600;letter-spacing:.5px;margin-bottom:1.5rem;animation:fadeUp .7s .1s ease both;}
+    .hero-tag-dot{width:6px;height:6px;background:#60a5fa;border-radius:50%;animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.5);}}
+    .hero h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.8rem,5vw,4.8rem);color:#fff;line-height:1.06;letter-spacing:-1.5px;margin-bottom:1.4rem;animation:fadeUp .7s .2s ease both;}
+    .hero h1 em{font-style:italic;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hero p{font-size:1rem;color:rgba(255,255,255,.6);line-height:1.8;max-width:480px;margin-bottom:2.5rem;animation:fadeUp .7s .35s ease both;font-weight:300;}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .7s .5s ease both;}
+    .btn-blue{padding:.9rem 2rem;background:var(--accent);border:none;border-radius:8px;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;box-shadow:0 4px 20px var(--glow);transition:all .2s;display:inline-block;}
+    .btn-blue:hover{background:#1d4ed8;transform:translateY(-1px);}
+    .btn-glass{padding:.9rem 2rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#fff;font-family:'Inter',sans-serif;font-weight:500;font-size:.9rem;cursor:pointer;text-decoration:none;transition:all .2s;display:inline-block;backdrop-filter:blur(10px);}
+    .btn-glass:hover{background:rgba(255,255,255,.14);}
+    .hero-trust{display:flex;align-items:center;gap:1.5rem;margin-top:3rem;animation:fadeUp .7s .65s ease both;}
+    .ht-item{display:flex;flex-direction:column;gap:.2rem;}
+    .ht-num{font-weight:800;font-size:1.6rem;color:#fff;}
+    .ht-label{font-size:.72rem;color:rgba(255,255,255,.4);letter-spacing:.5px;text-transform:uppercase;}
+    .ht-divider{width:1px;height:36px;background:rgba(255,255,255,.12);}
+
+    /* RIGHT — DASHBOARD CARD */
+    .hero-visual{animation:fadeIn .9s .4s ease both;}
+    .dash-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1.8rem;backdrop-filter:blur(20px);box-shadow:0 24px 60px rgba(0,0,0,.4);}
+    .dc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+    .dc-title{font-weight:700;font-size:.95rem;color:#fff;}
+    .dc-badge{background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.3);border-radius:50px;padding:.2rem .7rem;font-size:.7rem;color:#34d399;font-weight:600;}
+    .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem;}
+    .kpi-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem;}
+    .kpi-label{font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:.4rem;}
+    .kpi-val{font-weight:800;font-size:1.4rem;color:#fff;}
+    .kpi-change{font-size:.7rem;margin-top:.2rem;}
+    .kpi-change.up{color:#34d399;}
+    .kpi-change.down{color:#f87171;}
+    .chart-bar-wrap{margin-bottom:1.2rem;}
+    .chart-label{font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:.6rem;}
+    .chart-bars{display:flex;align-items:flex-end;gap:.4rem;height:60px;}
+    .bar{flex:1;border-radius:4px 4px 0 0;transition:height .3s;}
+    .client-row{display:flex;align-items:center;gap:.8rem;padding:.6rem;background:rgba(255,255,255,.04);border-radius:8px;}
+    .cr-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0;}
+    .cr-name{font-size:.78rem;color:rgba(255,255,255,.7);flex:1;}
+    .cr-val{font-size:.78rem;font-weight:600;color:#60a5fa;}
+
+    /* CLIENTS MARQUEE */
+    .clients-wrap{background:#fff;padding:2.5rem 5rem;border-bottom:1px solid var(--border);}
+    .clients-label{font-size:.72rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:1.5rem;}
+    .clients-track-wrap{overflow:hidden;}
+    .clients-track{display:flex;gap:4rem;align-items:center;animation:marquee 20s linear infinite;white-space:nowrap;}
+    .client-logo{font-size:.9rem;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;opacity:.5;transition:opacity .2s;}
+    .client-logo:hover{opacity:1;}
+    @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+    /* SERVICES */
+    .section{padding:7rem 5rem;}
+    .sec-wrap{max-width:1200px;margin:0 auto;}
+    .sec-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.15);border-radius:50px;padding:.3rem .9rem;font-size:.72rem;color:var(--accent);font-weight:600;letter-spacing:.5px;margin-bottom:1rem;}
+    .sec-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.5px;line-height:1.1;}
+    .sec-title em{font-style:italic;color:var(--accent);}
+    .sec-sub{color:var(--muted);font-size:.95rem;line-height:1.8;max-width:500px;margin-top:.8rem;font-weight:300;}
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;}
+    .service-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:transform .3s,box-shadow .3s,border-color .3s;cursor:pointer;}
+    .service-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.08);border-color:rgba(37,99,235,.2);}
+    .sc-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem;}
+    .sc-icon.blue{background:rgba(37,99,235,0.1);}
+    .sc-icon.violet{background:rgba(124,58,237,0.1);}
+    .sc-icon.green{background:rgba(16,185,129,0.1);}
+    .sc-icon.sky{background:rgba(14,165,233,0.1);}
+    .sc-icon.rose{background:rgba(244,63,94,0.1);}
+    .sc-icon.amber{background:rgba(245,158,11,0.1);}
+    .sc-title{font-weight:700;font-size:1rem;margin-bottom:.5rem;}
+    .sc-desc{font-size:.84rem;color:var(--muted);line-height:1.7;}
+    .sc-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.8rem;color:var(--accent);font-weight:600;margin-top:1rem;transition:gap .2s;cursor:pointer;}
+    .sc-link:hover{gap:.6rem;}
+
+    /* ABOUT / PROFILE */
+    .about-section{background:var(--dark);padding:7rem 5rem;}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;max-width:1200px;margin:0 auto;}
+    .about-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:2.5rem;}
+    .as-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1.4rem;}
+    .as-num{font-family:'Playfair Display',serif;font-weight:900;font-size:2rem;color:#fff;margin-bottom:.2rem;}
+    .as-num em{font-style:italic;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .as-label{font-size:.78rem;color:rgba(255,255,255,.4);}
+    .about-visual{position:relative;}
+    .about-img{width:100%;aspect-ratio:1;background:linear-gradient(145deg,#111827,#1e2a40);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:9rem;border:1px solid rgba(255,255,255,.08);}
+    .about-badge{position:absolute;bottom:-16px;right:-16px;background:var(--accent);border-radius:14px;padding:1rem 1.4rem;box-shadow:0 8px 24px var(--glow);}
+    .ab-num{font-weight:800;font-size:1.4rem;color:#fff;}
+    .ab-label{font-size:.7rem;color:rgba(255,255,255,.7);letter-spacing:.5px;text-transform:uppercase;}
+
+    /* TEAM */
+    .team-section{background:var(--surface);}
+    .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3.5rem;}
+    .team-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+    .team-card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(0,0,0,.08);}
+    .tc-photo{height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;}
+    .tc-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,.1) 100%);}
+    .tc-body{padding:1.2rem;}
+    .tc-name{font-weight:700;font-size:.95rem;margin-bottom:.2rem;}
+    .tc-role{font-size:.75rem;color:var(--accent);font-weight:600;letter-spacing:.3px;margin-bottom:.5rem;}
+    .tc-bio{font-size:.78rem;color:var(--muted);line-height:1.5;}
+    .tc-socials{display:flex;gap:.5rem;margin-top:.8rem;}
+    .ts-btn{width:28px;height:28px;border-radius:6px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;cursor:pointer;transition:all .2s;}
+    .ts-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+    /* PORTFOLIO */
+    .portfolio-section{padding:7rem 5rem;}
+    .portfolio-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem;}
+    .pf-btn{padding:.4rem 1rem;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Inter',sans-serif;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .25s;}
+    .pf-btn:hover,.pf-btn.active{background:var(--dark);border-color:var(--dark);color:#fff;}
+    .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+    .portfolio-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;}
+    .portfolio-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,.1);}
+    .pc-preview{height:200px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;}
+    .pc-preview::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,.05) 100%);}
+    .pc-type{position:absolute;top:.8rem;left:.8rem;z-index:1;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:4px;letter-spacing:.5px;text-transform:uppercase;background:rgba(255,255,255,.9);color:var(--text);}
+    .pc-info{padding:1.2rem;}
+    .pc-client{font-size:.7rem;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:.3rem;}
+    .pc-name{font-weight:700;font-size:.95rem;margin-bottom:.3rem;}
+    .pc-tags{display:flex;gap:.3rem;flex-wrap:wrap;}
+    .pc-tag{font-size:.65rem;background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.15);border-radius:4px;padding:.15rem .5rem;color:var(--accent);}
+
+    /* CAREERS */
+    .careers-section{background:var(--surface);padding:7rem 5rem;}
+    .jobs-list{display:flex;flex-direction:column;gap:1rem;margin-top:3rem;}
+    .job-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;display:flex;align-items:center;gap:2rem;transition:border-color .3s,box-shadow .3s;cursor:pointer;}
+    .job-card:hover{border-color:rgba(37,99,235,.25);box-shadow:0 4px 16px rgba(0,0,0,.06);}
+    .jc-icon{width:46px;height:46px;border-radius:10px;background:rgba(37,99,235,0.08);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+    .jc-info{flex:1;}
+    .jc-title{font-weight:700;font-size:.95rem;margin-bottom:.2rem;}
+    .jc-meta{display:flex;gap:.8rem;flex-wrap:wrap;}
+    .jc-tag{font-size:.72rem;color:var(--muted);}
+    .jc-dept{font-size:.72rem;color:var(--accent);font-weight:600;background:rgba(37,99,235,.08);border-radius:4px;padding:.15rem .5rem;}
+    .jc-salary{font-size:.88rem;font-weight:600;color:var(--text);white-space:nowrap;}
+    .jc-apply{padding:.5rem 1.3rem;background:var(--accent);border:none;border-radius:6px;color:#fff;font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:background .2s;white-space:nowrap;}
+    .jc-apply:hover{background:#1d4ed8;}
+
+    /* CTA */
+    .cta-section{padding:6rem 5rem;background:linear-gradient(135deg,var(--dark) 0%,#0f1a35 50%,var(--dark2) 100%);position:relative;overflow:hidden;}
+    .cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(124,58,237,0.2) 0%,transparent 70%);}
+    .cta-inner{position:relative;z-index:1;text-align:center;max-width:680px;margin:0 auto;}
+    .cta-section h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.2rem,4vw,3.5rem);color:#fff;letter-spacing:-.5px;margin-bottom:.8rem;}
+    .cta-section h2 em{font-style:italic;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .cta-section p{color:rgba(255,255,255,.5);margin-bottom:2.5rem;font-size:.95rem;line-height:1.7;}
+    .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .cta-form{display:flex;gap:.8rem;max-width:440px;margin:0 auto;margin-top:2rem;}
+    .cta-input{flex:1;padding:.9rem 1.2rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#fff;font-family:'Inter',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s;}
+    .cta-input:focus{border-color:#60a5fa;}
+    .cta-input::placeholder{color:rgba(255,255,255,.3);}
+    .cta-submit{padding:.9rem 1.6rem;background:var(--accent);border:none;border-radius:8px;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;white-space:nowrap;transition:background .2s;}
+    .cta-submit:hover{background:#1d4ed8;}
+
+    /* FOOTER */
+    footer{background:var(--dark2);padding:5rem 5rem 2.5rem;border-top:1px solid rgba(255,255,255,.05);}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3.5rem;}
+    .fb-logo{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;text-decoration:none;}
+    .fb-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+    .fb-logo-text{font-weight:800;font-size:1.15rem;color:#fff;}
+    .fb-desc{font-size:.82rem;color:rgba(255,255,255,.35);line-height:1.7;max-width:240px;margin-bottom:1.2rem;}
+    .fb-socials{display:flex;gap:.5rem;}
+    .fbs{width:32px;height:32px;border-radius:7px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.8rem;cursor:pointer;transition:all .2s;}
+    .fbs:hover{background:var(--accent);border-color:var(--accent);}
+    .fc-col h4{font-size:.72rem;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.2rem;}
+    .fc-col a{display:block;color:rgba(255,255,255,.5);text-decoration:none;font-size:.83rem;margin-bottom:.5rem;transition:color .2s;}
+    .fc-col a:hover{color:#fff;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .footer-bottom p{font-size:.78rem;color:rgba(255,255,255,.25);}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--dark);border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:.7rem 1.6rem;font-size:.84rem;color:#fff;font-weight:500;z-index:9998;transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 10px 30px rgba(0,0,0,.3);}
+    .toast.show{transform:translateX(-50%) translateY(0);}
+
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:1100px){.hero-inner,.about-grid{grid-template-columns:1fr;}.hero-visual{display:none;}.services-grid,.portfolio-grid{grid-template-columns:repeat(2,1fr);}.team-grid{grid-template-columns:repeat(2,1fr);}.footer-top{grid-template-columns:1fr 1fr;}}
+    @media(max-width:768px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}.hero,.section,.about-section,.careers-section,.cta-section{padding-left:1.5rem;padding-right:1.5rem;}.clients-wrap{padding:2rem 1.5rem;}.services-grid,.portfolio-grid,.team-grid{grid-template-columns:1fr;}.job-card{flex-direction:column;align-items:flex-start;}.footer-top{grid-template-columns:1fr;}footer{padding:3rem 1.5rem 1.5rem;}.footer-bottom{flex-direction:column;text-align:center;}}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">🏢</div>
+      <span class="nav-logo-text">BizCorp</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#careers">Careers</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-btn-ghost">Log In</button>
+      <button class="nav-btn-solid" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-grad"></div>
+    <div class="hero-dots"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-tag"><span class="hero-tag-dot"></span> Trusted by 500+ Companies Globally</div>
+        <h1>Building Businesses<br/>That <em>Thrive</em><br/>in the Digital Age</h1>
+        <p>BizCorp delivers end-to-end corporate solutions — from strategy and technology to talent and transformation. We don't just consult. We deliver results.</p>
+        <div class="hero-btns">
+          <a href="#services" class="btn-blue">Explore Services</a>
+          <a href="#portfolio" class="btn-glass">View Our Work →</a>
+        </div>
+        <div class="hero-trust">
+          <div class="ht-item"><span class="ht-num">500+</span><span class="ht-label">Clients</span></div>
+          <div class="ht-divider"></div>
+          <div class="ht-item"><span class="ht-num">15+</span><span class="ht-label">Years Exp.</span></div>
+          <div class="ht-divider"></div>
+          <div class="ht-item"><span class="ht-num">₹200Cr+</span><span class="ht-label">Revenue Delivered</span></div>
+          <div class="ht-divider"></div>
+          <div class="ht-item"><span class="ht-num">48</span><span class="ht-label">Countries</span></div>
+        </div>
+      </div>
+
+      <!-- DASHBOARD VISUAL -->
+      <div class="hero-visual">
+        <div class="dash-card">
+          <div class="dc-header">
+            <span class="dc-title">Business Dashboard</span>
+            <span class="dc-badge">● Live</span>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-label">Revenue (Q2)</div>
+              <div class="kpi-val">₹4.2Cr</div>
+              <div class="kpi-change up">↑ 24% vs Q1</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Active Clients</div>
+              <div class="kpi-val">128</div>
+              <div class="kpi-change up">↑ 12 new</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Projects</div>
+              <div class="kpi-val">47</div>
+              <div class="kpi-change up">↑ 8 this month</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">NPS Score</div>
+              <div class="kpi-val">92</div>
+              <div class="kpi-change up">↑ Excellent</div>
+            </div>
+          </div>
+          <div class="chart-bar-wrap">
+            <div class="chart-label">Monthly Revenue (₹ Lakhs)</div>
+            <div class="chart-bars">
+              <div class="bar" style="height:40%;background:rgba(37,99,235,.4);"></div>
+              <div class="bar" style="height:55%;background:rgba(37,99,235,.5);"></div>
+              <div class="bar" style="height:45%;background:rgba(37,99,235,.4);"></div>
+              <div class="bar" style="height:70%;background:rgba(37,99,235,.6);"></div>
+              <div class="bar" style="height:60%;background:rgba(37,99,235,.5);"></div>
+              <div class="bar" style="height:85%;background:rgba(124,58,237,.7);"></div>
+              <div class="bar" style="height:100%;background:linear-gradient(to top,var(--accent),var(--accent2));"></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.5rem;">
+            <div class="client-row"><div class="cr-avatar" style="background:linear-gradient(135deg,#2563eb,#7c3aed);">T</div><span class="cr-name">TechNova Ltd.</span><span class="cr-val">₹48L</span></div>
+            <div class="client-row"><div class="cr-avatar" style="background:linear-gradient(135deg,#10b981,#0ea5e9);">G</div><span class="cr-name">GlobalMart Inc.</span><span class="cr-val">₹36L</span></div>
+            <div class="client-row"><div class="cr-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">A</div><span class="cr-name">Apex Industries</span><span class="cr-val">₹29L</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENT LOGOS -->
+  <div class="clients-wrap">
+    <div class="clients-label">Trusted by Industry Leaders</div>
+    <div class="clients-track-wrap">
+      <div class="clients-track">
+        <span class="client-logo">TechNova</span>
+        <span class="client-logo">GlobalMart</span>
+        <span class="client-logo">Apex Industries</span>
+        <span class="client-logo">FutureSystems</span>
+        <span class="client-logo">InnovateCo</span>
+        <span class="client-logo">DataPrime</span>
+        <span class="client-logo">CloudEdge</span>
+        <span class="client-logo">NextGen Corp</span>
+        <span class="client-logo">TechNova</span>
+        <span class="client-logo">GlobalMart</span>
+        <span class="client-logo">Apex Industries</span>
+        <span class="client-logo">FutureSystems</span>
+        <span class="client-logo">InnovateCo</span>
+        <span class="client-logo">DataPrime</span>
+        <span class="client-logo">CloudEdge</span>
+        <span class="client-logo">NextGen Corp</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="sec-wrap">
+      <div class="reveal">
+        <div class="sec-tag">What We Do</div>
+        <h2 class="sec-title">Enterprise <em>Services</em><br/>Built to Scale</h2>
+        <p class="sec-sub">From digital transformation to talent solutions, we offer the full spectrum of services your business needs to grow.</p>
+      </div>
+      <div class="services-grid reveal">
+        <div class="service-card"><div class="sc-icon blue">💡</div><div class="sc-title">Strategy & Consulting</div><div class="sc-desc">Data-driven business strategies that align with your goals. We identify opportunities, eliminate inefficiencies and chart a clear path forward.</div><div class="sc-link">Learn More →</div></div>
+        <div class="service-card"><div class="sc-icon violet">⚙️</div><div class="sc-title">Digital Transformation</div><div class="sc-desc">End-to-end technology modernisation — cloud migration, process automation, ERP implementation and custom software development.</div><div class="sc-link">Learn More →</div></div>
+        <div class="service-card"><div class="sc-icon green">📊</div><div class="sc-title">Business Intelligence</div><div class="sc-desc">Turn raw data into actionable insights. Custom dashboards, predictive analytics and real-time reporting for smarter decisions.</div><div class="sc-link">Learn More →</div></div>
+        <div class="service-card"><div class="sc-icon sky">🌐</div><div class="sc-title">Digital Marketing</div><div class="sc-desc">Performance-driven marketing campaigns — SEO, paid media, content strategy and brand positioning that deliver measurable ROI.</div><div class="sc-link">Learn More →</div></div>
+        <div class="service-card"><div class="sc-icon rose">👥</div><div class="sc-title">HR & Talent Solutions</div><div class="sc-desc">Executive search, talent acquisition, workforce planning and HR transformation to help you build and retain world-class teams.</div><div class="sc-link">Learn More →</div></div>
+        <div class="service-card"><div class="sc-icon amber">🔒</div><div class="sc-title">Cybersecurity</div><div class="sc-desc">Comprehensive security audits, threat detection, compliance consulting and incident response — keeping your business safe 24/7.</div><div class="sc-link">Learn More →</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / PROFILE -->
+  <section class="about-section" id="about">
+    <div class="about-grid">
+      <div>
+        <div class="sec-tag" style="background:rgba(96,165,250,.1);border-color:rgba(96,165,250,.2);color:#93c5fd;">Our Story</div>
+        <h2 class="sec-title" style="color:#fff;">15 Years of <em style="background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Transforming</em> Businesses</h2>
+        <p style="color:rgba(255,255,255,.5);font-size:.95rem;line-height:1.8;margin-top:1rem;font-weight:300;">Founded in 2009, BizCorp has grown from a boutique consulting firm into a full-service corporate solutions powerhouse. We've partnered with Fortune 500 companies, fast-growing startups, and everything in between.</p>
+        <p style="color:rgba(255,255,255,.4);font-size:.92rem;line-height:1.8;margin-top:.8rem;font-weight:300;">Our philosophy is simple: results above all. We embed ourselves in your business, understand your challenges deeply, and deliver solutions that move the needle where it matters most.</p>
+        <div class="about-stats">
+          <div class="as-card"><div class="as-num"><em>500+</em></div><div class="as-label">Clients served globally</div></div>
+          <div class="as-card"><div class="as-num"><em>₹200Cr+</em></div><div class="as-label">Revenue delivered for clients</div></div>
+          <div class="as-card"><div class="as-num"><em>48</em></div><div class="as-label">Countries we operate in</div></div>
+          <div class="as-card"><div class="as-num"><em>92%</em></div><div class="as-label">Client retention rate</div></div>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <div class="about-img">🏢</div>
+        <div class="about-badge"><div class="ab-num">15+</div><div class="ab-label">Years in Business</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section team-section" id="team">
+    <div class="sec-wrap">
+      <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <div class="sec-tag">Leadership</div>
+          <h2 class="sec-title">Meet the <em>Team</em></h2>
+          <p class="sec-sub">World-class professionals with decades of experience across industries and geographies.</p>
+        </div>
+        <a href="#careers" style="font-size:.85rem;color:var(--accent);font-weight:600;text-decoration:none;">View Open Positions →</a>
+      </div>
+      <div class="team-grid reveal">
+        <div class="team-card"><div class="tc-photo" style="background:linear-gradient(145deg,#dbeafe,#c7d2fe);">👨‍💼</div><div class="tc-body"><div class="tc-name">Arjun Mehta</div><div class="tc-role">CEO & Co-Founder</div><div class="tc-bio">20+ years in corporate strategy. Former McKinsey partner. IIM Ahmedabad alumnus.</div><div class="tc-socials"><div class="ts-btn">in</div><div class="ts-btn">𝕏</div></div></div></div>
+        <div class="team-card"><div class="tc-photo" style="background:linear-gradient(145deg,#d1fae5,#c7d2fe);">👩‍💼</div><div class="tc-body"><div class="tc-name">Priya Sharma</div><div class="tc-role">CTO & Co-Founder</div><div class="tc-bio">Former Google engineer. Led digital transformation at 50+ enterprises. IIT Delhi.</div><div class="tc-socials"><div class="ts-btn">in</div><div class="ts-btn">𝕏</div></div></div></div>
+        <div class="team-card"><div class="tc-photo" style="background:linear-gradient(145deg,#fce7f3,#dbeafe);">👨‍💻</div><div class="tc-body"><div class="tc-name">Rahul Verma</div><div class="tc-role">Chief Strategy Officer</div><div class="tc-bio">15 years in M&A and corporate strategy. Wharton MBA. Helped scale 3 unicorns.</div><div class="tc-socials"><div class="ts-btn">in</div><div class="ts-btn">𝕏</div></div></div></div>
+        <div class="team-card"><div class="tc-photo" style="background:linear-gradient(145deg,#fef3c7,#fce7f3);">👩‍🔬</div><div class="tc-body"><div class="tc-name">Ananya Reddy</div><div class="tc-role">Chief Analytics Officer</div><div class="tc-bio">Data scientist turned business leader. PhD from IISc. Built analytics teams at 20+ companies.</div><div class="tc-socials"><div class="ts-btn">in</div><div class="ts-btn">𝕏</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio-section" id="portfolio">
+    <div class="sec-wrap">
+      <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:.5rem;">
+        <div>
+          <div class="sec-tag">Our Work</div>
+          <h2 class="sec-title">Client <em>Portfolio</em></h2>
+          <p class="sec-sub">A curated selection of impactful projects delivered for clients across sectors.</p>
+        </div>
+        <div class="portfolio-filters">
+          <button class="pf-btn active" onclick="filterPortfolio(this,'all')">All</button>
+          <button class="pf-btn" onclick="filterPortfolio(this,'strategy')">Strategy</button>
+          <button class="pf-btn" onclick="filterPortfolio(this,'digital')">Digital</button>
+          <button class="pf-btn" onclick="filterPortfolio(this,'hr')">HR</button>
+        </div>
+      </div>
+      <div class="portfolio-grid reveal" id="portfolioGrid">
+        <div class="portfolio-card" data-cat="strategy"><div class="pc-preview" style="background:linear-gradient(145deg,#dbeafe,#c7d2fe);"><span class="pc-type">Strategy</span>📈</div><div class="pc-info"><div class="pc-client">TechNova Ltd.</div><div class="pc-name">5-Year Growth Strategy & Market Entry</div><div class="pc-tags"><span class="pc-tag">Strategy</span><span class="pc-tag">M&A</span><span class="pc-tag">APAC</span></div></div></div>
+        <div class="portfolio-card" data-cat="digital"><div class="pc-preview" style="background:linear-gradient(145deg,#d1fae5,#a7f3d0);"><span class="pc-type">Digital</span>🌐</div><div class="pc-info"><div class="pc-client">GlobalMart Inc.</div><div class="pc-name">E-commerce Digital Transformation</div><div class="pc-tags"><span class="pc-tag">Digital</span><span class="pc-tag">Cloud</span><span class="pc-tag">AI</span></div></div></div>
+        <div class="portfolio-card" data-cat="hr"><div class="pc-preview" style="background:linear-gradient(145deg,#fce7f3,#fbcfe8);"><span class="pc-type">HR</span>👥</div><div class="pc-info"><div class="pc-client">Apex Industries</div><div class="pc-name">Executive Talent Acquisition & Culture</div><div class="pc-tags"><span class="pc-tag">HR</span><span class="pc-tag">Talent</span><span class="pc-tag">Culture</span></div></div></div>
+        <div class="portfolio-card" data-cat="digital"><div class="pc-preview" style="background:linear-gradient(145deg,#fef3c7,#fde68a);"><span class="pc-type">Digital</span>📊</div><div class="pc-info"><div class="pc-client">DataPrime Corp</div><div class="pc-name">Real-Time BI Dashboard & Analytics</div><div class="pc-tags"><span class="pc-tag">Analytics</span><span class="pc-tag">BI</span><span class="pc-tag">SaaS</span></div></div></div>
+        <div class="portfolio-card" data-cat="strategy"><div class="pc-preview" style="background:linear-gradient(145deg,#ede9fe,#ddd6fe);"><span class="pc-type">Strategy</span>🏭</div><div class="pc-info"><div class="pc-client">InnovateCo</div><div class="pc-name">Operations Optimisation — 40% Cost Reduction</div><div class="pc-tags"><span class="pc-tag">Ops</span><span class="pc-tag">Lean</span><span class="pc-tag">Cost</span></div></div></div>
+        <div class="portfolio-card" data-cat="digital"><div class="pc-preview" style="background:linear-gradient(145deg,#cffafe,#a5f3fc);"><span class="pc-type">Security</span>🔒</div><div class="pc-info"><div class="pc-client">FutureSystems</div><div class="pc-name">Enterprise Cybersecurity Overhaul</div><div class="pc-tags"><span class="pc-tag">Security</span><span class="pc-tag">Compliance</span><span class="pc-tag">ISO</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAREERS -->
+  <section class="careers-section" id="careers">
+    <div class="sec-wrap">
+      <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <div class="sec-tag">Join Us</div>
+          <h2 class="sec-title">Build Your Career at<br/><em>BizCorp</em></h2>
+          <p class="sec-sub">We're always looking for exceptional people. Explore open positions and grow with us.</p>
+        </div>
+        <div style="background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.15);border-radius:10px;padding:.8rem 1.2rem;text-align:center;">
+          <div style="font-weight:700;font-size:1.4rem;color:var(--accent);">18</div>
+          <div style="font-size:.72rem;color:var(--muted);">Open Positions</div>
+        </div>
+      </div>
+      <div class="jobs-list reveal">
+        <div class="job-card"><div class="jc-icon">💼</div><div class="jc-info"><div class="jc-title">Senior Strategy Consultant</div><div class="jc-meta"><span class="jc-dept">Strategy</span><span class="jc-tag">📍 Hyderabad / Remote</span><span class="jc-tag">⏰ Full-time</span><span class="jc-tag">🎓 MBA Required</span></div></div><span class="jc-salary">₹24–32 LPA</span><button class="jc-apply" onclick="showToast('Redirecting to application...')">Apply Now</button></div>
+        <div class="job-card"><div class="jc-icon">💻</div><div class="jc-info"><div class="jc-title">Full Stack Developer (React + Node.js)</div><div class="jc-meta"><span class="jc-dept">Technology</span><span class="jc-tag">📍 Hyderabad</span><span class="jc-tag">⏰ Full-time</span><span class="jc-tag">🎓 3+ Years Exp.</span></div></div><span class="jc-salary">₹18–28 LPA</span><button class="jc-apply" onclick="showToast('Redirecting to application...')">Apply Now</button></div>
+        <div class="job-card"><div class="jc-icon">📊</div><div class="jc-info"><div class="jc-title">Business Intelligence Analyst</div><div class="jc-meta"><span class="jc-dept">Analytics</span><span class="jc-tag">📍 Bangalore / Remote</span><span class="jc-tag">⏰ Full-time</span><span class="jc-tag">🎓 Data Background</span></div></div><span class="jc-salary">₹14–20 LPA</span><button class="jc-apply" onclick="showToast('Redirecting to application...')">Apply Now</button></div>
+        <div class="job-card"><div class="jc-icon">👥</div><div class="jc-info"><div class="jc-title">Talent Acquisition Lead</div><div class="jc-meta"><span class="jc-dept">HR</span><span class="jc-tag">📍 Hyderabad</span><span class="jc-tag">⏰ Full-time</span><span class="jc-tag">🎓 5+ Years HR</span></div></div><span class="jc-salary">₹16–24 LPA</span><button class="jc-apply" onclick="showToast('Redirecting to application...')">Apply Now</button></div>
+        <div class="job-card"><div class="jc-icon">🔒</div><div class="jc-info"><div class="jc-title">Cybersecurity Engineer</div><div class="jc-meta"><span class="jc-dept">Security</span><span class="jc-tag">📍 Remote</span><span class="jc-tag">⏰ Full-time</span><span class="jc-tag">🎓 CISSP Preferred</span></div></div><span class="jc-salary">₹22–30 LPA</span><button class="jc-apply" onclick="showToast('Redirecting to application...')">Apply Now</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <div class="cta-inner">
+      <div class="sec-tag" style="margin:0 auto 1.2rem;background:rgba(96,165,250,.1);border-color:rgba(96,165,250,.2);color:#93c5fd;">Get Started Today</div>
+      <h2>Ready to <em>Transform</em><br/>Your Business?</h2>
+      <p>Book a free 30-minute discovery call with our experts. No commitment, just clarity on how we can help you grow.</p>
+      <div class="cta-btns">
+        <a href="#" class="btn-blue" onclick="showToast('Booking calendar loading...')">📅 Book Free Consultation</a>
+        <a href="#portfolio" class="btn-glass">See Our Work →</a>
+      </div>
+      <div class="cta-form">
+        <input type="email" class="cta-input" placeholder="Enter your work email" id="ctaEmail"/>
+        <button class="cta-submit" onclick="submitCTA()">Get in Touch</button>
+      </div>
+      <p style="font-size:.72rem;color:rgba(255,255,255,.2);margin-top:.6rem;">No spam. We'll respond within 2 business hours.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <a href="#" class="fb-logo"><div class="fb-logo-icon">🏢</div><span class="fb-logo-text">BizCorp</span></a>
+        <p class="fb-desc">End-to-end corporate solutions for businesses that refuse to settle for average. Strategy, technology, talent — all under one roof.</p>
+        <div class="fb-socials"><div class="fbs">in</div><div class="fbs">𝕏</div><div class="fbs">fb</div><div class="fbs">yt</div></div>
+      </div>
+      <div class="fc-col"><h4>Services</h4><a href="#services">Strategy</a><a href="#services">Digital</a><a href="#services">Analytics</a><a href="#services">HR Solutions</a><a href="#services">Cybersecurity</a></div>
+      <div class="fc-col"><h4>Company</h4><a href="#about">About Us</a><a href="#team">Our Team</a><a href="#portfolio">Portfolio</a><a href="#careers">Careers</a></div>
+      <div class="fc-col"><h4>Resources</h4><a href="#">Case Studies</a><a href="#">Blog</a><a href="#">Whitepapers</a><a href="#">Webinars</a></div>
+      <div class="fc-col"><h4>Contact</h4><a href="#">📍 Hyderabad, India</a><a href="#">📞 +91 98765 43210</a><a href="#">✉️ hello@bizcorp.in</a><a href="#">🕐 Mon–Fri 9–6 IST</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 BizCorp Solutions Pvt. Ltd. All rights reserved.</p>
+      <p>Privacy Policy · Terms of Service · Sitemap</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">✅ <span id="toastMsg">Done!</span></div>
+
+  <script>
+    let toastTimer;
+    function showToast(msg){clearTimeout(toastTimer);document.getElementById('toastMsg').textContent=msg;const t=document.getElementById('toast');t.classList.add('show');toastTimer=setTimeout(()=>t.classList.remove('show'),2500);}
+
+    function filterPortfolio(el,cat){
+      document.querySelectorAll('.pf-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
+      document.querySelectorAll('.portfolio-card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';});
+    }
+
+    function submitCTA(){
+      const v=document.getElementById('ctaEmail').value;
+      if(v.includes('@')){document.getElementById('ctaEmail').value='';showToast('Thanks! We\'ll be in touch within 2 hours. ✉️');}
+      else showToast('Please enter a valid email address.');
+    }
+
+    const ro=new IntersectionObserver((e)=>{e.forEach((en,i)=>{if(en.isIntersecting)setTimeout(()=>en.target.classList.add('visible'),i*80);});},{threshold:.06});
+    document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+  </script>
+</body>
+</html>

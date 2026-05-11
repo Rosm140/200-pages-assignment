@@ -19,7 +19,7 @@ const manualPageCounts = {
     'SoundWave': 18,   // ✅ SoundWave - COMPLETED
     'StyleHub': 17,    // ✅ StyleHub - COMPLETED
     'GameVerse': 19,    // ✅ GameVerse - COMPLETED
-    'corporate': 0
+    'BizCorp': 11      // ✅ BizCorp - COMPLETED
 };
 
 // Website Configuration
@@ -38,7 +38,7 @@ const websiteConfig = [
     { id: 12, name: "SoundWave", folder: "SoundWave", icon: "🎵", description: "Music streaming platform", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Music player UI", "Playlists & albums", "Artist profiles", "Search & discovery"], expectedPages: 18 },
     { id: 13, name: "StyleHub", folder: "StyleHub", icon: "👗", description: "Fashion e-commerce", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Product catalog", "Size guides", "Lookbook & trends", "Shopping cart"], expectedPages: 17 },
     { id: 14, name: "GameVerse", folder: "GameVerse", icon: "🎮", description: "Gaming community platform", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Game library", "User profiles", "Leaderboards", "Community forums"], expectedPages: 19 },
-    { id: 15, name: "BizCorp", folder: "corporate", icon: "🏢", description: "Corporate business website", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Company profile", "Services showcase", "Team & careers", "Client portfolio"], expectedPages: 11 }
+    { id: 15, name: "BizCorp", folder: "BizCorp", icon: "🏢", description: "Corporate business website", techStack: ["HTML5", "CSS3", "JavaScript"], features: ["Company profile", "Services showcase", "Team & careers", "Client portfolio"], expectedPages: 11 }
 ];
 
 async function scanAllWebsites() {
